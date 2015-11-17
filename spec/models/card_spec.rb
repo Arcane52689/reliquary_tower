@@ -29,4 +29,6 @@ RSpec.describe Card, type: :model do
     expect(card.errors[:colors]).to include("Purple is not a valid color. Must be one of the following: Blue, White, Black, Green, Red")
   end
 
+
+
 end
