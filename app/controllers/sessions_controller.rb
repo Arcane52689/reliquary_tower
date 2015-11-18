@@ -6,8 +6,9 @@ class SessionsController < ApplicationController
 
 
   def create
+    byebug
     user = User.find_by_credentials(
-    params[:user][:email_or_password],
+    params[:user][:email_or_username],
     params[:user][:password]
     )
     login(user)
@@ -16,6 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     current_session = Session.find_by(token: session[:session_token])
+    session[:session_token] = nil
     current_session.destroy!
     redirect_to new_session_url
   end
