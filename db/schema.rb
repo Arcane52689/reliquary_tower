@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118144127) do
+ActiveRecord::Schema.define(version: 20151118165324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "card_slots", force: :cascade do |t|
+    t.integer  "deck_id"
+    t.integer  "card_id"
+    t.string   "status",     default: "main deck", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "card_slots", ["card_id"], name: "index_card_slots_on_card_id", using: :btree
+  add_index "card_slots", ["deck_id"], name: "index_card_slots_on_deck_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
     t.string   "name",                                  null: false
@@ -71,5 +82,7 @@ ActiveRecord::Schema.define(version: 20151118144127) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "card_slots", "cards"
+  add_foreign_key "card_slots", "decks"
   add_foreign_key "sessions", "users"
 end

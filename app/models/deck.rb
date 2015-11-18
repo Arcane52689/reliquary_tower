@@ -3,14 +3,19 @@ class Deck < ActiveRecord::Base
   @format = "Deck"
   @card_minimum = 0
   @card_limit = Float::INFINITY
-  validates :name, presence: true
+
+  has_many :card_slots
+  has_many :cards, through: :card_slots, as: :card
 
   belongs_to :user
   # validate :not_too_many_cards, :not_too_few_cards
   after_initialize :set_variables
 
-  def self.all_in_format
-    self.all.where(format: @format)
+  validates :name, presence: true
+
+
+  def self.all_in_format(format=@format)
+    self.all.where(format: format)
   end
 
   def self.format
@@ -38,7 +43,7 @@ end
 class Commander < Deck
   @format = "Commander"
   @card_limit = 100
-  @card_maximum = 100
+  @card_minimum = 100
 
 
 
@@ -50,19 +55,23 @@ end
 class TinyLeaders < Deck
   @format = "Tiny Leaders"
   @card_limit = 50
-  @card_maximum = 50
+  @card_minimum = 50
 
 
 end
 
 class Standard < Deck
   @format = "Standard"
-  @card_limit = 60
+  @card_minimum = 60
+  @card_limit = Float::INFINITY
+
 
 
 end
 
 class Modern < Deck
   @format = "Modern"
-  @card_limit = 60
+  @card_minimum = 60
+  @card_limit = Float::INFINITY
+
 end

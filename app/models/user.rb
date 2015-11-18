@@ -24,6 +24,22 @@ class User < ActiveRecord::Base
     nil
   end
 
+  def commander_decks
+    Commander.all_in_format.where(user_id: self.id)
+  end
+
+  def standard_decks
+    Standard.all_in_format.where(user_id: self.id)
+  end
+
+  def tiny_leaders_decks
+    TinyLeaders.all_in_format.where(user_id: self.id)
+  end
+
+  def modern_decks
+    Modern.all_in_format.where(user_id: self.id)
+  end
+  
 
 
   def password=(password)
