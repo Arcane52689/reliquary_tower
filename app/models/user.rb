@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
 
   has_many :decks, dependent: :destroy
+  has_many :sessions, dependent: :destroy
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
@@ -10,14 +11,20 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }, allow_nil: true
 
 
-  def self.find_by_credentials(email, password)
-    user = User.find_by({
-      email: email
-    })
+  def self.find_by_credentials(email_or_username, password)
+    if email_or_username.match(/.*\@.*\..*/)
+      user = self.find_by(email: email_or_username)
+    end
+    unless user
+      user = self.find_by(username: email_or_username)
+    end
+
     return nil unless user
     return user if user.is_password?(password)
     nil
   end
+
+
 
   def password=(password)
     self.password_digest = BCrypt::Password.create(password)

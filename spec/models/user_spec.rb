@@ -57,4 +57,35 @@ RSpec.describe User, type: :model do
 
   end
 
+  describe "User should be found and identified by credentials" do
+    let(:user) { User.create(
+      username: "me",
+      password: "mememe",
+      email: "me@me.me"
+      )}
+
+    it "should look users up by email" do
+      user.save
+      found_user = User.find_by_credentials("me@me.me", "mememe")
+      expect(found_user).to eq(user)
+    end
+
+    it "should look users up by username" do
+      user.save
+      found_user = User.find_by_credentials("me", "mememe")
+      expect(found_user).to eq(user)
+    end
+
+    it "should return nil if the wrong password is given" do
+      user.save
+      found_user = User.find_by_credentials("me@me.me", "123345")
+      expect(found_user).to eq(nil)
+    end
+
+
+
+
+
+  end
+
 end

@@ -1,0 +1,9 @@
+
+
+<form class="" action="<%=users_url %>" method="post">
+  <%= authentic_form %>
+  <label for="">Username <input type="text" name="user[username]" value="<%= @model.username %>"></label>
+  <label for="">Email <input type="text" name="user[email]" value="<%= @model.email %>"></label>
+  <label for "">password <input type="password" name="user[password]" value=""></label>
+  <button type="submit">Submit</button>
+</form>
