@@ -12,7 +12,7 @@ class Deck < ActiveRecord::Base
   after_initialize :set_variables
 
   validates :name, presence: true
-
+  validate :ensure_right_number_of_cards
 
   def self.all_in_format(format=@format)
     self.all.where(format: format)
@@ -37,15 +37,42 @@ class Deck < ActiveRecord::Base
     self.format ||= self.class.format
   end
 
+  def total_cards
+    self.card_slots.where(status: "main deck").inject(0) { |acc, obj| acc + obj.quantity}
+  end
+
+  def ensure_right_number_of_cards
+    return nil if self.is_prototype
+    total = self.total_cards
+    if total < self.card_minimum
+      self.errors[:cards] << "Not enough cards"
+    elsif total > self.card_limit
+      self.errors[:cards] << "Too many cards"
+    else
+    end
+  end
+
+
+
+
+
 end
 
 
 class Commander < Deck
   @format = "Commander"
-  @card_limit = 100
-  @card_minimum = 100
+  @card_limit = 99
+  @card_minimum = 99
 
 
+  validate :ensure_one_commander
+
+
+  def ensure_one_commander
+    if self.card_slots.where(status: 'Commander').count > 1
+      self.errors[:card_limit] << "There can only be one Commander"
+    end
+  end
 
 
 
@@ -54,9 +81,17 @@ end
 
 class TinyLeaders < Deck
   @format = "Tiny Leaders"
-  @card_limit = 50
-  @card_minimum = 50
+  @card_limit = 49
+  @card_minimum = 49
 
+  validate :ensure_one_commander
+
+
+  def ensure_one_commander
+    if self.card_slots.where(status: 'Commander').count > 1
+      self.errors[:card_limit] << "There can only be one Commander"
+    end
+  end
 
 end
 

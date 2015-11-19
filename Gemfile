@@ -34,6 +34,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'factory_girl_rails'
+  gem 'guard-rspec', require: false
   gem 'byebug'
   gem 'rspec-rails'
   gem 'better_errors'

@@ -33,21 +33,23 @@ RSpec.describe Deck, type: :model do
     end
 
     it "should create decks with the proper minimum number of cards" do
-      expect(commander.card_minimum).to eq(100)
-      expect(tiny.card_minimum).to eq(50)
+      expect(commander.card_minimum).to eq(99)
+      expect(tiny.card_minimum).to eq(49)
       expect(modern.card_minimum).to eq(60)
       expect(standard.card_minimum).to eq(60)
     end
 
     it "should create decks with the proper maximum number of cards" do
-      expect(commander.card_limit).to eq(100)
-      expect(tiny.card_limit).to eq(50)
+      expect(commander.card_limit).to eq(99)
+      expect(tiny.card_limit).to eq(49)
       expect(modern.card_limit).to eq(Float::INFINITY)
       expect(standard.card_limit).to eq(Float::INFINITY)
     end
 
 
   end
+
+
 
 
 end
