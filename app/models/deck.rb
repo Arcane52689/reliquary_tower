@@ -11,7 +11,7 @@ class Deck < ActiveRecord::Base
   # validate :not_too_many_cards, :not_too_few_cards
   after_initialize :set_variables
 
-  validates :name, presence: true
+  validates :name, :user_id, presence: true
   validate :ensure_right_number_of_cards
 
   def self.all_in_format(format=@format)
@@ -37,13 +37,36 @@ class Deck < ActiveRecord::Base
     self.format ||= self.class.format
   end
 
-  def total_cards
-    self.card_slots.where(status: "main deck").inject(0) { |acc, obj| acc + obj.quantity}
+
+  def add_cards(card_ids)
+    unless card_ids.is_a?(Array)
+      add_card(card_ids)
+    else
+      card_ids.each do |card_id|
+        self.add_card(card_id)
+      end
+    end
+    self
+  end
+
+  def add_card(card_id)
+    card_slot = card_slots.find_by(card_id: card_id)
+    if card_slot
+      card_slot.quantity += 1
+      card_slot.save
+    else
+      self.card_slots.create(card_id: card_id)
+    end
+  end
+
+
+  def total_cards_in(status)
+    self.card_slots.where(status: status).inject(0) { |acc, obj| acc + obj.quantity}
   end
 
   def ensure_right_number_of_cards
     return nil if self.is_prototype
-    total = self.total_cards
+    total = self.total_cards_in("main_board")
     if total < self.card_minimum
       self.errors[:cards] << "Not enough cards"
     elsif total > self.card_limit

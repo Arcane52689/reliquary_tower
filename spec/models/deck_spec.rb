@@ -11,40 +11,162 @@ RSpec.describe Deck, type: :model do
       expect(deck.errors[:name]).to include("can't be blank")
     end
 
+    it "should require a user_id to be present" do
+      deck.save
+      expect(deck.errors[:user_id]).to include("can't be blank")
+    end
+
     it "should save as long as a name is present" do
       deck.name = "testing"
+      deck.user_id = 1
       expect(deck.save).to eq(true)
     end
 
   end
 
+  describe "Deck methods" do
+
+
+    describe "Deck.all_in_format" do
+      before(:all) do
+        @user = User.first || User.create({
+          username: 'testing',
+          password: 'testing',
+          email: 'test@test.test'
+          })
+        @user.commander_decks.create(name: 'deck1')
+        @user.commander_decks.create(name: 'deck2')
+        @user.commander_decks.create(name: 'deck3')
+
+        @user.standard_decks.create(name: 'deck1')
+        @user.standard_decks.create(name: 'deck2')
+
+        @user.modern_decks.create(name: 'deck1')
+
+      end
+
+      it "should return all decks in the specified format" do
+        expect(Deck.all_in_format('Commander').length).to eq(3)
+        expect(Deck.all_in_format('Standard').length).to eq(2)
+        expect(Deck.all_in_format('Modern').length).to eq(1)
+        expect(Deck.all_in_format('Tiny Leaders').length).to eq(0)
+      end
+
+      it "should assume the format based on the deck subclass" do
+        expect(Commander.all_in_format.length).to eq(3)
+        expect(Standard.all_in_format.length).to eq(2)
+        expect(Modern.all_in_format.length).to eq(1)
+        expect(TinyLeaders.all_in_format.length).to eq(0)
+      end
+
+    end
+
+    describe "add_cards" do
+      let(:deck) { create(:deck) }
+      let(:card) { create(:card)}
+      let(:card2) { create(:card) }
+
+      it "should add a single card to the deck if passed a single card" do
+        deck.add_cards(card.id)
+        expect(deck.cards.length).to eq(1)
+      end
+
+      it "should add multiple cards to the deck if passed an array" do
+        cards = [card.id, card2.id]
+        deck.add_cards(cards)
+        expect(deck.cards.length).to eq(2)
+      end
+
+      it "if the card_id is already in the deck, it should increase the quantity of the card slot instead of creating a new card" do
+        cards = [card.id, card.id, card2.id, card2.id]
+        deck.add_cards(cards)
+        expect(deck.card_slots.length).to eq(2)
+      end
+
+    end
+
+
+  end
+
   describe "Deck subclasses" do
-    let(:user) { User.create(username:"me", email: "me@me.me", password:"mememe")}
-    let(:commander) { user.commander_decks.create(name: "commander1")}
-    let(:standard)  { user.standard_decks.create(name: "standard1")}
-    let(:modern)    { user.modern_decks.create(name: "modern1")}
-    let(:tiny)     { user.tiny_leaders_decks.create(name: "tiny1")}
+    let(:user) { create(:user)}
 
-    it "should create deck with the proper format" do
-      expect(commander.format).to eq("Commander")
-      expect(standard.format).to eq("Standard")
-      expect(modern.format).to eq("Modern")
-      expect(tiny.format).to eq("Tiny Leaders")
+    describe "Commander" do
+      let(:commander) { create(:commander) }
+
+      it "should create deck with the proper format" do
+        expect(commander.format).to eq("Commander")
+      end
+
+      it "should create decks with the proper minimum number of cards" do
+        expect(commander.card_minimum).to eq(99)
+      end
+
+      it "should create decks with the proper maximum number of cards" do
+        expect(commander.card_limit).to eq(99)
+      end
+
+
     end
 
-    it "should create decks with the proper minimum number of cards" do
-      expect(commander.card_minimum).to eq(99)
-      expect(tiny.card_minimum).to eq(49)
-      expect(modern.card_minimum).to eq(60)
-      expect(standard.card_minimum).to eq(60)
+    describe "Tiny Leaders" do
+      let(:tiny)      { create(:tiny_leaders) }
+
+      it "should create deck with the proper format" do
+        expect(tiny.format).to eq("Tiny Leaders")
+      end
+
+      it "should create decks with the proper minimum number of cards" do
+        expect(tiny.card_minimum).to eq(49)
+      end
+
+      it "should create decks with the proper maximum number of cards" do
+        expect(tiny.card_limit).to eq(49)
+      end
+
+
+
     end
 
-    it "should create decks with the proper maximum number of cards" do
-      expect(commander.card_limit).to eq(99)
-      expect(tiny.card_limit).to eq(49)
-      expect(modern.card_limit).to eq(Float::INFINITY)
-      expect(standard.card_limit).to eq(Float::INFINITY)
+    describe "Standard" do
+      let(:standard)  { create(:standard) }
+
+      it "should create deck with the proper format" do
+        expect(standard.format).to eq("Standard")
+      end
+
+      it "should create decks with the proper minimum number of cards" do
+        expect(standard.card_minimum).to eq(60)
+      end
+
+      it "should create decks with the proper maximum number of cards" do
+        expect(standard.card_limit).to eq(Float::INFINITY)
+      end
+
+
     end
+
+    describe "Modern" do
+      let(:modern)    { create(:modern) }
+
+      it "should create deck with the proper format" do
+        expect(modern.format).to eq("Modern")
+      end
+
+      it "should create decks with the proper minimum number of cards" do
+        expect(modern.card_minimum).to eq(60)
+      end
+
+      it "should create decks with the proper maximum number of cards" do
+        expect(modern.card_limit).to eq(Float::INFINITY)
+      end
+    end
+
+
+
+
+
+
 
 
   end
