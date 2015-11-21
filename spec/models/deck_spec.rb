@@ -83,6 +83,30 @@ RSpec.describe Deck, type: :model do
         expect(deck.card_slots.length).to eq(2)
       end
 
+      it "should accept a location as a secondary argument and add the cards there" do
+        cards = [card.id, card2.id]
+        deck.add_cards(cards, 'sideboard')
+        expect(deck.card_slots.first.status).to eq("sideboard")
+      end
+
+    end
+
+    describe "total_cards_in Location" do
+      before(:each) do
+        @deck = create(:deck)
+        cards = Array.new(10) { create(:card).id }
+        @deck.add_cards(cards)
+        side_board = Array.new(5) { create(:card).id }
+        @deck.add_cards(side_board, "sideboard")
+      end
+
+      it "return the number of cards in the specified location" do
+        main_deck = @deck.total_cards_in("main deck")
+        sideboard = @deck.total_cards_in("sideboard")
+        expect(main_deck).to eq(10)
+        expect(sideboard).to eq(5)
+      end
+
     end
 
 

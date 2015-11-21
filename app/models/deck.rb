@@ -38,24 +38,24 @@ class Deck < ActiveRecord::Base
   end
 
 
-  def add_cards(card_ids)
+  def add_cards(card_ids, status="main deck")
     unless card_ids.is_a?(Array)
-      add_card(card_ids)
+      add_card(card_ids, status)
     else
       card_ids.each do |card_id|
-        self.add_card(card_id)
+        self.add_card(card_id, status)
       end
     end
     self
   end
 
-  def add_card(card_id)
-    card_slot = card_slots.find_by(card_id: card_id)
+  def add_card(card_id, status="main deck")
+    card_slot = card_slots.find_by(card_id: card_id, status: status)
     if card_slot
       card_slot.quantity += 1
       card_slot.save
     else
-      self.card_slots.create(card_id: card_id)
+      self.card_slots.create(card_id: card_id, status: status)
     end
   end
 

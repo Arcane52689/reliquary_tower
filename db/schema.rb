@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120184359) do
+ActiveRecord::Schema.define(version: 20151121152209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20151120184359) do
   create_table "card_slots", force: :cascade do |t|
     t.integer  "deck_id"
     t.integer  "card_id"
-    t.string   "status",     default: "main deck", null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer  "quantity",   default: 1,           null: false
+    t.string   "location",   default: "main deck"
   end
 
   add_index "card_slots", ["card_id"], name: "index_card_slots_on_card_id", using: :btree
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 20151120184359) do
     t.string   "mana_cost",                                null: false
     t.integer  "cmc",                                      null: false
     t.string   "colors",                      default: [],              array: true
-    t.string   "color_identiy",               default: [],              array: true
     t.string   "supertypes",                  default: [],              array: true
     t.string   "types",                       default: [],              array: true
     t.string   "subtypes",                                              array: true
@@ -46,6 +45,7 @@ ActiveRecord::Schema.define(version: 20151120184359) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.boolean  "can_be_commander"
+    t.string   "color_identity",              default: [],              array: true
   end
 
   add_index "cards", ["name"], name: "index_cards_on_name", using: :btree
