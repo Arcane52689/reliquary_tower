@@ -217,6 +217,7 @@ DEPENDENCIES
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails
+  json
   pg
   rails (= 4.2.1)
   rspec-rails

@@ -8,11 +8,6 @@ RSpec.describe Card, type: :model do
       expect(card.errors[:name]).to include("can't be blank")
     end
 
-    it "validates that the mana_cost is present" do
-      card.save
-      expect(card.errors[:mana_cost]).to include("can't be blank")
-    end
-
     it "validates that the converted_mana_cost is present" do
       card.save
       expect(card.errors[:cmc]).to include("can't be blank")
@@ -53,6 +48,12 @@ RSpec.describe Card, type: :model do
       it "should check if the card is a legendary creature" do
         expect(legendary_creature.is_legendary_creature?).to eq(true)
         expect(card.is_legendary_creature?).to eq(false)
+      end
+
+
+      let(:basic_land) { create(:basic_land)}
+      it "should check if the card is a basic land" do
+        expect(basic_land.is_basic?).to eq(true)
       end
 
     end

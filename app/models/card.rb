@@ -12,7 +12,8 @@ class Card < ActiveRecord::Base
   has_many :card_slots
   has_many :decks, through: :card_slots, as: :deck
 
-  validates :name, :mana_cost, :cmc, :rarity, :multiverse_id, presence: true
+  validates :name, :cmc, :rarity, :multiverse_id, presence: true
+  validates :mana_cost, presence: true, allow_blank: true
   validates :card_text, presence: true, allow_blank: true
   validate :valid_colors
 
@@ -30,12 +31,16 @@ class Card < ActiveRecord::Base
   end
 
 
+  def is_basic?
+    self.supertypes.include?("Basic")
+  end
+
   def is_legendary?
     self.supertypes.include?("Legendary")
   end
 
   def is_creature?
-    self.supertypes.include?("Creature")
+    self.types.include?("Creature")
   end
 
   def is_legendary_creature?
@@ -58,13 +63,6 @@ class Card < ActiveRecord::Base
     self.color_identity.uniq!
   end
 
-  def parse_mana_cost
-
-  end
-
-  def parse_text_box
-
-  end
 
 
 end
