@@ -86,7 +86,7 @@ RSpec.describe Deck, type: :model do
       it "should accept a location as a secondary argument and add the cards there" do
         cards = [card.id, card2.id]
         deck.add_cards(cards, 'sideboard')
-        expect(deck.card_slots.first.status).to eq("sideboard")
+        expect(deck.card_slots.first.location).to eq("sideboard")
       end
 
     end

@@ -69,9 +69,13 @@ RSpec.describe Card, type: :model do
         expect(legendary_creature.can_be_commander?).to eq(true)
       end
 
-      it "should parse the color identity" do
+      it "should parse the color identity  in a cards manacost" do
         expect(card.color_identity).to contain_exactly("Red", "White", "Blue", "Green", "Black")
-        
+        expect(planeswalker_commander.color_identity).to contain_exactly("White")
+      end
+
+      it "should parse the color identity in a cards text box" do
+        expect(legendary_creature.color_identity).to contain_exactly("Red", "Green","Blue",)
       end
 
     end

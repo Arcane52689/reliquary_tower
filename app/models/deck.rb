@@ -38,30 +38,30 @@ class Deck < ActiveRecord::Base
   end
 
 
-  def add_cards(card_ids, status="main deck")
+  def add_cards(card_ids, location="main deck")
     unless card_ids.is_a?(Array)
-      add_card(card_ids, status)
+      add_card(card_ids, location)
     else
       card_ids.each do |card_id|
-        self.add_card(card_id, status)
+        self.add_card(card_id, location)
       end
     end
     self
   end
 
-  def add_card(card_id, status="main deck")
-    card_slot = card_slots.find_by(card_id: card_id, status: status)
+  def add_card(card_id, location="main deck")
+    card_slot = card_slots.find_by(card_id: card_id, location: location)
     if card_slot
       card_slot.quantity += 1
       card_slot.save
     else
-      self.card_slots.create(card_id: card_id, status: status)
+      self.card_slots.create(card_id: card_id, location: location)
     end
   end
 
 
-  def total_cards_in(status)
-    self.card_slots.where(status: status).inject(0) { |acc, obj| acc + obj.quantity}
+  def total_cards_in(location)
+    self.card_slots.where(location: location).inject(0) { |acc, obj| acc + obj.quantity}
   end
 
   def ensure_right_number_of_cards
@@ -92,7 +92,7 @@ class Commander < Deck
 
 
   def ensure_one_commander
-    if self.card_slots.where(status: 'Commander').count > 1
+    if self.card_slots.where(location: 'Commander').count > 1
       self.errors[:card_limit] << "There can only be one Commander"
     end
   end
@@ -111,7 +111,7 @@ class TinyLeaders < Deck
 
 
   def ensure_one_commander
-    if self.card_slots.where(status: 'Commander').count > 1
+    if self.card_slots.where(location: 'Commander').count > 1
       self.errors[:card_limit] << "There can only be one Commander"
     end
   end

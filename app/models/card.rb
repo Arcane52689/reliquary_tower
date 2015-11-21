@@ -1,13 +1,13 @@
 class Card < ActiveRecord::Base
   VALID_COLORS = ['Blue', 'White', 'Black', 'Green', 'Red']
   COLOR_DICT = {
-    W: "White",
-    U: "Blue",
-    B: "Black",
-    R: "Red",
-    G: "Green"
+    "W" => "White",
+    "U" => "Blue",
+    "B" => "Black",
+    "R" => "Red",
+    "G" => "Green"
   }
-
+  COLOR_REGEX = /({\w}|{\w\/\/\w})/
 
   has_many :card_slots
   has_many :decks, through: :card_slots, as: :deck
@@ -48,7 +48,22 @@ class Card < ActiveRecord::Base
   end
 
   def parse_color_identity
-    self
+    [self.mana_cost, self.card_text].each do |text|
+      text.scan(COLOR_REGEX) do |mana_symbol|
+        mana_symbol[0].scan(/\w/) do |color|
+          self.color_identity << COLOR_DICT[color[0]]
+        end
+      end
+    end
+    self.color_identity.uniq!
+  end
+
+  def parse_mana_cost
+
+  end
+
+  def parse_text_box
+
   end
 
 
