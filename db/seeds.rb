@@ -9,28 +9,54 @@
 
 #seed some cards
 
+def seed_set
+  file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
+
+  file = File.read(file_name)
+
+  data = JSON.parse(file)
+
+
+  set = CardSet.where(is_seeded: false).first
+
+  cards = data[set.code]['cards']
+  card_ids = []
+  cards.each do |card_data|
+    next if Card.exists?(multiverse_id: card_data['multiverseid'])
+    card = Card.create_from_json(card_data)
+    card_ids << card.id
+  end
+  set.is_seeded = true
+  set.card_ids = card_ids
+  set.save
+end
+
+
+
 file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
 
 file = File.read(file_name)
 
 data = JSON.parse(file)
-data.keys.each do |set|
-  set_data = data[set]
-  set_data["name"]
-
-end
-
-
-# next if Card.exists(multiverse_id: c["mul"])
-# Card.new( {
-#   mana_cost: c["manaCost"] || "",
-#   name: c["name"],
-#   cmc: c["cmc"],
-#   colors: c["colors"],
-#   supertypes: c["supertypes"],
-#   types: c["types"],
-#   subtypes: c["subtypes"],
-#   card_text: c["text"],
-#   multiverse_id: c["multiverse_id"]
+# data.keys.each do |set|
+#   set_data = data[set]
+#   CardSet.create({
+#     name: set_data["name"],
+#     is_seeded: false,
+#     code: set_data["code"]
+#     })
 #
-#   })
+# end
+
+set = CardSet.where(is_seeded: false).first
+
+cards = data[set.code]['cards']
+card_ids = []
+cards.each do |card_data|
+  next if Card.exists?(multiverse_id: card_data['multiverseid'])
+  card = Card.create_from_json(card_data)
+  card_ids << card.id
+end
+set.is_seeded = true
+set.card_ids = card_ids
+set.save

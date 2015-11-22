@@ -1,5 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe CardSet, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe "validation testing" do
+    let(:card_set) { CardSet.new }
+
+    it "should require a name to be present before saving" do
+      card_set.save
+      expect(card_set.errors[:name]).to include("can't be blank")
+    end
+
+  end
+
+
 end

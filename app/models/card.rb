@@ -21,6 +21,27 @@ class Card < ActiveRecord::Base
   before_save :parse_color_identity
 
 
+  def self.create_from_json(data)
+
+    new_card = Card.new( {
+      mana_cost: data["manaCost"] || "",
+      name: data["name"],
+      cmc: data["cmc"] || 0,
+      colors: data["colors"] || [],
+      supertypes: data["supertypes"] || [],
+      types: data["types"] || [],
+      subtypes: data["subtypes"] || [],
+      card_text: data["text"] || "",
+      multiverse_id: data["multiverseid"],
+      rarity: data["rarity"] || "not listed",
+      flavor_text: data["flavor"],
+      power: data["power"] || nil,
+      toughness: data["toughness"] || nil
+    })
+    new_card.save
+    new_card
+
+  end
 
   def valid_colors
     self.colors.each do |color|
