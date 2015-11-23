@@ -34,9 +34,34 @@ FactoryGirl.define do
       types ["Land"]
       mana_cost ""
       colors []
+      card_text "{T}: Add {1} to your mana pool"
 
       factory :basic_land do
         supertypes ["Basic"]
+
+        factory :forest do
+          subtypes ['forest']
+          card_text '{T}: Add {G} to your mana pool'
+        end
+
+        factory :mountain do
+          subtypes ['mountain']
+          card_text ['{T}: Add {R} to your mana pool']
+        end
+        factory :swamp do
+          subtypes ['swamp']
+          card_text ['{T}: Add {B} to your mana pool']
+        end
+        factory :island do
+          subtypes ['island']
+          card_text ['{T}: Add {U} to your mana pool']
+        end
+        factory :plains do
+          subtypes ['plains']
+          card_text ['{T}: Add {W} to your mana pool']
+        end
+
+
       end
 
     end

@@ -66,7 +66,7 @@ RSpec.describe Card, type: :model do
       let(:planeswalker_commander) { create(:planeswalker_commander) }
       let(:card) {create(:card) }
       let(:legendary_creature) { create(:legendary_creature )}
-
+      let(:island) {create(:island)}
 
       it "should keep track of whether a card can be a commander or not" do
         expect(planeswalker_commander.can_be_commander?).to eq(true)
@@ -83,8 +83,34 @@ RSpec.describe Card, type: :model do
         expect(legendary_creature.color_identity).to contain_exactly("Red", "Green","Blue",)
       end
 
-      it "should determine if a card can be in the deck" do
-        expect(legendary_creature.can_command?()).to eq(false)
+      it "color identity should not contain any nil values" do
+        expect(island.color_identity).to contain_exactly("Blue")
+      end
+
+      describe "card.can_command - a method that makes sure the color identities overlap" do
+        let(:forest) { create(:forest)}
+        let(:swamp) { create(:swamp)}
+        let(:land) { create(:land)}
+
+        it "should allow cards whose color identity is the same" do
+          expect(legendary_creature.can_command?(legendary_creature)).to eq(true)
+        end
+
+        it "should allow cards whose color identity is a subset" do
+          expect(legendary_creature.can_command?(forest)).to eq(true)
+        end
+
+        it "should allow completely colorless cards" do
+          expect(legendary_creature.can_command?(land)).to eq(true)
+        end
+
+        it "should not allow lands of opposite colors" do
+          expect(legendary_creature.can_command?(swamp)).to eq(false)
+        end
+
+
+
+
       end
 
     end

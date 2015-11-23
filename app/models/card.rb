@@ -20,6 +20,26 @@ class Card < ActiveRecord::Base
   before_save :determine_can_be_commander
   before_save :parse_color_identity
 
+  def self.find_by_color(color)
+    self.find_by_single_item_in_array_field(:colors, color)
+  end
+
+  def self.find_by_multicolor(colors)
+    self.find_by_multiple_items_in_array_field(:colors, colors)
+  end
+
+  def self.find_by_color_identity(colors)
+    self.find_by_multiple_items_in_array_field(:color_identity, colors)
+  end
+
+  def self.find_by_single_item_in_array_field(field, item)
+    self.where("? = ANY (#{field})", item)
+  end
+
+  def self.find_by_multiple_items_in_array_field(field, arr)
+    self.where("#{field} @> ARRAY[?]::varchar[]", arr)
+  end
+
 
   def self.create_from_json(data)
 
@@ -43,12 +63,22 @@ class Card < ActiveRecord::Base
 
   end
 
+
   def valid_colors
     self.colors.each do |color|
       unless VALID_COLORS.include?(color)
         self.errors[:colors] << "#{color} is not a valid color. Must be one of the following: #{VALID_COLORS.join(", ")}"
       end
     end
+  end
+
+
+  def find_commander_card_suggestions
+    Card.where("color_identity <@ ARRAY[?]::varchar[]", self.color_identity)
+  end
+
+  def find_tiny_leader_suggestions
+    self.find_commander_card_suggestions.where("cmc < 4")
   end
 
 
@@ -77,8 +107,8 @@ class Card < ActiveRecord::Base
     true
   end
 
-  def color_identity_is_subset(card)
-    
+  def can_command?(card)
+    self.color_identity.is_superset_of?(card.color_identity)
   end
 
 
@@ -90,9 +120,23 @@ class Card < ActiveRecord::Base
         end
       end
     end
-    self.color_identity.uniq!
+    self.color_identity = self.color_identity.compact.uniq
   end
 
+
+
+end
+
+class Array
+
+  def is_superset_of?(arr2)
+    superset = true
+    arr2.each do |item|
+
+      superset = false unless self.include?(item)
+    end
+    superset
+  end
 
 
 end
