@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123171141) do
+ActiveRecord::Schema.define(version: 20151123194223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,14 +88,14 @@ ActiveRecord::Schema.define(version: 20151123171141) do
   add_index "sessions", ["user_id"], name: "index_sessions_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
-    t.integer  "category_id", null: false
-    t.integer  "taggable_id", null: false
-    t.string   "taggable",    null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
+    t.string   "taggable_type", null: false
+    t.integer  "taggable_id",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "taggings", ["category_id", "taggable", "taggable_id"], name: "index_taggings_on_category_id_and_taggable_and_taggable_id", unique: true, using: :btree
+  add_index "taggings", ["category_id", "taggable_type", "taggable_id"], name: "index_taggings_on_category_id_and_taggable_type_and_taggable_id", unique: true, using: :btree
   add_index "taggings", ["category_id"], name: "index_taggings_on_category_id", using: :btree
 
   create_table "users", force: :cascade do |t|

@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :tagging do
-    category nil
+    category_id 1
+    taggable_id 1
+    taggable_type "Card"
   end
 
 end
