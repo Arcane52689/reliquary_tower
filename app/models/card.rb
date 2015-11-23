@@ -125,6 +125,10 @@ class Card < ActiveRecord::Base
   end
 
 
+  def image_url
+    "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=#{self.multiverse_id}&type=card"
+  end
+
 
 end
 

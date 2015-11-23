@@ -29,6 +29,15 @@ RSpec.describe Card, type: :model do
 
   describe "card.methods" do
 
+    describe "basic methods" do
+      let(:card) { create(:card)}
+
+      it "should generate a valid image url" do
+        expect(card.image_url).to eq("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=52123&type=card")
+      end
+
+    end
+
 
     describe "type check methods" do
       let(:legendary_creature) { create(:legendary_creature)}
