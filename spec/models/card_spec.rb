@@ -56,6 +56,10 @@ RSpec.describe Card, type: :model do
         expect(basic_land.is_basic?).to eq(true)
       end
 
+      it "should check if the card is colorless" do
+        expect(basic_land.is_colorless?).to eq(true)
+      end
+
     end
 
     describe "commander methods" do
@@ -79,7 +83,13 @@ RSpec.describe Card, type: :model do
         expect(legendary_creature.color_identity).to contain_exactly("Red", "Green","Blue",)
       end
 
+      it "should determine if a card can be in the deck" do
+        expect(legendary_creature.can_command?()).to eq(false)
+      end
+
     end
+
+
 
     describe "Creation Methods" do
       let(:data) {{"artist"=>"Richard Thomas","cmc"=>5,"colors"=>["Blue"],"flavor"=>"These spirits of the air are winsome and wild, and cannot be truly contained. Only marginally intelligent, they often substitute whimsy for strategy, delighting in mischief and mayhem.","id"=>"926234c2fe8863f49220a878346c4c5ca79b6046","imageName"=>"air elemental" ,"layout"=>"normal","legalities"=>[{"format"=>"Commander","legality"=>"Legal"},{"format"=>"Freeform","legality"=>"Legal"},{"format"=>"Legacy","legality"=>"Legal"},{"format"=>"Modern","legality"=>"Legal"},{"format"=>"Prismatic","legality"=>"Legal"},{"format"=>"Singleton 100","legality"=>"Legal"},{"format"=>"Tribal Wars Legacy","legality"=>"Legal"},{"format"=>"Vintage","legality"=>"Legal"}],"manaCost"=>"{3}{U}{U}","multiverseid"=>94,"name"=>"Air Elemental","originalText"=>"Flying","originalType"=>"Summon â€” Elemental","power"=>"4","printings"=>["LEA","LEB","2ED","CED","CEI","3ED","4ED","5ED","PO2","6ED","S99","BRB","BTD","7ED","8ED","9ED","10E","DD2","M10","DPA","ME4","DD3_JVC"],"rarity"=>"Uncommon","subtypes"=>["Elemental"],"text"=>"Flying","toughness"=>"4","type"=>"Creature â€” Elemental","types"=>["Creature"]}}

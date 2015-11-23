@@ -52,6 +52,10 @@ class Card < ActiveRecord::Base
   end
 
 
+  def is_colorless?
+    self.colors.none?
+  end
+
   def is_basic?
     self.supertypes.include?("Basic")
   end
@@ -72,6 +76,11 @@ class Card < ActiveRecord::Base
     self.can_be_commander ||= self.is_legendary_creature?
     true
   end
+
+  def color_identity_is_subset(card)
+    
+  end
+
 
   def parse_color_identity
     [self.mana_cost, self.card_text].each do |text|

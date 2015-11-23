@@ -33,6 +33,7 @@ FactoryGirl.define do
     factory :land do
       types ["Land"]
       mana_cost ""
+      colors []
 
       factory :basic_land do
         supertypes ["Basic"]

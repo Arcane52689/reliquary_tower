@@ -31,32 +31,4 @@ def seed_set
   set.save
 end
 
-
-
-file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
-
-file = File.read(file_name)
-
-data = JSON.parse(file)
-# data.keys.each do |set|
-#   set_data = data[set]
-#   CardSet.create({
-#     name: set_data["name"],
-#     is_seeded: false,
-#     code: set_data["code"]
-#     })
-#
-# end
-
-set = CardSet.where(is_seeded: false).first
-
-cards = data[set.code]['cards']
-card_ids = []
-cards.each do |card_data|
-  next if Card.exists?(multiverse_id: card_data['multiverseid'])
-  card = Card.create_from_json(card_data)
-  card_ids << card.id
-end
-set.is_seeded = true
-set.card_ids = card_ids
-set.save
+5.times { seed_set }
