@@ -1,0 +1,28 @@
+{
+  "name": "reliquary_tower",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Arcane52689/reliquary_tower",
+  "authors": [
+    "Arcane52689 <tjenkins52689@gmail.com>"
+  ],
+  "description": "\"An app for magic users\"",
+  "main": "",
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-animate": "~1.4.8"
+  }
+}
