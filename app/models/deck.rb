@@ -8,7 +8,9 @@ class Deck < ActiveRecord::Base
   has_many :cards, through: :card_slots, as: :card
 
   belongs_to :user
-  # validate :not_too_many_cards, :not_too_few_cards
+  has_many :taggings, as: :taggable
+
+
   after_initialize :set_variables
 
   validates :name, :user_id, presence: true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151122165808) do
+ActiveRecord::Schema.define(version: 20151123171141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,17 +59,22 @@ ActiveRecord::Schema.define(version: 20151122165808) do
 
   add_index "cards", ["name"], name: "index_cards_on_name", using: :btree
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+
   create_table "decks", force: :cascade do |t|
     t.string   "name",                        null: false
     t.string   "format",                      null: false
-    t.string   "taggings",     default: [],                array: true
     t.boolean  "is_prototype", default: true
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "user_id"
   end
-
-  add_index "decks", ["taggings"], name: "index_decks_on_taggings", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.integer  "user_id",      null: false
@@ -81,6 +86,17 @@ ActiveRecord::Schema.define(version: 20151122165808) do
 
   add_index "sessions", ["token"], name: "index_sessions_on_token", using: :btree
   add_index "sessions", ["user_id"], name: "index_sessions_on_user_id", using: :btree
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "category_id", null: false
+    t.integer  "taggable_id", null: false
+    t.string   "taggable",    null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "taggings", ["category_id", "taggable", "taggable_id"], name: "index_taggings_on_category_id_and_taggable_and_taggable_id", unique: true, using: :btree
+  add_index "taggings", ["category_id"], name: "index_taggings_on_category_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",        null: false
@@ -96,4 +112,5 @@ ActiveRecord::Schema.define(version: 20151122165808) do
   add_foreign_key "card_slots", "cards"
   add_foreign_key "card_slots", "decks"
   add_foreign_key "sessions", "users"
+  add_foreign_key "taggings", "categories"
 end
