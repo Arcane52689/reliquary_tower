@@ -12,12 +12,20 @@ FactoryGirl.define do
 
 
     factory :legendary_creature do
+      name 'test legend'
       supertypes ["Legendary"]
       types ["Creature"]
-      mana_cost "2{G}"
+      mana_cost "3{G}"
       card_text "{U//R}"
-    end
 
+
+      factory :tiny_leader do
+        name 'test tiny leader'
+        mana_cost "2B"
+        card_text "{U//R}"
+
+      end
+    end
 
     factory :planewalker do
       types ["Planeswalker"]
