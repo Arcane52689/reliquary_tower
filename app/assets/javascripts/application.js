@@ -16,6 +16,10 @@
 //= require angular-route/angular-route
 //= require angular-animate/angular-animate
 //= require angular-rails-templates
-//= require arcane-models-angular/ModelFactory
-
+//= require_tree ./templates
+//= require ./ModelFactory
+//= require ./reliquary_tower
+//= require_tree ./models
+//= require_tree ./controllers
+//= require_tree ./directives
 //= require_tree .

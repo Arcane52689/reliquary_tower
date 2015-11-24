@@ -1,21 +1,47 @@
 class UsersController < ApplicationController
   CLASS = User
 
-  def get_class
-    User
+  def new
+    @model = User.new
+    render :new
   end
 
   def create
-    @model = get_class.new(model_params)
+    @model = User.new(model_params)
     if @model.save
       # render json: @model, status: 200
-      login(@model)
-      redirect_to new_user_url
+      redirect_to user_url(@model)
     else
       render json: {errors: @model.errors.full_messages}, status: 422
     end
   end
 
+  def update
+    @model = User.find(params[:id])
+    if @model.update(model_params)
+      render json: @model, status: 200
+    else
+      render json: {errors: @model.errors.full_messages}, status: 422
+    end
+  end
+
+  def edit
+    @model = User.find(params[:id])
+    render :edit
+  end
+
+  def index
+    @models = User.all
+  end
+
+  def destroy
+    @model = User.find(params[:id])
+    if @model.destroy
+      render json: @model, status: 200
+    else
+      render json: {errors: 'WTF went wrong? '}
+    end
+  end
 
   def model_params
     params.require(:user).permit(:username, :email, :password)

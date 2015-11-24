@@ -14,9 +14,9 @@ RSpec.describe CardSlot, type: :model do
       expect(card_slot.errors[:deck_id]).to include("can't be blank")
     end
 
-    it "should set the default value of 'status' to 'main deck'" do
+    it "should set the default value of 'location' to 'main deck'" do
       card_slot.save
-      expect(card_slot.status).to eq("main deck")
+      expect(card_slot.location).to eq("main deck")
     end
 
     it "should set the default value of 'quanitity' to 1" do

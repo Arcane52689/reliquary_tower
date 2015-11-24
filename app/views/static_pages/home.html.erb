@@ -3,8 +3,14 @@
 <% if logged_in? %>
   <h1> Welcome <%= current_user.username %>, would you like to
     <%= my_button_to session_url, "logout", 'DELETE' %>
+
   </h1>
 <% else %>
   <h1> Please <a href="<%=new_session_url %>"> sign in </a> or
     <a href="<%=new_user_url%>"> sign up </a> </h1>
 <% end %>
+
+
+<main ng-view>
+
+</main>

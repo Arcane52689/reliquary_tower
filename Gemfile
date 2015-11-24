@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
+# User earlier version of sprockets to suppoert template loading
+gem 'sprockets', '2.12.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -36,7 +38,7 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-
+  gem 'capybara'
   gem 'factory_girl_rails'
   gem 'guard-rspec', require: false
   gem 'byebug'
