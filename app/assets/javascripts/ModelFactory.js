@@ -197,7 +197,6 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
       this.models.push(model)
     }
     if (!this.adding) {
-      debugger
       this.sort();
     }
   }

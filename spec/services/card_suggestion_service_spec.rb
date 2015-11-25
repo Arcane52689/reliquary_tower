@@ -5,6 +5,7 @@ require './app/services/card_suggestion_service.rb'
 
 describe "CardSuggestionService" do
   before(:all) do
+    
     @category = create(:category)
     create(:legendary_creature).taggings.create(category_id: @category.id)
     create(:tiny_leader).taggings.create(category_id: @category.id)

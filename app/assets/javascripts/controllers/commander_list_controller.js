@@ -1,11 +1,15 @@
-angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollection', function() {
+angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollection', function(CardCollection) {
   this.initialize = function() {
-    this.cards = new CardCollection({
-      url: "api/suggestions/commander"
+    this.list = new CardCollection({
+      url: "api/cards/commanders"
     })
-    this.cards.fetch()
+    this.list.fetch()
+
   }
 
+  this.check = function() {
+    debugger
+  }
 
 
 

@@ -6,4 +6,5 @@
 
     BaseCollection.parentOf(CardCollection)
 
+    return CardCollection
 }]);

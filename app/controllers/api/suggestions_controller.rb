@@ -1,12 +1,8 @@
-class API::SuggestionsController < ApplicationController
+class Api::SuggestionsController < ApplicationController
 
 
-  def commanders
-    @cards = CardSuggestionService.commander(params[:card][:colors], params[:card][:categories])
-  end
-
-  def tiny_leaders
-    @cards = CardSuggestionService.tiny_leader(params[:card][:colors], params[:card][:categories])
+  def all_commanders
+    @cards = CardSuggestionService.commander([], [])
   end
 
 

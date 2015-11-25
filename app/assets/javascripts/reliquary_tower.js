@@ -20,7 +20,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   .when('/commanders', {
     templateUrl: 'cards/card_list.html',
     controller: 'CommanderListCtrl',
-    contorllerAs: 'cards'
+    controllerAs: 'cards'
   })
 
 }])

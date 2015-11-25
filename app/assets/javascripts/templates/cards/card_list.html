@@ -1,1 +1,13 @@
 <h1> Hi, I'm a card list </h1>
+{{ cards.me}}
+length: {{cards.list.all().length}}
+<ul>
+  <li ng-repeat="card in cards.list.all()">
+  {{ card.get("name") }}
+  </li>
+</ul>
+
+<span class="mana mana-r"></span>
+
+
+<button ng-click="cards.check()"> check</button>
