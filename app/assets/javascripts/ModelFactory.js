@@ -164,7 +164,6 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
   }
 
   BaseCollection.prototype.addModels = function(dataArr) {
-    debugger
     this.adding = true;
     dataArr.forEach(this.addModel.bind(this));
     this.adding = false
