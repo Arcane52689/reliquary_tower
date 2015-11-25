@@ -1,5 +1,12 @@
 
+<script type="text/javascript">
+  window.white_mana_url = "<%=image_path('white_mana.png')%>"
+  window.blue_mana_url = "<%=image_path('blue_mana.png')%>"
+  window.black_mana_url = "<%=image_path('black_mana.png')%>"
+  window.red_mana_url = "<%=image_path('red_mana.png')%>"
+  window.green_mana_url = "<%=image_path('green_mana.png')%>"
 
+</script>
 <% if logged_in? %>
   <h1> Welcome <%= current_user.username %>, would you like to
     <%= my_button_to session_url, "logout", 'DELETE' %>

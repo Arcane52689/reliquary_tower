@@ -1,0 +1,12 @@
+<ul class="color-select group">
+  <li class="big-mana"
+  ng-repeat="color in colors.list"
+  ng-click="colors.toggle(color)"
+  ng-class="colors.checkClass(color)"
+  >
+  <img ng-src="{{colors.grabImage(color)}}" alt="" />
+</li>
+<li class="big-mana" ng-click="colors.toggleStrict()">
+  {{ colors.isStrict() ? 'Show All' : 'Multicolor only' }}
+</li>
+</ul>

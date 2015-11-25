@@ -3,6 +3,29 @@ I did not make this, but found it at the following site:
  http://bluebones.net/2013/10/css-sprite-for-magic-the-gathering-mana-symbols/
 */
 
+
+.color-select {
+  border: 1px solid black;
+}
+
+
+.big-mana {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  margin: 10px;
+  padding: 15px;
+  float: left;
+  border-radius: 50%
+}
+
+.big-mana.selected {
+  background: green;
+}
+
+
+
 .mana {
     display: inline-block;
     background: image-url('mana.png') no-repeat;
@@ -10,6 +33,7 @@ I did not make this, but found it at the following site:
     width: 15px;
     height: 15px;
 }
+
 
 .mana-2b { background-position: -0px -0px }
 .mana-br { background-position: -15px -0px }
