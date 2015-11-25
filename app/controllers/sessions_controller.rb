@@ -6,11 +6,11 @@ class SessionsController < ApplicationController
 
 
   def create
-    byebug
     user = User.find_by_credentials(
     params[:user][:email_or_username],
     params[:user][:password]
     )
+    render :new unless user
     login(user)
     redirect_to root_url
   end

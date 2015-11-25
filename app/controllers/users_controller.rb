@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @model = User.new(model_params)
     if @model.save
       # render json: @model, status: 200
-      redirect_to user_url(@model)
+      redirect_to root_url
     else
       render json: {errors: @model.errors.full_messages}, status: 422
     end

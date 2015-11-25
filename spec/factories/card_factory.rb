@@ -16,12 +16,14 @@ FactoryGirl.define do
       supertypes ["Legendary"]
       types ["Creature"]
       mana_cost "3{G}"
+      cmc 4
       card_text "{U//R}"
 
 
       factory :tiny_leader do
         name 'test tiny leader'
         mana_cost "2B"
+        cmc 3
         card_text "{U//R}"
 
       end
@@ -29,9 +31,17 @@ FactoryGirl.define do
 
     factory :planewalker do
       types ["Planeswalker"]
-
+      name "test planeswalker"
       factory :planeswalker_commander do
         mana_cost '2{W}{W}'
+        cmc 4
+        can_be_commander true
+      end
+
+      factory :tiny_planeswalker do
+        mana_cost '1G'
+        cmc 3
+        name "nissa"
         can_be_commander true
       end
 
