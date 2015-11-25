@@ -6,6 +6,7 @@ FactoryGirl.define do
     name 'Test'
     mana_cost '{W}{U}{B}{R}{G}}'
     cmc 5
+    type_string "Creature - Test"
     rarity 'common'
     card_text ""
     multiverse_id 52123

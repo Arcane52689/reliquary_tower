@@ -13,7 +13,7 @@ class Card < ActiveRecord::Base
   has_many :decks, through: :card_slots, as: :deck
   has_many :taggings, as: :taggable
 
-  validates :name, :cmc, :rarity, :multiverse_id, presence: true
+  validates :name, :cmc, :rarity, :type_string, :multiverse_id, presence: true
   validates :mana_cost, presence: true, allow_blank: true
   validates :card_text, presence: true, allow_blank: true
   validate :valid_colors
@@ -57,7 +57,8 @@ class Card < ActiveRecord::Base
       rarity: data["rarity"] || "not listed",
       flavor_text: data["flavor"],
       power: data["power"] || nil,
-      toughness: data["toughness"] || nil
+      toughness: data["toughness"] || nil,
+      type_string: data["type"]
     })
     new_card.save
     new_card
@@ -81,6 +82,8 @@ class Card < ActiveRecord::Base
   def find_tiny_leader_suggestions
     self.find_commander_card_suggestions.where("cmc < 4")
   end
+
+
 
 
   def is_colorless?

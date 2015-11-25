@@ -23,6 +23,11 @@ RSpec.describe Card, type: :model do
       card.save
       expect(card.errors[:colors]).to include("Purple is not a valid color. Must be one of the following: Blue, White, Black, Green, Red")
     end
+
+    it "should validate that a type_string is present" do
+      card.save
+      expect(card.errors[:type_string]).to include("can't be blank")
+    end
   end
 
 
@@ -35,6 +40,8 @@ RSpec.describe Card, type: :model do
       it "should generate a valid image url" do
         expect(card.image_url).to eq("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=52123&type=card")
       end
+
+
 
     end
 

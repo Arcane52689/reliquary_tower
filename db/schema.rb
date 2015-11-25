@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123194223) do
+ActiveRecord::Schema.define(version: 20151125145159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20151123194223) do
     t.string   "colors",                      default: [],              array: true
     t.string   "supertypes",                  default: [],              array: true
     t.string   "types",                       default: [],              array: true
-    t.string   "subtypes",                                              array: true
     t.string   "rarity",           limit: 50,              null: false
     t.text     "card_text",                                null: false
     t.text     "flavor_text"
@@ -55,6 +54,8 @@ ActiveRecord::Schema.define(version: 20151123194223) do
     t.datetime "updated_at",                               null: false
     t.boolean  "can_be_commander"
     t.string   "color_identity",              default: [],              array: true
+    t.string   "subtypes",                    default: [],              array: true
+    t.string   "type_string",                              null: false
   end
 
   add_index "cards", ["name"], name: "index_cards_on_name", using: :btree
