@@ -6,6 +6,7 @@
 
     var BaseModel = function(data) {
       this.initialize(data);
+      this.idIsOptional = false;
   }
 
 
@@ -87,7 +88,7 @@
 
     BaseModel.prototype.fetch = function(options) {
       options = options || {};
-      if (this.id) {
+      if (this.id || this.idIsOptional) {
         $http.get(this.url()).success(function(resp) {
           this.updateAttributes(resp);
           options.success && options.success(resp);

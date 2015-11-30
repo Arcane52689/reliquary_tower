@@ -16,7 +16,9 @@ var app = angular.module('ReliquaryTower', ['templates', 'AngularModelFactory', 
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
-    templateUrl: 'home.html'
+    templateUrl: 'home.html',
+    controller: 'HomeCtrl',
+    controllerAs: 'home'
   })
   .when('/commanders', {
     templateUrl: 'cards/card_list.html',

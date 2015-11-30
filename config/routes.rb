@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     get "cards/commanders", to: "cards#commanders"
-
-
+    resource :users, only: [ :create, :show]
+    resource :session, only: [:create, :destroy]
 
 
   end
