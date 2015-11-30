@@ -1,6 +1,18 @@
 
-<ul>
-  <li ng-click="pageSelect.prev()"> Prev</li>
-  <li> {{pageSelect.pageInfo.currentPage}} of {{pageSelect.pageInfo.pages}}</li>
-  <li ng-click="pageSelect.next()"> Next</li>
+<ul class="page-select">
+  <li ng-click="pageSelect.prev()"   ng-class="pageSelect.isSelected(1)"> Prev </li>
+  <li ng-click="pageSelect.goToPage(1)"> 1 </li>
+  <li ng-show="pageSelect.pageInfo.currentPage > 4"> .. </li>
+  <li
+    ng-repeat="page in pageSelect.pageList()"
+    ng-class="pageSelect.isSelected(page)"
+    ng-click="pageSelect.goToPage(page)"
+  >
+    {{page}}
+  </li>
+  <li ng-show="pageSelect.pageInfo.currentPage < pageSelect.pageInfo.pages - 3"> .. </li>
+  <li ng-click="pageSelect.goToPage(pageSelect.pageInfo.pages)"
+    ng-class="pageSelect.isSelected(pageSelect.pageInfo.pages)"
+  > {{ pageSelect.pageInfo.pages }}</li>
+  <li ng-click="pageSelect.next()"> Next </li>
 </ul>

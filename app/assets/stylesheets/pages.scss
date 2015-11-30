@@ -1,0 +1,20 @@
+
+
+.page-select {
+  display: block;
+  width: 400px;
+  margin: auto;
+  font-size: 20px;
+}
+
+.page-select > li {
+  float: left;
+  display: block;
+  margin-left: 20px;
+  text-decoration: underline;
+  color: blue;
+}
+
+.page-select .selected {
+  color: black;
+}

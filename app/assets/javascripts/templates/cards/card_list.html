@@ -4,8 +4,8 @@
 <button ng-show="cards.isCommanderList" ng-click="cards.toggleTinyLeaders()">
   {{ (cards.list === cards.lists.all_commanders) ? "Show Tiny Leaders" : "Show All Cards" }}
 </button>
-  <label for="">Page {{this.pageInfo.currentPage}} of {{this.pageInfo.pages}}</label>
-<ul>
+
+<ul class="card-list">
   <li class="card" ng-repeat="card in cards.showPage()">
   <figure >
     <img ng-src="{{card.get('image_url')}}" alt="{{card.get('card_text')}}" />

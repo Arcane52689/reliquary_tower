@@ -7,6 +7,6 @@
   <img ng-src="{{colors.grabImage(color)}}" alt="" />
 </li>
 <li class="big-mana" ng-click="colors.toggleStrict()">
-  {{ colors.isStrict() ? 'Show All' : 'Multicolor only' }}
+  Make {{ colors.isStrict() ? 'Inclusive' : 'Exclusive' }}
 </li>
 </ul>
