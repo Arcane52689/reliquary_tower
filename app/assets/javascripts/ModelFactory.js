@@ -380,8 +380,10 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 
 
+
+
   BaseCollection.prototype.getPage = function(pageNumber) {
-    return this.models.slice(this.getStartIndex(pageNumber), this.perPage);
+    return this.models.slice(this.getStartIndex(pageNumber), this.getStartIndex(pageNumber) + this.perPage);
   }
 
 

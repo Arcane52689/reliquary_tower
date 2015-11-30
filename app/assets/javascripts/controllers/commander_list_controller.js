@@ -16,7 +16,7 @@ angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollectio
       }.bind(this)
     })
     $scope.$on('ColorSelect', this.updateDisplayed.bind(this))
-    this.currentPage = Selected.pageInfo.currentPage;
+    this.pageInfo = Selected.pageInfo
   }
 
 
@@ -71,12 +71,18 @@ angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollectio
     } else {
       this.displayed = this.list.where(excludeCallback)
     }
-    Selected.pageInfo.pages = this.displayed.pages()
-    this.currentPage = 1;
+    this.pageInfo.pages = this.displayed.pages()
+    this.pageInfo.currentPage = 1;
+
   }
 
 
-
+  this.showPage = function() {
+    if (this.displayed) {
+      return this.displayed.getPage(this.pageInfo.currentPage);
+    }
+    return []
+  }
 
   this.initialize()
 

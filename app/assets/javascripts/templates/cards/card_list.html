@@ -2,11 +2,11 @@
 <color-select></color-select>
 
 <button ng-show="cards.isCommanderList" ng-click="cards.toggleTinyLeaders()">
-  {{ (cards.list === cards.lists.all_commanders) ? "Show Tiny Leaders" : "Show All Commanders" }}
+  {{ (cards.list === cards.lists.all_commanders) ? "Show Tiny Leaders" : "Show All Cards" }}
 </button>
-
+  <label for="">Page {{this.pageInfo.currentPage}} of {{this.pageInfo.pages}}</label>
 <ul>
-  <li class="card" ng-repeat="card in cards.displayed.all()">
+  <li class="card" ng-repeat="card in cards.showPage()">
   <figure >
     <img ng-src="{{card.get('image_url')}}" alt="{{card.get('card_text')}}" />
   </figure>
@@ -14,7 +14,7 @@
 
 </ul>
 
-
+<page-select></page-select>
 
 
 <button ng-click="cards.check()"> check</button>
