@@ -10,6 +10,10 @@ angular.module('AppUtilities').factory('Selected', function() {
     },
     strict: false,
 
+    pageInfo: {
+      currentPage: 1
+    },
+
     selectedColors: function() {
       var result = [];
       this.color_list.forEach(function(color) {
@@ -30,7 +34,7 @@ angular.module('AppUtilities').factory('Selected', function() {
       return result;
     }
 
-    
+
 
 
 
