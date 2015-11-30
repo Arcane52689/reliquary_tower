@@ -32,6 +32,7 @@ gem 'json'
 
 
 gem "angular-rails-templates"
+gem 'angular_rails_csrf'
 
 group :test do
   gem 'database_cleaner'

@@ -1,1 +1,4 @@
 <h1>Welcome {{ home.user.get('username') }},to the Reliquary Tower App</h1>
+
+
+<button ng-hide="home.user.isNew()" ng-click="home.logout()">Logout</button>

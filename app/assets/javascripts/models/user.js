@@ -5,23 +5,36 @@ angular.module('AppModels').factory('CurrentUser', ['BaseModel', '$http', functi
     this.idIsOptional = true
   }
 
+  BaseModel.parentOf(User);
+
+
   User.prototype.url = function() {
     return "./api/users/"
   }
 
-  User.prototype.login = function() {
+
+
+  User.prototype.login = function(options) {
     $http.post('./api/session/', {user:{
       email_or_username: this.get('email_or_username'),
       password: this.get('password')
-    }.success(function() {
-      this.set('password', "");
+    }}).success(function(resp) {
+      options.success && options.success()
+    }).error(function(resp) {
+      options.error && options.error()
     })
+  }
+
+  User.prototype.logout = function(options) {
+    $http.delete('/api/session/').success(function(resp){
+      this.attributes = {};
+      options.success && options.success()
+    }).error(function(resp) {
     })
   }
 
 
 
-  BaseModel.parentOf(User);
 
   var CurrentUser = new User({});
   CurrentUser.fetch();
