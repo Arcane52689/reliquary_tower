@@ -1,14 +1,32 @@
 angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollection', 'Selected', '$scope', function(CardCollection, Selected, $scope) {
   this.initialize = function() {
-    this.list = new CardCollection({
-      url: "api/cards/commanders"
-    })
-    this.list.fetch({
+    this.isCommanderList = true;
+    this.lists = {
+      all_commanders: new CardCollection({
+        url: "api/cards/commanders"
+      })
+    }
+    this.lists.all_commanders.fetch({
       success: function() {
+        this.list = this.lists.all_commanders;
+        this.lists.tiny_leaders = this.list.where(function(card) {
+          return (card.get('cmc') <= 3);
+        })
         this.updateDisplayed();
       }.bind(this)
     })
     $scope.$on('ColorSelect', this.updateDisplayed.bind(this))
+    this.currentPage = Selected.currentPage();
+  }
+
+
+  this.toggleTinyLeaders = function() {
+    if (this.list === this.lists.all_commanders) {
+      this.list = this.lists.tiny_leaders
+    } else {
+      this.list = this.lists.all_commanders
+    }
+    this.updateDisplayed();
 
   }
 

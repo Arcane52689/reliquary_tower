@@ -13,6 +13,7 @@ angular.module('AppControllers').controller('ColorSelectCtrl', ['Selected', '$sc
 
   this.toggleStrict = function() {
     Selected.strict = Selected.strict ? false : true;
+    $scope.$emit('ColorSelect')
   }
 
   this.checkClass = function(color) {

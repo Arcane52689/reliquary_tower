@@ -28,7 +28,7 @@
           this.attributes[key] = data[key];
         }
       }
-      if (data.id) {
+      if (typeof data.id !=='undefined') {
         this.id = data.id;
       }
     }
@@ -72,7 +72,7 @@
       $http.put(this.url(), this.attributes).success(function(resp) {
         this.updateAttributes(resp);
         options.success && options.success(resp);
-      }.bind(this)).error(function(resp, options) {
+      }.bind(this)).error(function(resp) {
         options.error && options.error(resp)
       })
     }
@@ -109,6 +109,7 @@
       this._collections.forEach(function(collection) {
         collection.remove(this.id);
       }.bind(this));
+      this._collections = [];
       return this;
     }
 
@@ -116,12 +117,17 @@
 
     BaseModel.prototype.destroy = function(options) {
       options = options || {};
-      $http.delete(this.url).success(function() {
+      if (this.id) {
+        $http.delete(this.url()).success(function(resp) {
+          this.removeFromCollections();
+          options.success && options.success(resp)
+        }.bind(this)).error(function(resp) {
+          options.error && options.error(resp)
+        }.bind(this))
+      } else {
         this.removeFromCollections();
-        options.success && options.success()
-      }.bind(this)).error(function() {
-        options.error && options.error
-      })
+      }
+
     }
 
 
@@ -131,7 +137,7 @@
 
 }])
 
-ModelFactory.factory('BaseCollection', ['$http',function($http) {
+ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, BaseModel) {
 
   var BaseCollection = function(options) {
     this.initialize(options);
@@ -144,12 +150,13 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
   }
 
   BaseCollection.prototype.initialize = function(options) {
-    this.model = options.model;
-    this.url = options.url
+    this.model = options.model || BaseModel;
+    this.url = options.url;
     this.models = [];
     this.modelsById = {};
     this.comparator = options.comparator || 'id';
-    this.reverse = false;
+    this.reverse = options.reverse || false;
+    this.perPage = options.perPage || 25;
   }
 
   BaseCollection.prototype.fetch = function(options) {
@@ -163,6 +170,8 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
     })
   }
 
+  /* adding functions */
+
   BaseCollection.prototype.addModels = function(dataArr) {
     this.adding = true;
     dataArr.forEach(this.addModel.bind(this));
@@ -175,14 +184,7 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
     this.add(model);
   }
 
-  BaseCollection.prototype.each = function(callback) {
-      var model, idx
-    for (idx = 0; idx < this.models.length; idx++) {
-      model = this.models[idx];
-      callback.call(this, model, idx, this.models)
-    }
-    return this;
-  }
+
 
   BaseCollection.prototype.add = function(model) {
     if (model.id) {
@@ -191,14 +193,32 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
       } else {
         this.modelsById[model.id] = model;
         this.models.push(model);
+        model.belongsTo(this)
       }
     } else {
       this.models.push(model)
+      model.belongsTo(this)
+
     }
     if (!this.adding) {
       this.sort();
     }
   }
+
+
+  BaseCollection.prototype.remove = function(id) {
+    if (typeof id === 'object') {
+      id = id.id
+    }
+    if ( this.modelsById[id]) {
+      delete this.modelsById[id];
+      var index = this.findIndex(id);
+      if (index >=0) {
+        this.models.splice(index, 1);
+      }
+    }
+  }
+  /* Sorting Functions */
 
   BaseCollection.prototype.reverseOrder = function() {
     this.reverse = this.reverse ? false : true;
@@ -206,7 +226,7 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
   }
 
 
-
+  /* compare is a private function used to compare two models by the comparator */
   BaseCollection.prototype.compare = function(c1, c2) {
     var attribute1 = c1.get(this.comparator);
     var attribute2 = c2.get(this.comparator);
@@ -230,19 +250,9 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
     return this;
   }
 
-  BaseCollection.prototype.remove = function(id) {
-    if (typeof id === 'object') {
-      id = id.id
-    }
-    if ( this.modelsById[id]) {
-      delete this.modelsById[id];
-      var index = this.findIndex(id);
-      if (index >=0) {
-        this.models.splice(index, 1);
-      }
-    }
-  }
 
+
+/* search function */
 
 
 
@@ -259,6 +269,7 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
     })
     return index;
   }
+/*  subset functions */
 
   BaseCollection.prototype.where = function(callback) {
     var result = new this.constructor({
@@ -283,11 +294,19 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
   // returns the first n items in the collection. if no number is passed, it returns the first item
   BaseCollection.prototype.first = function(n) {
     n = n || 1;
-    return this.models.slice(0, n);
+    if (n=== 1) {
+      return this.models[0]
+    } else {
+      return this.models.slice(0, n);
+    }
   }
 
+/* information functions */
   BaseCollection.prototype.any = function(callback) {
+    var model
+    callback = callback || function() { return true };
     for (var i = 0; i < this.models.length; i++) {
+      model = this.models[i];
       if (callback(model, i)) {
         return true;
       }
@@ -299,9 +318,44 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
     return !this.any(callback);
   }
 
+  BaseCollection.prototype.areAll = function(callback) {
+    for (var i = 0; i < this.models.length; i++) {
+      if (!callback(this.models[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+  BaseCollection.prototype.count = function(callback) {
+    callback = callback || function() { return true };
+    var count = 0;
+    this.each(function(model) {
+      if (callback(model)) {
+        count += 1;
+      }
+    })
+    return count;
+  }
+
+
   BaseCollection.prototype.empty = function() {
     return (this.models.length === 0);
   }
+
+
+/* iteration function */
+
+  BaseCollection.prototype.each = function(callback) {
+      var model, idx
+    for (idx = 0; idx < this.models.length; idx++) {
+      model = this.models[idx];
+      callback.call(this, model, idx, this.models)
+    }
+    return this;
+  }
+
 
   BaseCollection.prototype.map = function(callback) {
     var model, result, results, i;
@@ -313,6 +367,27 @@ ModelFactory.factory('BaseCollection', ['$http',function($http) {
     }
     return results;
   }
+
+
+  /* pagination */
+
+  BaseCollection.prototype.pages = function() {
+    return Math.ceil(this.models.length / this.perPage);
+  }
+
+  BaseCollection.prototype.getStartIndex = function(page) {
+    return this.perPage * (page - 1);
+  }
+
+
+  BaseCollection.prototype.getPage = function(pageNumber) {
+    return this.models.slice(this.getStartIndex(pageNumber), this.perPage);
+  }
+
+
+
+
+
 
   return BaseCollection;
 

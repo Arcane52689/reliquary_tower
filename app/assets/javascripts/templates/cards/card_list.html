@@ -1,17 +1,17 @@
-<h1> Hi, I'm a card list </h1>
-{{ cards.me}}
-length: {{cards.list.all().length}}
 
 <color-select></color-select>
 
-included: {{ cards.selectedColors() }}
-<br>
-excluded: {{ cards.excludedColors() }}
+<button ng-show="cards.isCommanderList" ng-click="cards.toggleTinyLeaders()">
+  {{ (cards.list === cards.lists.all_commanders) ? "Show Tiny Leaders" : "Show All Commanders" }}
+</button>
 
 <ul>
-  <li ng-repeat="card in cards.displayed.all()">
-  {{ card.get("name") }}  {{ card.get('color_identity')}}
+  <li class="card" ng-repeat="card in cards.displayed.all()">
+  <figure >
+    <img ng-src="{{card.get('image_url')}}" alt="{{card.get('card_text')}}" />
+  </figure>
   </li>
+
 </ul>
 
 
