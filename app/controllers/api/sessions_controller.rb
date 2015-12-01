@@ -9,14 +9,14 @@ class Api::SessionsController < ApplicationController
     )
 
     if user
+      login(user)
       render json: user, status: 200
     else
-      render json: "invalid login credentials"
+      render json: {error: "invalid login credentials"}, status: 422
     end
   end
 
   def destroy
-    byebug
     current_session = Session.find_by(token: session[:session_token])
     session[:session_token] = nil
     current_session.destroy!

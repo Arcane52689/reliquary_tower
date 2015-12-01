@@ -11,7 +11,7 @@ angular.module('AppControllers', [])
 
 
 
-var app = angular.module('ReliquaryTower', ['templates', 'AngularModelFactory', 'ngRoute', 'AppModels', 'AppCollections', 'AppControllers', 'AppDirectives', 'AppUtilities'])
+var app = angular.module('ReliquaryTower', ['templates', 'AngularModelFactory', 'ngRoute', 'AppModels', 'AppCollections', 'AppControllers', 'AppDirectives', 'AppUtilities', 'AngularFlash'])
 
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -24,6 +24,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     templateUrl: 'cards/card_list.html',
     controller: 'CommanderListCtrl',
     controllerAs: 'cards'
+  })
+  .when('/login', {
+    templateUrl: 'login.html',
+    controller: 'LoginCtrl',
+    controllerAs: 'login'
   })
 
 }])

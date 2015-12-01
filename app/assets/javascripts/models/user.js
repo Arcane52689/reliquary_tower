@@ -15,23 +15,30 @@ angular.module('AppModels').factory('CurrentUser', ['BaseModel', '$http', functi
 
 
   User.prototype.login = function(options) {
+    options = options || {};
     $http.post('./api/session/', {user:{
       email_or_username: this.get('email_or_username'),
       password: this.get('password')
     }}).success(function(resp) {
+      this.attributes.password = "nope";
+      this.updateAttributes(resp);
+      options.success && options.success()
+    }.bind(this)).error(function(resp) {
+      options.error && options.error()
+    })
+  }
+
+  User.prototype.logout = function(options) {
+    options = options || {};
+
+    $http.delete('/api/session/').success(function(resp){
+      this.attributes.username = undefined;
       options.success && options.success()
     }).error(function(resp) {
       options.error && options.error()
     })
   }
 
-  User.prototype.logout = function(options) {
-    $http.delete('/api/session/').success(function(resp){
-      this.attributes = {};
-      options.success && options.success()
-    }).error(function(resp) {
-    })
-  }
 
 
 
