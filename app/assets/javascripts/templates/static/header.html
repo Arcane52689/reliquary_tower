@@ -1,0 +1,22 @@
+<header>
+  <label class="home logo"><a href="#">Reliquary Tower</a></label>
+
+  <nav>
+    <ul>
+      <li> Format:
+        <ul>
+          <li> Commander </li>
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li ng-show="header.loggedIn()" ng-click="header.logout()">Logout</li>
+          <li ng-hide="header.loggedIn()" ng-click="header.login()">Login</li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+
+</header>

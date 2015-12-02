@@ -35,5 +35,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'CardSearchBarController',
     controllerAs: 'search'
   })
+  .when('/header', {
+    templateUrl: 'static/header.html',
+    controller: 'HeaderCtrl',
+    controllerAs: 'header'
+  })
 
 }])
