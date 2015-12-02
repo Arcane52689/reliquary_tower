@@ -33,13 +33,17 @@ angular.module('AppModels').factory('CurrentUser', ['BaseModel', '$http', functi
 
     $http.delete('/api/session/').success(function(resp){
       this.attributes.username = undefined;
+      this.attributes.id = undefined
+      this.id = undefined;
       options.success && options.success()
-    }).error(function(resp) {
+    }.bind(this)).error(function(resp) {
       options.error && options.error()
     })
   }
 
-
+  User.prototype.logged_in = function() {
+    return !!this.id
+  }
 
 
 

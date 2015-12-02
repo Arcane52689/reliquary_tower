@@ -1,7 +1,20 @@
-<h1>login</h1>
 
-<form ng-submit="login.login()" >
+<ul>
+  <li ng-click="login.showLogin()">Login</li>
+  <li ng-click="login.showSignUp()">Sign up</li>
+</ul>
+
+
+<form ng-submit="login.login()" ng-hide="login.signingUp">
   <label>Email or Username: <input type="text" ng-model="login.user.attributes.email_or_username"></label>
+  <label>Password: <input type="password" ng-model="login.user.attributes.password"></label>
+  <label></label>
+  <button >Submit</button>
+</form>
+
+<form ng-submit="login.signUp()" ng-show="login.signingUp">
+  <label>Email: <input type="text" ng-model="login.user.attributes.email"></label>
+  <label>Username: <input type="text" ng-model="login.user.attributes.username"> </label>
   <label>Password: <input type="password" ng-model="login.user.attributes.password"></label>
   <label></label>
   <button >Submit</button>
