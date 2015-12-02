@@ -8,7 +8,6 @@ angular.module('AppControllers').controller('LoginCtrl', ['Flash', 'CurrentUser'
   this.login = function() {
     this.user.login({
       success:function(resp) {
-        debugger;
         $location.path('/');
         Flash.success("Welcome " + CurrentUser.get('username') )
     }});

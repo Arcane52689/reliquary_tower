@@ -14,6 +14,10 @@ angular.module('AppUtilities').factory('Selected', function() {
       currentPage: 1
     },
 
+    objects: {
+      card: undefined
+    },
+
     selectedColors: function() {
       var result = [];
       this.color_list.forEach(function(color) {
@@ -33,6 +37,8 @@ angular.module('AppUtilities').factory('Selected', function() {
       }.bind(this));
       return result;
     }
+
+
 
 
 

@@ -1,6 +1,6 @@
-class API::DecksController < ApplicationController
+class Api::DecksController < ApplicationController
 
 
-  
+
 
 end

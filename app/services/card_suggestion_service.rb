@@ -16,5 +16,10 @@ class CardSuggestionService
   end
 
 
+  def self.search_by_name(params)
+    Card.where('UPPER(name) like UPPER(?)', "%#{params[:name]}%").order(params[:orderBy]).limit(params[:limit])
+  end
+
+
 
 end

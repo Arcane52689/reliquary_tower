@@ -30,5 +30,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'LoginCtrl',
     controllerAs: 'login'
   })
+  .when('/search', {
+    templateUrl: 'cards/card_search.html',
+    controller: 'CardSearchBarController',
+    controllerAs: 'search'
+  })
 
 }])

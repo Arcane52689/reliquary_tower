@@ -1,0 +1,20 @@
+<div class="card-search">
+  <ul>
+
+    <li>Name: <input type="text" ng-model="search.results.searchOptions.name" ng-change="search.updateResults()"
+        >
+    </li>
+
+    <li ng-repeat="card in search.results.all()"
+      class="card-search-suggestion"
+      ng-show="search.displayResults"
+      ng-click="search.selectCard(card.id)"
+      >
+      {{card.get('name')}}
+    </li>
+
+  </ul>
+
+
+  hi {{search.selected.get('name')}}
+</div>

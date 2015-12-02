@@ -158,11 +158,15 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     this.comparator = options.comparator || 'id';
     this.reverse = options.reverse || false;
     this.perPage = options.perPage || 25;
+    this.searchOptions = options.searchOptions || {};
   }
 
   BaseCollection.prototype.fetch = function(options) {
     options = options || {};
-    $http.get(this.url).success(function(resp) {
+    $http.get(this.url,{ params: this.searchOptions}).success(function(resp) {
+      if(options.clearModels) {
+        this.clearModels();
+      }
       this.addModels(resp);
       options.success && options.success(resp)
     }.bind(this)).error(function(resp) {
@@ -218,6 +222,11 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
         this.models.splice(index, 1);
       }
     }
+  }
+
+  BaseCollection.prototype.clearModels = function(id) {
+    this.models = [];
+    this.modelsById = {};
   }
   /* Sorting Functions */
 
@@ -388,12 +397,9 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 
 
-
-
-
-
   return BaseCollection;
 
 }])
 
-}())
+
+}());
