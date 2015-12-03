@@ -6,4 +6,4 @@ angular.module("AppDirectives").directive("login", function() {
     controller: 'LoginCtrl',
     controllerAs: 'login'
   }
-}
+});
