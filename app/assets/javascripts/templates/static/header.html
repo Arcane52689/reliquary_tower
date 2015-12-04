@@ -11,12 +11,12 @@
       <li>
         <ul>
           <li ng-show="header.loggedIn()" ng-click="header.logout()">Logout</li>
-          <li ng-hide="header.loggedIn()" ng-click="header.login()">Login</li>
+          <li ng-hide="header.loggedIn()" ng-click="header.showLoginView()">Login</li>
         </ul>
       </li>
 
     </ul>
   </nav>
 
-
+<button ng-click="header.checkView()" name="button">Check</button>
 </header>

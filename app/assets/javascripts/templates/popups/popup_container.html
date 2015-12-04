@@ -1,5 +1,7 @@
-<div class="popup-container" ng-show="popups.activePopup()">
-  <div class="login-container" ng-show="popups.dipslayed.login">
+<div class="popup-container outer-modal" ng-show="popups.hasActiveView()">
+
+
+  <div class="login-container" ng-show="popups.displayed.loginView">
     <login></login>
   </div>
 </div>
