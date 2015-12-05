@@ -1,0 +1,53 @@
+
+
+
+.login-options {
+  .selected {
+
+    background: green
+  }
+}
+
+
+.login-option {
+  display:block;
+  float: left;
+  width: 50px;
+  padding: 10px 15px;
+  margin-left: 60px;
+  border: 1px solid black;
+  color: white;
+  background: red;
+
+}
+
+
+.login-form {
+  width: 300px;
+  margin: auto;
+
+  li {
+    margin: 10px auto;
+    width: 90%;
+    display: block;
+    label {
+      display:block;
+      float: left
+    }
+    input {
+      display:block;
+      float : right;
+    }
+  }
+  .submit {
+    width: 100px;
+    margin: auto;
+
+    text-align: center;
+
+    border: 1px solid black;
+    padding: 5px 10px;
+    border-radius: 8px;
+  }
+
+}

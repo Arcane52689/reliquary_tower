@@ -25,7 +25,6 @@
           active = true;
         }
       }.bind(this));
-      console.log(active)
       return active;
     }
 

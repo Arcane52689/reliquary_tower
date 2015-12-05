@@ -14,6 +14,10 @@ angular.module('AppControllers').controller('LoginCtrl', ['Flash', 'CurrentUser'
     }});
   }
 
+  this.checkClass = function(key) {
+    
+  }
+
   this.signUp = function() {
     this.user.save({
       success: function() {

@@ -14,7 +14,7 @@
  *= require_self
  */
 
- h1, h2, h3, h4, h5, h6, ul, li, body, button, label, img {
+ h1, h2, h3, h4, h5, h6, ul, li, body, button, label, img, a {
    border: 0;
    padding: 0;
    margin: 0;
@@ -34,14 +34,19 @@
  }
 
 
-
-
+ ul {
+   list-style: none;
+ }
 
 
  img {
    display: block;
    width: 100%;
    height: auto;
+ }
+
+ button {
+   display: block;
  }
 
 

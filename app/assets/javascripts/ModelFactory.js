@@ -254,7 +254,6 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 
   BaseCollection.prototype.sort = function(callback) {
-    console.log('sorting')
     callback = callback || this.compare.bind(this);
     this.models.sort(callback);
     return this;
