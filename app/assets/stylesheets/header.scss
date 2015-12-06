@@ -1,0 +1,62 @@
+header {
+  background: rgb(93,68,42);
+  color: white;
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+
+  .logo {
+    float: left;
+    padding: 5px 10px;
+  }
+
+  nav {
+    max-width: 800px;
+    float: right;
+    border-right: 1px solid white;
+
+    .nav-link {
+      float: left;
+      position: relative;
+      a {
+        display: block;
+        padding: 5px 30px;
+        border-left: 1px solid white;
+
+      }
+
+    }
+
+  }
+
+}
+
+.nav-link:hover .dropdown {
+  display:block;
+
+}
+
+.dropdown {
+  position: absolute;
+  width: 100%;
+  border: 1px solid white;
+  display:none;
+  background: rgb(93,68,42);
+  z-index: 1;
+
+  .dropdown-item {
+    border-bottom: 1px solid white;
+
+    a {
+
+      padding: 5px 10px;
+    }
+  }
+
+
+
+  .dropdown-item:hover {
+    background: rgb(200, 150, 100);
+  }
+
+}

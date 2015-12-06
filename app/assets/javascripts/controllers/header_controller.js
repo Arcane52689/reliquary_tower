@@ -2,6 +2,23 @@
 angular.module('AppControllers').controller('HeaderCtrl', ['CurrentUser', 'Displayed', '$rootScope', function (CurrentUser, Displayed, $rootScope) {
   this.initialize = function() {
     this.user = CurrentUser;
+
+    this.formats = [
+      {
+        name: 'EDH'
+      },
+      {
+        name: 'Tiny Leaders'
+      },
+      {
+        name: 'Standard'
+      },
+      {
+        name: 'Modern'
+      }
+    ]
+
+
   }
 
 

@@ -1,22 +1,28 @@
-<header>
-  <label class="home logo"><a href="#">Reliquary Tower</a></label>
+<header class="group">
+  <label class="home logo"><a href="#/">Reliquary Tower</a></label>
 
   <nav>
-    <ul>
-      <li> Format:
-        <ul>
-          <li> Commander </li>
+    <ul class="group">
+      <li class="nav-link"> <a href="">Decks</a>
+        <ul class="dropdown">
+          <li class="dropdown-item"
+            ng-repeat="format in header.formats"
+            >
+            <a href=""> {{ format.name }} </a>
+          </li>
         </ul>
       </li>
-      <li>
+      <li class="nav-link">
+        <a href="/">My Decks</a>
+      </li>
+
+      <li class="nav-link">
         <ul>
-          <li ng-show="header.loggedIn()" ng-click="header.logout()">Logout</li>
-          <li ng-hide="header.loggedIn()" ng-click="header.showLoginView()">Login</li>
+          <li ng-show="header.loggedIn()" ng-click="header.logout()"><a>Logout</a></li>
+          <li ng-hide="header.loggedIn()" ng-click="header.showLoginView()"><a>Login</a></li>
         </ul>
       </li>
 
     </ul>
   </nav>
-
-<button ng-click="header.checkView()" name="button">Check</button>
 </header>
