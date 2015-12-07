@@ -1,4 +1,4 @@
-angular.module('AppControllers').controller('HomeCtrl', ['CurrentUser', 'Flash', function(CurrentUser, Flash) {
+angular.module('AppControllers').controller('HomeCtrl', ['CurrentUser', 'Flash', '$location', function(CurrentUser, Flash, $location) {
   this.user = CurrentUser
 
 
@@ -12,5 +12,11 @@ angular.module('AppControllers').controller('HomeCtrl', ['CurrentUser', 'Flash',
     }
   });
   }
+
+  this.goTo = function(location) {
+    $location.path('/' + location)
+  }
+
+
 
 }])

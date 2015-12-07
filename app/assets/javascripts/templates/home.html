@@ -1,4 +1,11 @@
 <h1>Welcome {{ home.user.get('username') }},to the Reliquary Tower App</h1>
 
+<ul class="options-list">
+  <li ng-click="home.goTo('commanders')">
+    Find A commander
+  </li>
+</ul>
+
+
 
 <button ng-hide="home.user.isNew()" ng-click="home.logout()">Logout</button>
