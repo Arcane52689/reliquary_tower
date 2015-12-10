@@ -17,7 +17,7 @@ angular.module('AppControllers').controller('PageSelectCtrl', ['Selected', funct
   }
 
   this.goToPage = function(page) {
-    if ((page > 0) && (page < this.pageInfo.pages)) {
+    if ((page > 0) && (page <= this.pageInfo.pages)) {
       this.pageInfo.currentPage = page
     }
   }
