@@ -11,12 +11,19 @@
 
   Deck.prototype.updateAttributes = function(data) {
     if (data.card_slots) {
-
+      this.card_slots.addModels(data.card_slots);
+      delete data.card_slots
     }
-
+    BaseModel.prototype.updateAttributes.call(this, data);
   }
 
-
+  Deck.prototype.toJSON = function() {
+    var data = {};
+    data.card_slots = this.card_slots.map(function(card_slot) {
+      return card_slot._toJSON
+    });
+    return data
+  }
 
 
   return Deck;

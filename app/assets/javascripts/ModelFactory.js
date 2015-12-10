@@ -61,7 +61,7 @@
 
 
     BaseModel.prototype.create = function(options) {
-      $http.post(this.url(), this.attributes).success(function(resp) {
+      $http.post(this.url(), this._toJSON()).success(function(resp) {
         this.updateAttributes(resp);
         options.success && options.success(resp);
       }.bind(this)).error(function(resp) {
@@ -70,7 +70,7 @@
     }
 
     BaseModel.prototype.update = function(options) {
-      $http.put(this.url(), this.attributes).success(function(resp) {
+      $http.put(this.url(), this._toJSON()).success(function(resp) {
         this.updateAttributes(resp);
         options.success && options.success(resp);
       }.bind(this)).error(function(resp) {
@@ -84,6 +84,21 @@
 
     BaseModel.prototype.set = function(key, value) {
       this.attributes[key] = value;
+    }
+
+    BaseModel.prototype._toJSON = function() {
+      var data
+      if (this.toJSON) {
+        data = this.toJSON();
+      } else {
+        data = {}
+      }
+      for (key in this.attributes) {
+        if (!data.hasOwnProperty(key)) {
+          data[key] = this.attributes[key]
+        }
+      }
+      return data;
     }
 
     BaseModel.prototype.fetch = function(options) {

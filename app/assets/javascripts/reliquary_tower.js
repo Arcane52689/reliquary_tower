@@ -35,10 +35,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'CardSearchBarController',
     controllerAs: 'search'
   })
-  .when('/header', {
-    templateUrl: 'static/header.html',
-    controller: 'HeaderCtrl',
-    controllerAs: 'header'
+  .when('/decks/new', {
+      templateUrl: 'decks/deck_form',
+      controller: 'DeckFormCtrl',
+      controllerAs: 'form'
   })
 
 }])
