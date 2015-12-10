@@ -6,7 +6,12 @@ class Api::CardsController < ApplicationController
 
   def find_by
     @card = Card.find_by("UPPER(name) = UPPER(?)", params[:name])
-    render json: @card
+    if @card
+      render json: @card, status: 200
+    else
+      message = params[:name] + " was not found"
+      render json: {error: message}, status: 404
+    end
   end
 
   def commanders

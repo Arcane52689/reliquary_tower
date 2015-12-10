@@ -1,0 +1,20 @@
+<li>
+  <ul class="card-slot">
+    <li>Card Name:
+      <input type="text"
+        ng-class="slot.checkStatus()"
+        ng-model="slot.cardSlot.card.attributes.name"
+        ng-blur="slot.findCard()"
+        >
+    </li>
+    <li>id: {{slot.cardSlot.card.id}}</li>
+    <li> Quantity:
+      <input type="integer" ng-model="slot.cardSlot.attributes.quantity">
+    </li>
+    <li>
+      <select ng-model="slot.cardSlot.attributes.location"
+        ng-options="location as location for location in ['main deck', 'sideboard', 'maybe list', 'commander']">
+      </select>
+    </li>
+  </ul>
+</li>

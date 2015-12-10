@@ -8,9 +8,13 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', function(Base
 
 
   Card.prototype.findByName = function(options) {
+
+    options = options || {};
     $http.get("api/cards/find_by", {params: {name: this.get('name')}}).success(function(resp) {
+      this.updateAttributes(resp)
       options.success && options.success(resp);
-    }).error(function(resp) {
+    }.bind(this)).error(function(resp) {
+      debugger
       options.error && options.error(resp)
     })
   }

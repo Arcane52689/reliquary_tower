@@ -7,7 +7,12 @@ class Api::DecksController < ApplicationController
   end
 
   def create
-
+    @deck = Deck.new(deck_params)
+    if @deck.save
+      render json: @deck, status: 200
+    else
+      render json: @deck.errors.full_messages
+    end
   end
 
   def update

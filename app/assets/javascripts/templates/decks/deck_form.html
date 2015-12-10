@@ -7,19 +7,8 @@ Name: <input type="text" ng-model="form.deck.attributes.name">
 
 <button name="add_slot" ng-click="form.addSlot('main deck')">Add Slot</button>
 <ul class="deck-list main-board">
-  <li ng-repeat='cardSlot in form.deck.mainDeck().all()'>
-    <ul class="card_slot">
-      <li>Card Name:
-        <input type="text" ng-model="cardSlot.card.attributes.name">
-      </li>
-      <li> Quantity:
-        <input type="integer" ng-model="cardSlot.attributes.quantity">
-      </li>
-      <li>
-        <select ng-model="cardSlot.attributes.location" ng-options="location as location for location in ['main deck', 'sideboard', 'maybe list', 'commander']">
-
-        </select>
-      </li>
-    </ul>
-  </li>
+<card-slot ng-repeat='cardSlot in form.deck.mainDeck().all()'
+  card-slot="cardSlot"></card-slot>
 </ul>
+
+<button ng-click="form.save()">Submit</button>
