@@ -1,1 +1,25 @@
 <h1> Hello,  I am the form for your deck </h1>
+
+
+<label>
+Name: <input type="text" ng-model="form.deck.attributes.name">
+</label>
+
+<button name="add_slot" ng-click="form.addSlot('main deck')">Add Slot</button>
+<ul class="deck-list main-board">
+  <li ng-repeat='cardSlot in form.deck.mainDeck().all()'>
+    <ul class="card_slot">
+      <li>Card Name:
+        <input type="text" ng-model="cardSlot.card.attributes.name">
+      </li>
+      <li> Quantity:
+        <input type="integer" ng-model="cardSlot.attributes.quantity">
+      </li>
+      <li>
+        <select ng-model="cardSlot.attributes.location" ng-options="location as location for location in ['main deck', 'sideboard', 'maybe list', 'commander']">
+
+        </select>
+      </li>
+    </ul>
+  </li>
+</ul>

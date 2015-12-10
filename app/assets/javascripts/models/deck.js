@@ -10,6 +10,8 @@
   BaseModel.parentOf(Deck);
 
   Deck.prototype.updateAttributes = function(data) {
+    data = data || {};
+
     if (data.card_slots) {
       this.card_slots.addModels(data.card_slots);
       delete data.card_slots
@@ -23,6 +25,19 @@
       return card_slot._toJSON
     });
     return data
+  }
+
+  Deck.prototype.addBlankSlot = function(options) {
+    this.card_slots.addModel({
+      quantity: 1,
+      location: options.location || 'main deck'
+    })
+  }
+
+  Deck.prototype.mainDeck = function() {
+    return this.card_slots.where(function(card_slot) {
+      return card_slot.attributes.location === 'main deck'
+    });
   }
 
 

@@ -15,8 +15,14 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
     }
   }
 
-  
+  this.card_slots = function() {
+    return this.deck.card_slots();
+  }
 
+  this.addSlot = function() {
+    this.deck.addBlankSlot({location: 'main deck'})
+    debugger
+  }
 
 
   this.initialize();

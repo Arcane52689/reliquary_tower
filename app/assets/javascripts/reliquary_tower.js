@@ -36,7 +36,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controllerAs: 'search'
   })
   .when('/decks/new', {
-      templateUrl: 'decks/deck_form',
+      templateUrl: 'decks/deck_form.html',
       controller: 'DeckFormCtrl',
       controllerAs: 'form'
   })
