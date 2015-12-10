@@ -4,6 +4,11 @@ class Api::CardsController < ApplicationController
 
   end
 
+  def find_by
+    @card = Card.find_by("UPPER(name) = UPPER(?)", params[:name])
+    render json: @card
+  end
+
   def commanders
     @cards = CardSuggestionService.commander([], [])
 
