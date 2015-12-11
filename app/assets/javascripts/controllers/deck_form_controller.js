@@ -21,7 +21,6 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
   this.addSlot = function() {
     this.deck.addBlankSlot({location: 'main deck'})
-    debugger
   }
 
 

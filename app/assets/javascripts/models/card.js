@@ -14,7 +14,6 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', function(Base
       this.updateAttributes(resp)
       options.success && options.success(resp);
     }.bind(this)).error(function(resp) {
-      debugger
       options.error && options.error(resp)
     })
   }

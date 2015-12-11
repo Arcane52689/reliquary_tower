@@ -7,6 +7,9 @@ angular.module('AppDirectives').directive('cardSlot', function() {
     controllerAs: 'slot',
     scope: {
       cardSlot: '=cardSlot'
+    },
+    link: function(scope, element) {
+      element.children().children()[0].children[0].focus();
     }
   }
 })

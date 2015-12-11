@@ -1,0 +1,33 @@
+
+
+
+
+
+
+
+
+
+
+
+// card slot item
+
+
+.card-slot {
+  li {
+    float: left;
+    width: 200px;
+  }
+
+
+
+}
+
+.found {
+    border: 1px solid #0f0;
+    background: rgba(50,200,50,.7);
+}
+
+.not-found {
+  border: 1px solid #f00;
+  background: rgba(200, 0, 0, .7);
+}
