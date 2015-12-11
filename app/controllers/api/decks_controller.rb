@@ -3,15 +3,17 @@ class Api::DecksController < ApplicationController
 
 
   def show
-
+    @deck = Deck.includes(card_slots: :card).find(params[:id])
+    render json: @deck
   end
 
   def create
-    @deck = Deck.new(deck_params)
+    @deck = current_user.decks.new(deck_params)
+    byebug
     if @deck.save
       render json: @deck, status: 200
     else
-      render json: @deck.errors.full_messages
+      render json: @deck.errors.full_messages, status: 422
     end
   end
 
@@ -30,7 +32,7 @@ class Api::DecksController < ApplicationController
   private
 
     def deck_params
-      params.require(:deck).permit(:name, taggings: [], card_slots: [])
+      params.permit(:name, taggings: [], card_slots: [:card_id, :location, :quantity])
     end
 
 

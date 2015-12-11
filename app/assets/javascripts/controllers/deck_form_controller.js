@@ -9,7 +9,12 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
   this._createDeck = function() {
     if($routeParams['id']) {
       this.deck = new Deck({id: $routeParams['id']})
-      this.deck.fetch();
+      this.loading = true
+      this.deck.fetch({
+        success: function() {
+          this.loading = false;
+        }.bind(this)
+      });
     } else {
       this.deck = new Deck()
     }
@@ -23,6 +28,15 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
     this.deck.addBlankSlot({location: 'main deck'})
   }
 
+
+  this.save = function() {
+    this.deck.card_slots.where(function(slot) {
+      return((!slot.card_id) || (slot.quantity < 1))
+    }).each(function(slot) {
+      slot.removeFromCollections();
+    });
+    this.deck.save();
+  }
 
   this.initialize();
 }])

@@ -4,7 +4,7 @@ class Deck < ActiveRecord::Base
   @card_minimum = 0
   @card_limit = Float::INFINITY
 
-  has_many :card_slots
+  has_many :card_slots, inverse_of: :deck, dependent: :destroy
   has_many :cards, through: :card_slots, as: :card
 
   belongs_to :user
@@ -31,6 +31,28 @@ class Deck < ActiveRecord::Base
   def self.card_minimum
     @card_minimum
   end
+
+  def card_slots=(card_slot_hashes)
+    # new_ids = card_slot_hashes.map { |hash| hash[:id] }.compact
+    # remove_old_ids(new_ids)
+    card_slots.build(card_slot_hashes)
+  end
+
+  # def remove_old_ids(new_ids)
+  #   id_hash = {}
+  #   byebug
+  #   self.card_slots.each do |card_slot|
+  #     id_hash[card_slot.id] = false
+  #   end
+  #   new_ids.each do |id|
+  #     id_hash[id] = true
+  #   end
+  #   to_remove = id_hash.select { |k, v| !v }
+  #
+  #   to_remove.each do |card_slot|
+  #     card_slot.destroy!
+  #   end
+  # end
 
 
   def set_variables

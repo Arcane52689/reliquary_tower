@@ -3,14 +3,20 @@
   ng-class="slot.checkStatus()"
   >
     <li>
+      <label ng-show="slot.hasCard()">
+        {{slot.cardSlot.card.get('name')}}
+      </label>
+
+
       <input type="text"
+        ng-hide="slot.hasCard()"
         ng-model="slot.cardSlot.card.attributes.name"
         ng-blur="slot.findCard()"
         >
     </li>
 
-    <li> 
-      <input type="integer" ng-model="slot.cardSlot.attributes.quantity">
+    <li>
+      <input type="number" ng-model="slot.cardSlot.attributes.quantity">
     </li>
     <li>
       <select ng-model="slot.cardSlot.attributes.location"

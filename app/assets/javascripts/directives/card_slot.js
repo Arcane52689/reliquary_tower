@@ -6,10 +6,14 @@ angular.module('AppDirectives').directive('cardSlot', function() {
     controller: 'CardSlotItemCtrl',
     controllerAs: 'slot',
     scope: {
+      loading: '=loading',
       cardSlot: '=cardSlot'
     },
     link: function(scope, element) {
-      element.children().children()[0].children[0].focus();
+      debugger
+      if (!scope.loading) {
+        element.children().children()[0].children[0].focus();
+      }
     }
   }
 })
