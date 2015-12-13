@@ -2,11 +2,11 @@ angular.module('AppUtilities').factory('Selected', function() {
   var Selected = {
     color_list: ["White", "Blue", "Black", "Red", 'Green'],
     colors: {
-      White: true,
-      Blue: true,
-      Black: true,
-      Red: true,
-      Green: true
+      White: 'neutral',
+      Blue: 'neutral',
+      Black: 'neutral',
+      Red: 'neutral',
+      Green: 'neutral'
     },
     strict: false,
 
@@ -21,7 +21,7 @@ angular.module('AppUtilities').factory('Selected', function() {
     selectedColors: function() {
       var result = [];
       this.color_list.forEach(function(color) {
-        if (this.colors[color]) {
+        if (this.colors[color] === 'selected') {
           result.push(color);
         }
       }.bind(this))
@@ -31,7 +31,7 @@ angular.module('AppUtilities').factory('Selected', function() {
     excludedColors: function() {
       var result = [];
       this.color_list.forEach(function(color) {
-        if (!this.colors[color]) {
+        if (this.colors[color] === 'not-selected') {
           result.push(color);
         }
       }.bind(this));

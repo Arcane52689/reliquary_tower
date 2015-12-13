@@ -1,3 +1,4 @@
+
 <ul class="color-select group">
   <li class="big-mana"
   ng-repeat="color in colors.list"
@@ -5,8 +6,5 @@
   ng-class="colors.checkClass(color)"
   >
   <img ng-src="{{colors.grabImage(color)}}" alt="" />
-</li>
-<li class="big-mana" ng-click="colors.toggleStrict()">
-  Make {{ colors.isStrict() ? 'Inclusive' : 'Exclusive' }}
 </li>
 </ul>

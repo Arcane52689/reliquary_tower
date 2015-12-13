@@ -38,39 +38,27 @@ angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollectio
     var excluded = Selected.excludedColors();
     var included = Selected.selectedColors();
 
-    var excludeCallback = function(card) {
+    var displayCallback = function(card) {
       display = true;
       card.get('color_identity').forEach(function(color) {
         if (excluded.indexOf(color) > -1) {
           display = false
         }
       })
-      return display;
-    }
-
-    var strictCallback = function(card) {
-      display  = true;
-      included.forEach(function(color){
-        if (card.get('color_identity').indexOf(color) === -1 ) {
+      if (!display) {
+        return display
+      }
+      included.forEach(function(color) {
+        if (card.get('color_identity').indexOf(color) === -1) {
           display = false;
         }
       })
-      if (!display) {
-        return false;
-      }
-      excluded.forEach(function(color) {
-        if (card.get('color_identity').indexOf(color) > -1) {
-          display = false
-        }
-      })
       return display;
+
     }
 
-    if (Selected.strict) {
-      this.displayed = this.list.where(strictCallback)
-    } else {
-      this.displayed = this.list.where(excludeCallback)
-    }
+    this.displayed = this.list.where(displayCallback)
+
     this.pageInfo.pages = this.displayed.pages()
     this.pageInfo.currentPage = 1;
 

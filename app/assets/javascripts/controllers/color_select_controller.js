@@ -7,17 +7,19 @@ angular.module('AppControllers').controller('ColorSelectCtrl', ['Selected', '$sc
   }
 
   this.toggle = function(color) {
-    this.colors[color] = this.colors[color] ? false :true;
+    if (this.colors[color] === 'neutral') {
+      this.colors[color] = 'selected';
+    } else if (this.colors[color] === 'selected') {
+      this.colors[color] = 'not-selected';
+    } else {
+      this.colors[color] = 'neutral';
+    }
     $scope.$emit('ColorSelect')
   }
 
-  this.toggleStrict = function() {
-    Selected.strict = Selected.strict ? false : true;
-    $scope.$emit('ColorSelect')
-  }
 
   this.checkClass = function(color) {
-    return this.isSelected(color);
+    return this.colors[color]
   }
 
   this.grabImage = function(color) {
@@ -31,17 +33,9 @@ angular.module('AppControllers').controller('ColorSelectCtrl', ['Selected', '$sc
     return images[color];
   }
 
-  this.isStrict = function() {
-    return Selected.strict;
-  }
 
-  this.isSelected = function(color) {
-    if (this.colors[color]) {
-      return " selected "
-    } else {
-      return ""
-    }
-  }
+
+
 
 
 
