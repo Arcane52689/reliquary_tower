@@ -116,14 +116,27 @@
 
     }
 
-    BaseModel.prototype.belongsTo = function(collection) {
-      this._collections.push(collection)
+    BaseModel.prototype.belongsTo = function(collection, cid) {
+      this._collections.push({
+        collection: collection,
+        cid: cid
+      })
       return this;
+    }
+
+    BaseModel.prototype.getCID = function(collection) {
+      var result
+      this._collections.forEach(function(c) {
+        if (c.collection === collection) {
+          result = c.cid
+        }
+      })
+      return result;
     }
 
     BaseModel.prototype.removeFromCollections = function() {
       this._collections.forEach(function(collection) {
-        collection.remove(this.id);
+        collection.collection.remove(collection.cid);
       }.bind(this));
       this._collections = [];
       return this;
@@ -170,10 +183,12 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     this.url = options.url;
     this.models = [];
     this.modelsById = {};
+    this.modelsByCID = {};
     this.comparator = options.comparator || 'id';
     this.reverse = options.reverse || false;
     this.perPage = options.perPage || 25;
     this.searchOptions = options.searchOptions || {};
+    this.currentCID = 1;
   }
 
   BaseCollection.prototype.fetch = function(options) {
@@ -213,12 +228,15 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
       } else {
         this.modelsById[model.id] = model;
         this.models.push(model);
-        model.belongsTo(this)
+        model.belongsTo(this, this.currentCID)
+        this.modelsByCID[this.currentCID] = model;
+        this.currentCID += 1;
       }
     } else {
       this.models.push(model)
-      model.belongsTo(this)
-
+      model.belongsTo(this, this.currentCID)
+      this.modelsByCID[this.currentCID] = model;
+      this.currentCID += 1;
     }
     if (!this.adding) {
       this.sort();
@@ -226,22 +244,28 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 
 
-  BaseCollection.prototype.remove = function(id) {
-    if (typeof id === 'object') {
-      id = id.id
+  BaseCollection.prototype.remove = function(cid) {
+    var model
+    if (typeof cid === 'object') {
+      model = cid;
+    } else {
+      model = this.modelsByCID[cid];
     }
-    if ( this.modelsById[id]) {
+    delete this.modelsByCID[cid];
+    var index = this.findIndex(cid);
+    if (index >=0) {
+      this.models.splice(index, 1);
+    }
+    if ( model.id) {
       delete this.modelsById[id];
-      var index = this.findIndex(id);
-      if (index >=0) {
-        this.models.splice(index, 1);
-      }
     }
   }
 
   BaseCollection.prototype.clearModels = function(id) {
     this.models = [];
     this.modelsById = {};
+    this.modelsByCID = {};
+    this.currentCID = 0
   }
   /* Sorting Functions */
 
@@ -249,6 +273,8 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     this.reverse = this.reverse ? false : true;
     return this;
   }
+
+
 
 
   /* compare is a private function used to compare two models by the comparator */
@@ -291,13 +317,13 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     return this.modelsById[id];
   }
 
-  BaseCollection.prototype.findIndex = function(id) {
+  BaseCollection.prototype.findIndex = function(cid) {
     var index = -1
     this.models.forEach(function(model, idx) {
-      if (model.id === id) {
+      if (model.getCID(this) === cid) {
         index = idx;
       }
-    })
+    }.bind(this))
     return index;
   }
 /*  subset functions */
