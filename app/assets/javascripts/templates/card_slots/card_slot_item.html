@@ -3,6 +3,7 @@
   ng-class="slot.checkStatus()"
   >
     <li class="card-name">
+      <button ng-click="slot.destroy()" class="close">X</button>
       <label ng-show="slot.hasCard()">
         {{slot.cardSlot.card.get('name')}}
       </label>
@@ -14,6 +15,8 @@
         ng-model="slot.cardSlot.card.attributes.name"
         ng-blur="slot.findCard()"
         >
+
+
     </li>
 
     <li>

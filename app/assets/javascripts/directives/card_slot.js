@@ -10,7 +10,6 @@ angular.module('AppDirectives').directive('cardSlot', function() {
     },
     link: function(scope, element) {
       if (!scope.cardSlot.attributes.card_id) {
-        debugger
         element.children()[0].children[0].children[1].focus()
       }
     }

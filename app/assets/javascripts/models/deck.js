@@ -3,7 +3,8 @@
     this.initialize(data);
     this.urlBase = "api/decks";
     this.card_slots = new BaseCollection({
-      model: CardSlot
+      model: CardSlot,
+      comparator: 'card_id'
     });
   };
 
@@ -27,7 +28,6 @@
     data.card_slots = this.card_slots.map(function(card_slot) {
       return card_slot._toJSON();
     });
-    debugger
     return data;
   };
 

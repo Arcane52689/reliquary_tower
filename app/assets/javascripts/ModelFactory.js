@@ -256,9 +256,16 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     var attribute1 = c1.get(this.comparator);
     var attribute2 = c2.get(this.comparator);
     if (typeof attribute1 === 'string') {
-      attribute1 = attribute1.toLowerCase();
-      attribute2 = attribute2.toLowerCase();
+      attribute1 = (typeof attribute1 === 'undefined') ? 'zzzz': attribute1.toLowerCase();
+      attribute2 = (typeof attribute2 === 'undefined') ? 'zzzz': attribute2.toLowerCase();
     }
+    if (typeof attribute1 === 'undefined') {
+      attribute1 = 100000
+    }
+    if (typeof attribute2 === 'undefined') {
+      attribute2 = 100000
+    }
+
     if (attribute1 < attribute2) {
       return (!this.reverse) ? -1 : 1;
     } else if ( attribute1 === attribute2) {

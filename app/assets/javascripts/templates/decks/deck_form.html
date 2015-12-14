@@ -22,7 +22,7 @@
 
   <section class="main-deck">
     <h1>Main Deck</h1>
-    <button name="add_slot" ng-click="form.addSlot('main deck')">Add Slot</button>
+    <button name="add_slot" ng-click="form.addSlot('main deck')" class="add-slot">Add Slot</button>
     <ul class="deck-list main-board" ng-enter="form.addSlot('main deck')">
       <li>
         <ul class="card-slot group list-head">
@@ -40,7 +40,7 @@
 
   <section class="sideboard">
     <h1> Sideboard </h1>
-    <button name="add_slot" ng-click="form.addSlot('sideboard')">Add Slot</button>
+    <button name="add_slot" ng-click="form.addSlot('sideboard')" class="add-slot">Add Slot</button>
     <ul class="deck-list main-board" ng-enter="form.addSlot('sideboard')">
       <li>
         <ul class="card-slot group list-head">

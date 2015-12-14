@@ -74,14 +74,12 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
   this.addSlot = function(location) {
     this.deck.addBlankSlot({location: location})
-    debugger
   }
 
 
   this.save = function() {
     this.deck.card_slots.where(function(slot) {
-
-      return((!slot.card.id) || (slot.quantity < 1))
+      return ((!slot.card.id) || (slot.attributes.quantity < 1))
     }).each(function(slot) {
       slot.removeFromCollections();
     });

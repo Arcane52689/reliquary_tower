@@ -36,7 +36,6 @@ class Deck < ActiveRecord::Base
     new_ids = card_slot_hashes.map { |hash| hash[:id] }.compact
     to_update = card_slot_hashes.select {|hash| !!hash[:id] }
     to_build = card_slot_hashes.select {|hash| !hash[:id] }
-    byebug
     remove_old_ids(new_ids)
     update_old_slots(to_update)
     card_slots.build(to_build)

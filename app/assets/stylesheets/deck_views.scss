@@ -24,7 +24,7 @@
       font-size: 24px;
     }
 
-    button {
+    .add-slot {
       color: white;
       background: rgb(20,20,200);
       padding: 5px 10px;
@@ -47,7 +47,11 @@
 
 
 .card-slot {
-
+  .close {
+    display: inline;
+    padding: 2px;
+    border: 1px solid black;
+  }
 
   li {
     float: left;
