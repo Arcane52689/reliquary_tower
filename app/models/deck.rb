@@ -33,26 +33,26 @@ class Deck < ActiveRecord::Base
   end
 
   def card_slots=(card_slot_hashes)
-    # new_ids = card_slot_hashes.map { |hash| hash[:id] }.compact
-    # remove_old_ids(new_ids)
+    new_ids = card_slot_hashes.map { |hash| hash[:id] }.compact
+    remove_old_ids(new_ids)
     card_slots.build(card_slot_hashes)
   end
 
-  # def remove_old_ids(new_ids)
-  #   id_hash = {}
-  #   byebug
-  #   self.card_slots.each do |card_slot|
-  #     id_hash[card_slot.id] = false
-  #   end
-  #   new_ids.each do |id|
-  #     id_hash[id] = true
-  #   end
-  #   to_remove = id_hash.select { |k, v| !v }
-  #
-  #   to_remove.each do |card_slot|
-  #     card_slot.destroy!
-  #   end
-  # end
+  def remove_old_ids(new_ids)
+    id_hash = {}
+    self.card_slots.each do |card_slot|
+      id_hash[card_slot.id] = false
+    end
+    new_ids.each do |id|
+      id_hash[id] = true
+    end
+
+    to_remove_ids = id_hash.select { |k, v| !v }.map { |k| k[0] }
+    to_remove_objects = self.card_slots.where('id IN (?)', to_remove_ids)
+    to_remove_objects.each do |card_slot|
+      card_slot.destroy
+    end
+  end
 
 
   def set_variables

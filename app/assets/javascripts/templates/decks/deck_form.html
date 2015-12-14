@@ -1,14 +1,27 @@
 <h1> Hello,  I am the form for your deck </h1>
 
 
-<label>
-Name: <input type="text" ng-model="form.deck.attributes.name">
-</label>
 
-<div class="">
+<div class="deck-information">
+  <label>
+    Name: <input type="text" ng-model="form.deck.attributes.name">
+  </label>
+  Format: <select class="format-select" ng-model="form.deck.attributes.format"
+  ng-options="format.format as format.format for format in form.formats"
+    >
+
+  </select>
+<br>
+  I am a {{form.deck.get('format')}} deck
+</div>
+
+
+
+
+<div class="deck-form container group">
 
   <section class="main-deck">
-
+    <h1>Main Deck</h1>
     <button name="add_slot" ng-click="form.addSlot('main deck')">Add Slot</button>
     <ul class="deck-list main-board" ng-enter="form.addSlot('main deck')">
       <li>
@@ -21,13 +34,12 @@ Name: <input type="text" ng-model="form.deck.attributes.name">
 
       <card-slot ng-repeat='cardSlot in form.deck.mainDeck().all()'
         card-slot="cardSlot"
-        loading="form.loading"
         ></card-slot>
     </ul>
   </section>
 
   <section class="sideboard">
-
+    <h1> Sideboard </h1>
     <button name="add_slot" ng-click="form.addSlot('sideboard')">Add Slot</button>
     <ul class="deck-list main-board" ng-enter="form.addSlot('sideboard')">
       <li>
