@@ -10,9 +10,8 @@ angular.module('AppDirectives').directive('cardSlot', function() {
       cardSlot: '=cardSlot'
     },
     link: function(scope, element) {
-      debugger
       if (!scope.loading) {
-        element.children().children()[0].children[0].focus();
+        element.children()[0].children[0].children[1].focus()
       }
     }
   }

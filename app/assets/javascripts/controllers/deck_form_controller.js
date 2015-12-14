@@ -16,6 +16,7 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
         }.bind(this)
       });
     } else {
+      this.loading = false
       this.deck = new Deck()
     }
   }
@@ -24,8 +25,8 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
     return this.deck.card_slots();
   }
 
-  this.addSlot = function() {
-    this.deck.addBlankSlot({location: 'main deck'})
+  this.addSlot = function(location) {
+    this.deck.addBlankSlot({location: location})
   }
 
 

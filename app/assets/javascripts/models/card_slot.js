@@ -10,7 +10,6 @@
   CardSlot.prototype.updateAttributes = function(data) {
     data = data || {};
     if (data.card) {
-      debugger
       this.card.updateAttributes(data.card);
       delete data.card
     }

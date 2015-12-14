@@ -24,7 +24,6 @@
     data.card_slots = this.card_slots.map(function(card_slot) {
       return card_slot._toJSON()
     });
-    debugger
     return data
   }
 
@@ -40,6 +39,20 @@
       return card_slot.attributes.location === 'main deck'
     });
   }
+
+  Deck.prototype.sideboard = function() {
+    return this.card_slots.where(function(card_slot) {
+      return card_slot.attributes.location === 'sideboard'
+    });
+  }
+
+  Deck.prototype.commander = function() {
+    return this.card_slots.where(function(card_slot) {
+      return card_slot.attributes.location === 'commander'
+    }).first();
+  }
+
+
 
 
   return Deck;

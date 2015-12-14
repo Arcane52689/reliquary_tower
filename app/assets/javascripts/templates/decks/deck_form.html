@@ -5,20 +5,47 @@
 Name: <input type="text" ng-model="form.deck.attributes.name">
 </label>
 
-<button name="add_slot" ng-click="form.addSlot('main deck')">Add Slot</button>
-<ul class="deck-list main-board" ng-enter="form.addSlot('main deck')">
-  <li>
-    <ul class="card-slot group list-head">
-      <li> Card Name</li>
-      <li> Quantity</li>
-      <li> Status</li>
+<div class="">
+
+  <section class="main-deck">
+
+    <button name="add_slot" ng-click="form.addSlot('main deck')">Add Slot</button>
+    <ul class="deck-list main-board" ng-enter="form.addSlot('main deck')">
+      <li>
+        <ul class="card-slot group list-head">
+          <li> Card Name</li>
+          <li> Quantity</li>
+          <li> Status</li>
+        </ul>
+      </li>
+
+      <card-slot ng-repeat='cardSlot in form.deck.mainDeck().all()'
+        card-slot="cardSlot"
+        loading="form.loading"
+        ></card-slot>
     </ul>
-  </li>
+  </section>
 
-  <card-slot ng-repeat='cardSlot in form.deck.mainDeck().all()'
-    card-slot="cardSlot"
-    loading="form.loading"
-    ></card-slot>
-</ul>
+  <section class="sideboard">
 
+    <button name="add_slot" ng-click="form.addSlot('sideboard')">Add Slot</button>
+    <ul class="deck-list main-board" ng-enter="form.addSlot('sideboard')">
+      <li>
+        <ul class="card-slot group list-head">
+          <li> Card Name</li>
+          <li> Quantity</li>
+          <li> Status</li>
+        </ul>
+      </li>
+
+      <card-slot ng-repeat='cardSlot in form.deck.sideboard().all()'
+        card-slot="cardSlot"
+        loading="form.loading"
+        ></card-slot>
+    </ul>
+
+  </section>
+
+
+</div>
 <button ng-click="form.save()">Submit</button>

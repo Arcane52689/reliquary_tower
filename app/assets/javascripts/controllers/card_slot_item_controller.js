@@ -15,6 +15,11 @@ angular.module('AppControllers').controller('CardSlotItemCtrl', ['$scope', 'Flas
   }
 
   this.findCard = function() {
+    if (!this.cardSlot.card.get('name')) {
+      return
+    }
+
+
     this.status = "searching"
     this.cardSlot.card.findByName({
       success:function(resp) {
