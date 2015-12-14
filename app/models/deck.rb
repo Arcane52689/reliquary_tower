@@ -34,8 +34,19 @@ class Deck < ActiveRecord::Base
 
   def card_slots=(card_slot_hashes)
     new_ids = card_slot_hashes.map { |hash| hash[:id] }.compact
+    to_update = card_slot_hashes.select {|hash| !!hash[:id] }
+    to_build = card_slot_hashes.select {|hash| !hash[:id] }
+    byebug
     remove_old_ids(new_ids)
-    card_slots.build(card_slot_hashes)
+    update_old_slots(to_update)
+    card_slots.build(to_build)
+  end
+
+  def update_old_slots(hashes)
+    hashes.each do |hash|
+      slot = CardSlot.find(hash[:id])
+      slot.update(hash)
+    end
   end
 
   def remove_old_ids(new_ids)

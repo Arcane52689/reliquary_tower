@@ -39,7 +39,7 @@ class Api::DecksController < ApplicationController
   private
 
     def deck_params
-      params.permit(:name, :format, taggings: [], card_slots: [:card_id, :location, :quantity])
+      params.permit(:name, :format, taggings: [], card_slots: [:id, :card_id, :location, :quantity])
     end
 
 

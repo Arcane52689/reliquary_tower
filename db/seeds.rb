@@ -29,6 +29,7 @@ def seed_set
   set.is_seeded = true
   set.card_ids = card_ids
   set.save
+  p set.name
 end
 
 5.times { seed_set }
