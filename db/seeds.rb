@@ -9,6 +9,14 @@
 
 #seed some cards
 
+def seed_categories(list)
+  list.each do |cat|
+    Category.create(name: cat)
+  end
+
+end
+
+
 def seed_set
   file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
 
@@ -33,3 +41,6 @@ def seed_set
 end
 
 5.times { seed_set }
+
+
+seed_categories([])

@@ -7,7 +7,7 @@ class Card < ActiveRecord::Base
     "R" => "Red",
     "G" => "Green"
   }
-  COLOR_REGEX = /({\w}|{\w\/\/\w})/
+  COLOR_REGEX = /({\w}|{\w\/\w})/
 
   has_many :card_slots
   has_many :decks, through: :card_slots, as: :deck

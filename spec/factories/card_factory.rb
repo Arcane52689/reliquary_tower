@@ -18,14 +18,14 @@ FactoryGirl.define do
       types ["Creature"]
       mana_cost "3{G}"
       cmc 4
-      card_text "{U//R}"
+      card_text "{U/R}"
 
 
       factory :tiny_leader do
         name 'test tiny leader'
         mana_cost "2B"
         cmc 3
-        card_text "{U//R}"
+        card_text "{U/R}"
 
       end
     end

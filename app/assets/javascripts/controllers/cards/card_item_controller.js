@@ -1,5 +1,5 @@
 angular.module("AppControllers").controller("CardItemCtrl", ['$scope', function($scope) {
-  this.initalize = function()  {
+  this.initialize = function()  {
     this.card = $scope.card
   }
 
