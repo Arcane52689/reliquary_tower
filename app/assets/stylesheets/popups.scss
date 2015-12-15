@@ -4,7 +4,7 @@
   display: block;
   position: fixed;
   border: 5px solid black;
-  width: 500px;
+  min-width: 500px;
   min-height: 500px;
   left: 50%;
   margin-left: -250px;
@@ -14,7 +14,7 @@
 }
 
 
-.inner-modal {
+.login-modal {
   width: 350px;
   padding: 10px;
   border: 1px solid black;

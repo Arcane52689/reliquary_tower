@@ -1,21 +1,20 @@
-<div class="inner-modal">
+<div class="card-modal group">
 
   <section class="big-image">
     <img ng-src="{{modal.card.get('image_url')}}" alt="" />
   </section>
 
-  <section class="displayed-info">
-    <ul class="displayed-info">
+  <section class="card-info">
+    <ul class="">
       <li>
         <h1 class="title">{{modal.card.get('name')}}</h1>
       </li>
-      <li>
-        manacost: {{ modal.card.get('mana_cost')}}
+      <li ng-bind-html="modal.card.displayCost">
       </li>
       <li>
-        <p>
+        <pre>
           {{modal.card.get('card_text')}}
-        </p>
+        </pre>
       </li>
     </ul>
 

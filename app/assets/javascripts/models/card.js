@@ -1,8 +1,10 @@
-angular.module('AppModels').factory('Card', ['BaseModel', '$http', function(BaseModel, $http) {
+angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', function(BaseModel, $http, $sce) {
   var Card = function(data) {
     this.initialize(data)
     this.urlBase = "api/cards"
   }
+
+
 
   BaseModel.parentOf(Card)
 
@@ -16,6 +18,30 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', function(Base
     }.bind(this)).error(function(resp) {
       options.error && options.error(resp)
     })
+  }
+
+
+  Card.prototype.convertManaCost = function() {
+    var swap = function(string) {
+      string = string.toLowerCase();
+      if (string.search(/\//) > -1) {
+        string = string.split('/').join('');
+      }
+      return '<span class="mana mana-' + string.slice(1,-1) + '"></span>'
+      string[1]
+    }
+    var re = /{\w}|{\w\/\w}/g
+    var displayCost = "";
+    var matches = this.attributes.mana_cost.match(re);
+    debugger;
+    for (var i = 0; i < matches.length; i++) {
+      displayCost += swap(matches[i]);
+    }
+    this.displayCost = $sce.trustAsHtml(displayCost);
+  }
+
+  Card.prototype.replaceTappedSymbol = function() {
+
   }
 
 

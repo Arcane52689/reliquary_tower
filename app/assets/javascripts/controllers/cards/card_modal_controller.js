@@ -2,8 +2,12 @@ angular.module("AppControllers").controller("CardModalCtrl", ['Selected', 'Displ
   this.initialize = function() {
 
     this.card = Selected.objects.card;
+    this.card.convertManaCost();
   }
 
+  this.close = function() {
+    Displayed.popups.cardView = false
+  }
 
   this.initialize();
 }])

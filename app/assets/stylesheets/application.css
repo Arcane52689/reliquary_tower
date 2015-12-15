@@ -14,7 +14,7 @@
  *= require_self
  */
 
- h1, h2, h3, h4, h5, h6, ul, li, body, button, label, img, a {
+ h1, h2, h3, h4, h5, h6, pre, ul, li, body, button, label, img, a {
    border: 0;
    padding: 0;
    margin: 0;
