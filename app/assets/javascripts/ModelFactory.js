@@ -217,6 +217,7 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   BaseCollection.prototype.addModel = function(data) {
     var model = new this.model(data);
     this.add(model);
+    return model;
   }
 
 
@@ -241,6 +242,7 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     if (!this.adding) {
       this.sort();
     }
+    return model;
   }
 
 

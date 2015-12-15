@@ -15,7 +15,8 @@ angular.module('AppUtilities').factory('Selected', function() {
     },
 
     objects: {
-      card: undefined
+      card: undefined,
+      deck: undefined
     },
 
     selectedColors: function() {
@@ -37,6 +38,8 @@ angular.module('AppUtilities').factory('Selected', function() {
       }.bind(this));
       return result;
     }
+
+
 
 
 

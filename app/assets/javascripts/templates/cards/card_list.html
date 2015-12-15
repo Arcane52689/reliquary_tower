@@ -6,11 +6,9 @@
 </button>
 
 <ul class="card-list">
-  <li class="card" ng-repeat="card in cards.showPage()">
-  <figure >
-    <img ng-src="{{card.get('image_url')}}" alt="{{card.get('card_text')}}" />
-  </figure>
-  </li>
+  <card-item ng-repeat="card in cards.showPage()"
+  card="card">
+  </card-item>
 
 </ul>
 

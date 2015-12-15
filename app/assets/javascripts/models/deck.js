@@ -32,7 +32,7 @@
   };
 
   Deck.prototype.addBlankSlot = function(options) {
-    this.card_slots.addModel({
+    return this.card_slots.addModel({
       quantity: 1,
       location: options.location || 'main deck'
     });
@@ -51,11 +51,36 @@
   };
 
   Deck.prototype.commander = function() {
-    return this.card_slots.where(function(card_slot) {
+    var commander = this.card_slots.where(function(card_slot) {
       return card_slot.attributes.location === 'commander'
     }).first();
+    if (!commander) {
+      commander = this.addBlankSlot({location: 'commander'});
+    }
+    return commander;
   };
 
+
+  Deck.prototype.colorIdentity = function() {
+
+
+    var colors = {}, result = [];
+
+    this.card_slots.each(function(slot) {
+      if (slot.card.id) {
+        slot.card.attributes.color_identity.forEach(function(color){
+          colors[color] = true;
+        })
+      }
+    })
+    for (color in colors) {
+      if (colors[color]) {
+        result.push(color);
+      }
+    }
+    debugger
+    return result;
+  }
 
 
 

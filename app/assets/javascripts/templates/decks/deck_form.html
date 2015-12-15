@@ -6,21 +6,28 @@
   <label>
     Name: <input type="text" ng-model="form.deck.attributes.name">
   </label>
-  Format: <select class="format-select" ng-model="form.deck.attributes.format"
-  ng-options="format.format as format.format for format in form.formats"
+  Format: <select class="format-select" ng-model="form.format"
+  ng-options="format as format.format for format in form.formats"
     >
 
   </select>
 <br>
-  I am a {{form.deck.get('format')}} deck
+  I am a {{form.format.format}} deck
 </div>
 
 
 
 
 <div class="deck-form container group">
+  <section class="commander-select" ng-if="form.format.has_commander">
+    <commander-select></commander-select>
 
-  <section class="main-deck">
+
+  </section>
+
+
+
+  <section class="main-deck card-list">
     <h1>Main Deck</h1>
     <button name="add_slot" ng-click="form.addSlot('main deck')" class="add-slot">Add Slot</button>
     <ul class="deck-list main-board" ng-enter="form.addSlot('main deck')">
@@ -38,7 +45,7 @@
     </ul>
   </section>
 
-  <section class="sideboard">
+  <section class="sideboard card-list">
     <h1> Sideboard </h1>
     <button name="add_slot" ng-click="form.addSlot('sideboard')" class="add-slot">Add Slot</button>
     <ul class="deck-list main-board" ng-enter="form.addSlot('sideboard')">
