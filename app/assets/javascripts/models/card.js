@@ -33,15 +33,14 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
     var re = /{\w}|{\w\/\w}/g
     var displayCost = "";
     var matches = this.attributes.mana_cost.match(re);
-    debugger;
     for (var i = 0; i < matches.length; i++) {
       displayCost += swap(matches[i]);
     }
     this.displayCost = $sce.trustAsHtml(displayCost);
   }
 
-  Card.prototype.replaceTappedSymbol = function() {
-
+  Card.prototype.convertCardText = function() {
+    var displayText = this.attributes.card_text
   }
 
 

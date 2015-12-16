@@ -1,5 +1,7 @@
-<div class="popup-container outer-modal" ng-show="popups.hasActiveView()">
-
+<div class="popup-container outer-modal"
+  ng-if="popups.hasActiveView()"
+  ng-esc="popups.closeAll()">
+  <button ng-click="popups.closeAll()" >Close</button>
 
   <div class="login-container" ng-show="popups.displayed.loginView">
     <login></login>
