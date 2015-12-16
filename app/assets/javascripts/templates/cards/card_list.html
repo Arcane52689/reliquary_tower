@@ -5,7 +5,7 @@
   {{ (cards.list === cards.lists.all_commanders) ? "Show Tiny Leaders" : "Show All Cards" }}
 </button>
 
-<ul class="card-list">
+<ul class="card-list group">
   <card-item ng-repeat="card in cards.showPage()"
   card="card">
   </card-item>

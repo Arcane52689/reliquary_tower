@@ -13,6 +13,8 @@ class Card < ActiveRecord::Base
   has_many :decks, through: :card_slots, as: :deck
   has_many :taggings, as: :taggable
 
+  belongs_to :card_set
+
   validates :name, :cmc, :rarity, :type_string, :multiverse_id, presence: true
   validates :mana_cost, presence: true, allow_blank: true
   validates :card_text, presence: true, allow_blank: true

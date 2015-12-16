@@ -16,6 +16,22 @@ def seed_categories(list)
 
 end
 
+def seed_sets
+
+  file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
+
+  file = File.read(file_name)
+
+  data = JSON.parse(file)
+  data.keys.each do |k|
+    CardSet.create({
+      name: data[k]['name'],
+      code: k,
+      is_seeded: false
+    })
+  end
+
+end
 
 def seed_set
   file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
@@ -28,19 +44,16 @@ def seed_set
   set = CardSet.where(is_seeded: false).first
 
   cards = data[set.code]['cards']
-  card_ids = []
   cards.each do |card_data|
     next if Card.exists?(multiverse_id: card_data['multiverseid'])
-    card = Card.create_from_json(card_data)
-    card_ids << card.id
+    card = set.cards.create_from_json(card_data)
   end
   set.is_seeded = true
-  set.card_ids = card_ids
   set.save
   p set.name
 end
 
-5.times { seed_set }
+10.times { seed_set }
 
 
-seed_categories([])
+# seed_sets

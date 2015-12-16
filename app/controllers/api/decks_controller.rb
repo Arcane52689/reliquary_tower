@@ -9,6 +9,7 @@ class Api::DecksController < ApplicationController
 
   def create
     @deck = current_user.decks.new(deck_params)
+    byebug
     if @deck.save
       render json: @deck, status: 200
     else
