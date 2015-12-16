@@ -12,7 +12,6 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
         card_text: ""
       }
     });
-    debugger
     this.cardSlot = this.deck.commander();
 
     if (this.hasCommander()) {

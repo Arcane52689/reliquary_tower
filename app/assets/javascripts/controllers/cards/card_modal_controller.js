@@ -3,6 +3,7 @@ angular.module("AppControllers").controller("CardModalCtrl", ['Selected', 'Displ
 
     this.card = Selected.objects.card;
     this.card.convertManaCost();
+    this.card.convertCardText();
   }
 
   this.close = function() {

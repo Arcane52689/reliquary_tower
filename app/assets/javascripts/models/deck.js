@@ -78,7 +78,6 @@
         result.push(color);
       }
     }
-    debugger
     return result;
   }
 

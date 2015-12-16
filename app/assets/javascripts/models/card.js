@@ -28,7 +28,6 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
         string = string.split('/').join('');
       }
       return '<span class="mana mana-' + string.slice(1,-1) + '"></span>'
-      string[1]
     }
     var re = /{\w}|{\w\/\w}/g
     var displayCost = "";
@@ -41,6 +40,20 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
 
   Card.prototype.convertCardText = function() {
     var displayText = this.attributes.card_text
+    var re = /{\w}|{\w\/\w}/g
+    var replacement = function(string) {
+      string = string.toLowerCase();
+      if (string.search(/\//) > -1) {
+        string = string.split('/').join('');
+      }
+      return '<span class="mana mana-' + string.slice(1,-1) + '"></span>'
+    }
+    matches = displayText.match(re);
+    for (var i = 0; i < matches.length; i++) {
+      var match = matches[i];
+      displayText = displayText.replace(match, replacement(match));
+    }
+    this.displayText = $sce.trustAsHtml(displayText);
   }
 
 

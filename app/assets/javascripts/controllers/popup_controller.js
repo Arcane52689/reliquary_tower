@@ -11,7 +11,6 @@ angular.module('AppControllers').controller('PopupCtrl', ['Displayed', '$rootSco
   }
 
   this.closeAll = function() {
-    debugger
     this.displayed.cardView = false;
     this.displayed.loginView = false;
   }
