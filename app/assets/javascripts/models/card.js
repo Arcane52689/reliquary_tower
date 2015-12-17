@@ -48,10 +48,12 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
       }
       return '<span class="mana mana-' + string.slice(1,-1) + '"></span>'
     }
-    matches = displayText.match(re);
-    for (var i = 0; i < matches.length; i++) {
-      var match = matches[i];
-      displayText = displayText.replace(match, replacement(match));
+    var matches = displayText.match(re);
+    if (matches) {
+      for (var i = 0; i < matches.length; i++) {
+        var match = matches[i];
+        displayText = displayText.replace(match, replacement(match));
+      }
     }
     this.displayText = $sce.trustAsHtml(displayText);
   }

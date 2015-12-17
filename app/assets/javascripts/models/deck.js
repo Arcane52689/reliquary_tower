@@ -11,7 +11,7 @@
   BaseModel.parentOf(Deck);
 
   Deck.prototype.updateAttributes = function(data) {
-    data = data || {};
+    data = data || { category_ids: []};
 
     if (data.card_slots) {
       if (this.card_slots.any()) {
@@ -20,7 +20,8 @@
       this.card_slots.addModels(data.card_slots);
       delete data.card_slots;
     }
-
+    if (!data.category_ids) {
+    }
 
     BaseModel.prototype.updateAttributes.call(this, data);
   };
