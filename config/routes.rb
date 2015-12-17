@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :decks, only: [:create, :show, :update, :index, :destroy]
     resource :users, only: [ :create, :show]
     resource :session, only: [:create, :destroy]
-    resources :categories, only: [:index]
+    resources :categories, only: [:index, :create]
 
 
   end

@@ -1,4 +1,4 @@
-angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routeParams', 'Selected', function(Deck, $routeParams, Selected) {
+angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routeParams', 'Selected', 'Categories', '$scope', function(Deck, $routeParams, Selected, Categories, $scope) {
 
   this.initialize = function() {
     this._createDeck();

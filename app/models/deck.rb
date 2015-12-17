@@ -9,7 +9,7 @@ class Deck < ActiveRecord::Base
 
   belongs_to :user
   has_many :taggings, as: :taggable
-
+  has_many :categories, through: :taggings, as: :category
 
   after_initialize :set_variables
 
@@ -108,6 +108,7 @@ class Deck < ActiveRecord::Base
     else
     end
   end
+
 
 
 

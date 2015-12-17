@@ -1,9 +1,13 @@
 
 
 <ul>
-  <li> <input type="text" ng-model="categories.name" ng-esc="categories.hideResults()" ng-change="categories.updateDisplayed()"></li>
+  <li> <input type="text" ng-model="categories.name"
+     ng-esc="categories.hideResults()"
+     ng-change="categories.updateDisplayed()"
+     ng-enter="categories.addSelected()">
+     <button ng-click="categories.addSelected()">Add Tag</button></li>
   <li ng-repeat="category in categories.displayed.first(10)" ng-show="categories.display"
-  ng-click="categories.select(category.id)">
+  ng-click="categories.select(category)">
     {{ category.get('name') }}
   </li>
 </ul>

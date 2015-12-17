@@ -1,4 +1,4 @@
-angular.module("AppControllers").controller("CategorySelectCtrl", ['Categories', '$scope', function(Categories, $scope) {
+angular.module("AppControllers").controller("CategorySelectCtrl", ['Categories', '$scope', 'Flash', function(Categories, $scope, Flash) {
   this.initialize = function() {
     this.list = Categories;
     this.taggable = $scope.taggable;
@@ -8,17 +8,14 @@ angular.module("AppControllers").controller("CategorySelectCtrl", ['Categories',
   }
 
   this.eliminateSelected = function() {
-    // var taggings = this.taggable.taggings.map(function(tagging) {
-    //   return tagging.get('category_id');
-    // })
-    var taggings = [];
+    var taggings = this.taggable.attributes.category_ids;
     this.list = Categories.where(function(cat) {
       return (taggings.indexOf(cat.id) < 0);
     });
   }
 
   this.updateDisplayed = function() {
-
+    this.selectedCategory = undefined;
     this.display = true
     var name = this.name.toLowerCase(), lowerName;
     this.displayed = this.list.where(function(category) {
@@ -37,8 +34,26 @@ angular.module("AppControllers").controller("CategorySelectCtrl", ['Categories',
     this.selectedCategory = category;
   }
 
-  this.addTag = function() {
-    this.taggable.addTaging(category.id);
+  this.addSelected = function() {
+    if (this.selectedCategory) {
+      this.taggable.attributes.category_ids.push(this.selectedCategory.id);
+      this.eliminateSelected();
+      this.name = "";
+    } else  {
+      var newCat = Categories.addModel({name: this.name});
+      newCat.save({
+        success: function() {
+          Flash.success(this.name + " was successfully created");
+          this.taggable.attributes.category_ids.push(newCat.id);
+          this.eliminateSelected();
+          this.name = ""
+        }.bind(this),
+        error: function(resp) {
+          Flash.error(resp.errors)
+          newCat.removeFromCollections();
+        }
+      })
+    }
   }
 
   this.initialize();

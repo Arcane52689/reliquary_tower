@@ -20,6 +20,8 @@
       this.card_slots.addModels(data.card_slots);
       delete data.card_slots;
     }
+
+
     BaseModel.prototype.updateAttributes.call(this, data);
   };
 
