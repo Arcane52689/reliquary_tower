@@ -100,6 +100,7 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
       if (format === this.deck.attributes.format) {
         this.format = format;
       }
+    debugger
     }.bind(this))
   }
 

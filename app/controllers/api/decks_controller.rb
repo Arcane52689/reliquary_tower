@@ -9,8 +9,8 @@ class Api::DecksController < ApplicationController
 
   def create
     @deck = current_user.decks.new(deck_params)
-    byebug
     if @deck.save
+      @deck.card_slots.includes(:card)
       render json: @deck, status: 200
     else
       render json: @deck.errors.full_messages, status: 422
@@ -18,7 +18,7 @@ class Api::DecksController < ApplicationController
   end
 
   def update
-    @deck = current_user.decks.find(params[:id])
+    @deck = current_user.decks.includes(card_slots: :card).find(params[:id])
     if @deck.update(deck_params)
       render json: @deck, status:200
     else
@@ -37,6 +37,7 @@ class Api::DecksController < ApplicationController
   private
 
     def deck_params
+      byebug
       params.permit(:name, :format, taggings: [], card_slots: [:id, :card_id, :location, :quantity])
     end
 

@@ -43,7 +43,7 @@ class Deck < ActiveRecord::Base
 
   def update_old_slots(hashes)
     hashes.each do |hash|
-      slot = CardSlot.find(hash[:id])
+      slot = self.card_slots.find(hash[:id])
       slot.update(hash)
     end
   end

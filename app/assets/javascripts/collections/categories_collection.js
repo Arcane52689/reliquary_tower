@@ -6,4 +6,5 @@ angular.module("AppCollections").factory('Categories', ['Category', 'BaseCollect
   Categories.fetch();
 
   return Categories
+  
 }]);

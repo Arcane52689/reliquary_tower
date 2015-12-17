@@ -87,15 +87,23 @@
     }
 
     BaseModel.prototype._toJSON = function() {
-      var data
+      var data, nameSpace;
       if (this.toJSON) {
         data = this.toJSON();
       } else {
         data = {}
       }
+      if (data.nameSpace) {
+        nameSpace = data.nameSpace;
+        delete data.nameSpace;
+      }
       for (key in this.attributes) {
         if (!data.hasOwnProperty(key)) {
-          data[key] = this.attributes[key]
+          if (nameSpace) {
+            data[nameSpace][key] = this.attributes[key]
+          } else {
+            data[key] = this.attributes[key]
+          }
         }
       }
       return data;
