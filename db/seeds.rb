@@ -55,5 +55,5 @@ end
 
 10.times { seed_set }
 
-
+seed_categories(['Sacrifice', 'tokens', 'aggro', 'landfall', 'storm', 'RDW', 'burn', 'exalted'])
 # seed_sets

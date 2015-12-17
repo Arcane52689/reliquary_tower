@@ -64,7 +64,6 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
       this.deck.fetch({
         success: function() {
           this.loading = false;
-          // this._addNewSlots();
           this.selectFormat()
         }.bind(this)
       });
@@ -97,10 +96,9 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
   this.selectFormat = function() {
     this.formats.forEach(function(format) {
-      if (format === this.deck.attributes.format) {
+      if (format.format === this.deck.attributes.format) {
         this.format = format;
       }
-    debugger
     }.bind(this))
   }
 

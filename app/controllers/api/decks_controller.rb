@@ -37,8 +37,7 @@ class Api::DecksController < ApplicationController
   private
 
     def deck_params
-      byebug
-      params.permit(:name, :format, taggings: [], card_slots: [:id, :card_id, :location, :quantity])
+      params.require(:deck).permit(:name, :format, taggings: [], card_slots: [:id, :card_id, :location, :quantity])
     end
 
 

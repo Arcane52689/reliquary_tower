@@ -1,4 +1,4 @@
-angular.module("AppCollections").factory('Categories', ['Category', 'BaseCollection', function() {
+angular.module("AppCollections").factory('Categories', ['Category', 'BaseCollection', function(Category, BaseCollection) {
   var Categories = new BaseCollection({
     model: Category,
     url: 'api/categories',
@@ -6,5 +6,5 @@ angular.module("AppCollections").factory('Categories', ['Category', 'BaseCollect
   Categories.fetch();
 
   return Categories
-  
+
 }]);

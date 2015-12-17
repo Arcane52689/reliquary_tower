@@ -1,7 +1,7 @@
 angular.module('AppModels').factory('Category', ['BaseModel', function(BaseModel) {
-  var Categroy = function() {
-    this.initialize();
+  var Category = function(data) {
     this.url = ""
+    this.initialize(data);
   }
 
   BaseModel.parentOf(Category);
