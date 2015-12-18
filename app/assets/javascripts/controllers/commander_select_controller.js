@@ -1,15 +1,18 @@
-angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollection', 'Selected', function(CardCollection, Selected) {
+angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollection', 'Selected', 'Commanders', function(CardCollection, Selected, Commanders) {
   this.initialize = function() {
     this.deck = Selected.objects.deck;
-    this.collection = new CardCollection({
-      url: 'api/cards/commanders',
+    this.commanders = Commanders;
+    Commanders.fetch();
+    this.suggestions = new CardCollection({
+      url: 'api/cards/suggestions',
       searchOptions: {
         included_colors: this.deck.colorIdentity(),
         exculded_colors: [],
         is_tiny_leader: (this.deck.get('format') === 'Tiny Leaders'),
         taggings: [],
         name: "",
-        card_text: ""
+        card_text: "",
+        commander: true
       }
     });
     this.cardSlot = this.deck.commander();
@@ -30,7 +33,18 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
     this.collection.fetch()
   }
 
-  
+  this.updateNames = function() {
+    var lowerName = this.name.toLowerCase()
+    this.possibleCards = this.commanders.where(function(card) {
+      return (card.get('name').toLowerCase().indexOf(lowerName) > -1)
+    });
+  }
+
+  this.selectCommander = function(card) {
+    this.
+  }
+
+
 
 
 

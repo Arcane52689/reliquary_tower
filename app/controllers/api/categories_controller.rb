@@ -17,7 +17,7 @@ class Api::CategoriesController < ApplicationController
 
   def index
     @categories = Category.all
-    render json: @categories, eachserializer: CategorySerializer
+    render json: @categories, each_serializer: CategorySerializer
   end
 
   def category_params

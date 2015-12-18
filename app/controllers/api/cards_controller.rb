@@ -17,7 +17,7 @@ class Api::CardsController < ApplicationController
   def commanders
     @cards = CardSuggestionService.commander([], [])
 
-    render json: @cards, eachserializer: CardSerializer
+    render json: @cards, each_serializer: CardSerializer
   end
 
 

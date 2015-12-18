@@ -3,7 +3,17 @@
 
   currently selecting the following colors:
   {{commander.collection.searchOptions.included_colors}}
-  <input type="text" ng-model="commander.collection.searchOptions.name">
+  <input type="text" ng-model="commander.name" ng-change="commander.updateNames()">
+  <ul class="name-search" ng-show="commander.searchingNames">
+    <li
+      class="name-item"
+      ng-repeat="card in commander.possibleCards.all()"
+      ng-click="commander.selectCommander(card)">
+      {{ card.get('name')}}
+    </li>
+  </ul>
+
+
   <ul class="possible-commanders">
 
   </ul>
