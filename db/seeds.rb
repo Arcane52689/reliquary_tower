@@ -31,6 +31,8 @@ def seed_sets
     })
   end
 
+  file.close
+
 end
 
 def seed_set
@@ -51,6 +53,8 @@ def seed_set
   set.is_seeded = true
   set.save
   p set.name
+
+  file.close
 end
 
 
