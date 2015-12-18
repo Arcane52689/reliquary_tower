@@ -1,6 +1,6 @@
 angular.module("AppControllers").controller("TaggingCtrl", [ 'Categories', '$scope', function(Categories, $scope) {
   this.initialize = function() {
-    this.category = Categories.find($scope.categoryId);
+    this.category = Categories.findOrFetch($scope.categoryId);
     this.taggable = $scope.taggable;
   }
 

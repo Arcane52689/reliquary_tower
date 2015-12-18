@@ -327,6 +327,15 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     return this.modelsById[id];
   }
 
+  BaseCollection.prototype.findOrFetch = function(id) {
+    var model = this.find(id);
+    if (!model) {
+      model = new this.model({id: id})
+    }
+    model.fetch();
+    return model;
+  }
+
   BaseCollection.prototype.findIndex = function(cid) {
     var index = -1
     this.models.forEach(function(model, idx) {

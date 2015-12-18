@@ -5,12 +5,6 @@ class CardSet < ActiveRecord::Base
 
   has_many :cards, dependent: :destroy
 
-  def self.create_from_json(set_json)
-    byebug
-    self.create({
 
-    })
-
-  end
 
 end

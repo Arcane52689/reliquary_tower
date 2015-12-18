@@ -1,4 +1,21 @@
+.tagging-item {
+  background: rgb(130,90,50);
+  min-width: 100px;
+  float: left;
+  margin-left: 10px;
+  button {
+    display:inline-block;
+  }
+}
 
+.tagging-item:before {
+  content:"";
+  display: inline-block;
+  border-left: 10px solid transparent;
+  border-right: 10px solid green;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
 
 .card-modal {
   width: 700px;

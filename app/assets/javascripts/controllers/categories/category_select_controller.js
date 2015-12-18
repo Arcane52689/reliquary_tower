@@ -8,7 +8,7 @@ angular.module("AppControllers").controller("CategorySelectCtrl", ['Categories',
   }
 
   this.eliminateSelected = function() {
-    var taggings = this.taggable.attributes.category_ids;
+    var taggings = this.taggable.attributes.category_ids || [];
     this.list = Categories.where(function(cat) {
       return (taggings.indexOf(cat.id) < 0);
     });
