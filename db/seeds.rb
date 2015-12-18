@@ -7,14 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
-
-file = File.open(file_name)
-
-
-
-data = JSON.parse(file.read)
-byebug
 def seed_categories(list)
   list.each do |cat|
     Category.create(name: cat)
@@ -63,5 +55,5 @@ end
 
 
 # seed_categories(['enchantments', 'auras', 'general damage', 'weenies', 'combo'])
-seed_sets
+# seed_sets
 seed_set(10)
