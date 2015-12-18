@@ -7,8 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-#seed some cards
+file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
 
+file = File.open(file_name)
+
+
+
+data = JSON.parse(file.read)
+byebug
 def seed_categories(list)
   list.each do |cat|
     Category.create(name: cat)
@@ -17,12 +23,12 @@ def seed_categories(list)
 end
 
 def seed_sets
-
   file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
 
-  file = File.read(file_name)
+  file = File.open(file_name)
 
-  data = JSON.parse(file)
+  data = JSON.parse(file.read)
+
   data.keys.each do |k|
     CardSet.create({
       name: data[k]['name'],
@@ -35,29 +41,27 @@ def seed_sets
 
 end
 
-def seed_set
+def seed_set(number)
   file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
 
-  file = File.read(file_name)
+  file = File.open(file_name)
 
-  data = JSON.parse(file)
-
-
-  set = CardSet.where(is_seeded: false).first
-
-  cards = data[set.code]['cards']
-  cards.each do |card_data|
-    next if Card.exists?(multiverse_id: card_data['multiverseid'])
-    card = set.cards.create_from_json(card_data)
+  data = JSON.parse(file.read)
+  number.times do
+    set = CardSet.where(is_seeded: false).first
+    cards = data[set.code]['cards']
+    cards.each do |card_data|
+      next if Card.exists?(multiverse_id: card_data['multiverseid'])
+      card = set.cards.create_from_json(card_data)
+    end
+    set.is_seeded = true
+    set.save
+    p set.name
   end
-  set.is_seeded = true
-  set.save
-  p set.name
-
   file.close
 end
 
 
 # seed_categories(['enchantments', 'auras', 'general damage', 'weenies', 'combo'])
 seed_sets
-10.times { seed_set }
+seed_set(10)
