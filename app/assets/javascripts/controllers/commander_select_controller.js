@@ -30,6 +30,7 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
     this.collection.fetch()
   }
 
+  
 
 
 

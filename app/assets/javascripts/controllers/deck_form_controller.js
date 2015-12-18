@@ -39,11 +39,7 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
   }
 
 
-  this._addNewSlots = function() {
-    this.addSlot('sideboard');
-    this.addSlot('main deck');
 
-  }
 
   this.hasCommander = function() {
     return this.format.hasCommander;
@@ -70,7 +66,6 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
     } else {
       this.loading = false;
       this.deck = new Deck();
-      this._addNewSlots();
     }
     Selected.objects.deck = this.deck;
   }
@@ -80,17 +75,14 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
   }
 
   this.addSlot = function(location) {
+    debugger
     this.deck.addBlankSlot({location: location})
+
   }
 
 
   this.save = function() {
-    this.deck.attributes.format = this.format.format;
-    this.deck.card_slots.where(function(slot) {
-      return ((!slot.card.id) || (slot.attributes.quantity < 1))
-    }).each(function(slot) {
-      slot.removeFromCollections();
-    });
+    this.deck.attributes.format = this.format.format || '';
     this.deck.save();
   }
 

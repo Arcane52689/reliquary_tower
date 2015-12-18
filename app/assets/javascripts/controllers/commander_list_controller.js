@@ -1,17 +1,13 @@
-angular.module('AppControllers').controller('CommanderListCtrl', ['CardCollection', 'Selected', '$scope', function(CardCollection, Selected, $scope) {
+angular.module('AppControllers').controller('CommanderListCtrl', ['Commanders', 'Selected', '$scope', function(Commanders, Selected, $scope) {
   this.initialize = function() {
     this.isCommanderList = true;
     this.lists = {
-      all_commanders: new CardCollection({
-        url: "api/cards/commanders"
-      })
+      all_commanders: Commanders
     }
     this.lists.all_commanders.fetch({
       success: function() {
         this.list = this.lists.all_commanders;
-        this.lists.tiny_leaders = this.list.where(function(card) {
-          return (card.get('cmc') <= 3);
-        })
+        this.lists.tiny_leaders = this.list.tinyLeaders();
         this.updateDisplayed();
       }.bind(this)
     })

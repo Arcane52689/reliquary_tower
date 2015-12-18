@@ -256,6 +256,7 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
 
   BaseCollection.prototype.remove = function(cid) {
     var model
+    debugger
     if (typeof cid === 'object') {
       model = cid;
     } else {
@@ -267,7 +268,7 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
       this.models.splice(index, 1);
     }
     if ( model.id) {
-      delete this.modelsById[id];
+      delete this.modelsById[model.id];
     }
   }
 

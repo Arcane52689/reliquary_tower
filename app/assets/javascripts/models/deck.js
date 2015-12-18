@@ -30,7 +30,9 @@
     var data = {};
     data.deck = {};
     data.nameSpace = 'deck';
-    data.deck.card_slots = this.card_slots.map(function(card_slot) {
+    data.deck.card_slots = this.card_slots.where(function(card_slot) {
+      return card_slot.card.id
+    }).map(function(card_slot) {
       return card_slot._toJSON();
     });
     return data;

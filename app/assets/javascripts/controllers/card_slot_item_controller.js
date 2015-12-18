@@ -19,6 +19,7 @@ angular.module('AppControllers').controller('CardSlotItemCtrl', ['$scope', 'Flas
     this.cardSlot.card.findByName({
       success:function(resp) {
         var text = this.cardSlot.card.get('name') + ' has been found';
+        this.cardSlot.attributes.card_id = this.cardSlot.card.id;
         this.status = "found";
         Flash.success(text);
       }.bind(this),

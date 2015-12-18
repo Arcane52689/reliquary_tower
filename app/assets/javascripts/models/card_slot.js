@@ -17,7 +17,9 @@
   }
 
   CardSlot.prototype.toJSON = function() {
-    this.attributes.card_id = this.card.id;
+    if (!this.attributes.card_id) {
+      debugger
+    }
     return {};
   }
 

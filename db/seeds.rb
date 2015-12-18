@@ -35,7 +35,7 @@ end
 
 def seed_set
   file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
-
+  
   file = File.read(file_name)
 
   data = JSON.parse(file)
@@ -53,7 +53,7 @@ def seed_set
   p set.name
 end
 
-10.times { seed_set }
+# 10.times { seed_set }
 
-seed_categories(['Sacrifice', 'tokens', 'aggro', 'landfall', 'storm', 'RDW', 'burn', 'exalted'])
-# seed_sets
+# seed_categories(['enchantments', 'auras', 'general damage', 'weenies', 'combo'])
+seed_sets
