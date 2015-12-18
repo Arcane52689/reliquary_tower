@@ -2,7 +2,8 @@
 <div class="">
 
   currently selecting the following colors:
-  {{commander.collection.searchOptions.included_colors}}
+  {{ commander.deck.colorIdentity() }}
+
   <input type="text" ng-model="commander.name" ng-change="commander.updateNames()">
   <ul class="name-search" ng-show="commander.searchingNames">
     <li

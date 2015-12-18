@@ -38,10 +38,11 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
     this.possibleCards = this.commanders.where(function(card) {
       return (card.get('name').toLowerCase().indexOf(lowerName) > -1)
     });
+    this.searchingNames = true;
   }
 
   this.selectCommander = function(card) {
-    this.
+
   }
 
 
