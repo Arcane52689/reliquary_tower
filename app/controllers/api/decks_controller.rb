@@ -31,7 +31,8 @@ class Api::DecksController < ApplicationController
   end
 
   def index
-
+    @decks = Deck.all
+    render json: @decks, each_serializer: DeckInfoSerializer
   end
 
   private

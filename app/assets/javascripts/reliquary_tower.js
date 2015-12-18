@@ -45,5 +45,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'DeckFormCtrl',
     controllerAs: 'form'
   })
+  .when('/decks', {
+    templateUrl: 'decks/deck_index.html',
+    controller: 'DeckIndexCtrl',
+    controllerAs: 'index'
+  })
 
 }])

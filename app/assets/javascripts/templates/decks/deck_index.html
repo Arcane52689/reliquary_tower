@@ -1,0 +1,12 @@
+
+
+<h1>All the decks</h1>
+
+<ul>
+  <li class="deck-item" ng-repeat="deck in index.decks.all()">
+    <ul class="deck-attributes group">
+      <li class="link" ng-click="index.goToDeck(deck.id)"> {{ deck.get('name') }} </li>
+      <li> {{ deck.get('format')}} </li>
+    </ul>
+  </li>
+</ul>

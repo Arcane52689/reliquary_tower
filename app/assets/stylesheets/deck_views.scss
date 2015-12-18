@@ -1,4 +1,26 @@
 
+// deck index
+
+
+
+//deck item
+
+.deck-item {
+  .deck-attributes {
+    li {
+      float: left;
+      margin-left: 15px;
+      width: 90px;
+    }
+    .link {
+      text-decoration: underline;
+      color: blue;
+    }
+  }
+}
+
+
+
 
 // deck locations
 
