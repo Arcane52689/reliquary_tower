@@ -56,4 +56,4 @@ end
 
 # seed_categories(['enchantments', 'auras', 'general damage', 'weenies', 'combo'])
 # seed_sets
-# seed_set(10)
+seed_set(10)
