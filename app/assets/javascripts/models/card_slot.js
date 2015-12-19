@@ -23,6 +23,10 @@
     return {};
   }
 
+  CardSlot.prototype.setCard = function(card) {
+    this.attributes.card_id = card.id
+    this.card = card;
+  }
 
 
   return CardSlot

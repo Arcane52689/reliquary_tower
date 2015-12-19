@@ -2,7 +2,7 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
   this.initialize = function() {
     this.deck = Selected.objects.deck;
     this.commanders = Commanders;
-    Commanders.fetch();
+    this.commanders.fetch();
     this.suggestions = new CardCollection({
       url: 'api/cards/suggestions',
       searchOptions: {
@@ -15,8 +15,6 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
         commander: true
       }
     });
-    this.cardSlot = this.deck.commander();
-
     if (this.hasCommander()) {
       this.searching = false;
     } else {
@@ -25,7 +23,7 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
   }
 
   this.hasCommander = function() {
-    return !!this.cardSlot.card.id
+    return !!this.deck.commander();
   }
 
   this.suggestCommander = function() {
@@ -42,7 +40,9 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
   }
 
   this.selectCommander = function(card) {
-
+    this.deck.setCommander(card);
+    this.name = card.get('name');
+    this.searchingNames = false;
   }
 
 

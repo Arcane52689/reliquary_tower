@@ -59,14 +59,22 @@
   };
 
   Deck.prototype.commander = function() {
-    var commander = this.card_slots.where(function(card_slot) {
-      return card_slot.attributes.location === 'commander'
-    }).first();
-    if (!commander) {
-      commander = this.addBlankSlot({location: 'commander'});
+    var models = this.card_slots.all()
+    for( var i = 0; i < models.length; i++ ) {
+      if (models[i].get('location') === 'commander') {
+        return models[i];
+      }
     }
-    return commander;
+    return undefined;
   };
+
+  Deck.prototype.setCommander = function(card) {
+    if (this.commander()) {
+      this.commander().setCard(card);
+    } else {
+      this.addBlankSlot({location: 'commander'}).setCard(card)
+    }
+  }
 
 
   Deck.prototype.colorIdentity = function() {
