@@ -36,7 +36,7 @@ class Category < ActiveRecord::Base
       query = "? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?)"
       arguments = [self.name.singularize, "%#{self.name.singularize}%", "%#{self.name.pluralize}%"]
     else
-      query = "category_id = ?"
+      query = "(taggings.category_id = ? AND taggings.taggable_type = 'Card'"
       arguments = [self.id]
     end
     return query, arguments
