@@ -6,13 +6,12 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
     this.suggestions = new CardCollection({
       url: 'api/cards/suggestions',
       searchOptions: {
-        included_colors: this.deck.colorIdentity(),
-        exculded_colors: [],
+        "included_colors[]": this.deck.colorIdentity(),
         is_tiny_leader: (this.deck.get('format') === 'Tiny Leaders'),
         taggings: [],
-        name: "",
         card_text: "",
-        commander: true
+        commander: true,
+        limit: 10
       }
     });
     if (this.hasCommander()) {
@@ -26,10 +25,7 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
     return !!this.deck.commander();
   }
 
-  this.suggestCommander = function() {
-    this.searching = true;
-    this.collection.fetch()
-  }
+
 
   this.updateNames = function() {
     var lowerName = this.name.toLowerCase()
@@ -45,6 +41,18 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
     this.searchingNames = false;
   }
 
+  this.updateSearchInfo = function() {
+    this.suggestions.searchOptions["included_colors[]"] = this.deck.colorIdentity();
+    this.suggestions.searchOptions.taggings = this.deck.get('category_ids');
+
+  }
+
+
+  this.suggestCommanders = function() {
+    this.updateSearchInfo();
+    debugger
+    this.suggestions.fetch();
+  }
 
 
 

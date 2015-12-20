@@ -14,9 +14,18 @@
     </li>
   </ul>
 
+  <section>
+    <div class="">
+      Card Text: <input type="text"
+        name="card[card_text]" ng-model="commander.suggestions.searchInfo.card_text">
+    </div>
+  </section>
 
+  <button ng-click="commander.suggestCommanders()">Suggest Commanders</button>
   <ul class="possible-commanders">
-
+    <li ng-repeat="suggestion in commander.suggestions.all()">
+      {{ suggestion.get('name') }}
+    </li>
   </ul>
 
   <section>

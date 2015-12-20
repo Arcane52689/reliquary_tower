@@ -28,8 +28,18 @@ class Api::CardsController < ApplicationController
     render json: @cards
   end
 
+  def suggestions
+    @cards = CardSuggestionService.suggest(suggestion_params)
+    render json: @cards
+  end
+
   def search_params
     params.permit(:name, :card_text, :orderBy, :limit)
+  end
+
+  def suggestion_params
+    byebug
+    params.permit(:card_text, :limit, :commander, :is_tiny_leader, included_colors: [])
   end
 
 

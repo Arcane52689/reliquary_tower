@@ -7,7 +7,7 @@ class CardSuggestionService
   def self.commander(colors, categories)
     result = Card.where( can_be_commander: true)
     result = result.joins(:taggings).find_by_color_identity(colors) if colors.any?
-    result.where("category_id IN (?)", categories) if categories.any?
+    result = result.where("category_id IN (?)", categories) if categories.any?
     result.to_a.uniq(&:name)
   end
 
@@ -21,6 +21,19 @@ class CardSuggestionService
   end
 
 
+
+  def self.suggest(params)
+    result = Card.all
+    byebug
+    result = result.where(can_be_commander: true) if params[:commander]
+    result = result.where('UPPER(name) like UPPER(?)', "%#{params[:card_text]}%")
+    result = result.find_by_color_identity(params[:included_colors]) if params[:included_colors]
+    result.where('cmc < 4') if params[:is_tiny_leader]
+    limit = params[:limit].to_i || 10
+    result = result.limit(limit)
+    result
+
+  end
 
 
 
