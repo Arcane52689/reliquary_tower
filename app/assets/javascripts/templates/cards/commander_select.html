@@ -23,9 +23,10 @@
 
   <button ng-click="commander.suggestCommanders()">Suggest Commanders</button>
   <ul class="possible-commanders">
-    <li ng-repeat="suggestion in commander.suggestions.all()">
-      {{ suggestion.get('name') }}
-    </li>
+    <card-item ng-repeat="suggestion in commander.suggestions.all()"
+      card="suggestion">
+
+    </card-item>
   </ul>
 
   <section>

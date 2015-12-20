@@ -26,7 +26,31 @@ RSpec.describe Category, type: :model do
 
 
 
+    describe "generate_query" do
+      let(:elves) { create :elves }
+      let(:category) { create :category}
 
+      it "should generate a query string" do
+        query, arguments = category.generate_query
+        expect(query).to eq("category_id = ?")
+        expect(arguments).to eq([3])
+      end
+
+      describe "tribal key words" do
+
+        it "should turn a plural name into a singular" do
+
+          query, arguments = elves.generate_query
+          expect(query).to eq("? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?)")
+          expect(arguments).to eq(['Elf', 'Elf', '%Elves%'])
+        end
+
+
+
+      end
+
+
+    end
 
 
 
