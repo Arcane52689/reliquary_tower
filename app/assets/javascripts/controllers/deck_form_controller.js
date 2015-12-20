@@ -75,7 +75,7 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
   }
 
   this.addSlot = function(location) {
-    debugger
+
     this.deck.addBlankSlot({location: location})
 
   }
@@ -83,7 +83,7 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
   this.save = function() {
     this.deck.attributes.format = this.format.format || '';
-    debugger
+
     this.deck.save();
   }
 

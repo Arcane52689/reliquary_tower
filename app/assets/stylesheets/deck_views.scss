@@ -38,11 +38,17 @@
   .card-list {
     float: left;
     width: 430px;
-    height: 400px;
     margin: 15px;
     border: 5px solid black;
     padding: 15px;
     border-radius: 10px;
+
+    .deck-list {
+      height: 400px;
+      overflow: scroll;
+
+    }
+
     h1 {
       text-align: center;
       font-size: 24px;

@@ -16,12 +16,7 @@
     BaseModel.prototype.updateAttributes.call(this, data);
   }
 
-  CardSlot.prototype.toJSON = function() {
-    if (!this.attributes.card_id) {
-      debugger
-    }
-    return {};
-  }
+
 
   CardSlot.prototype.setCard = function(card) {
     this.attributes.card_id = card.id

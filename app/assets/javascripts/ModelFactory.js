@@ -197,6 +197,7 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     this.perPage = options.perPage || 25;
     this.searchOptions = options.searchOptions || {};
     this.currentCID = 1;
+    this.isClone = false;
   }
 
   BaseCollection.prototype.fetch = function(options) {
@@ -237,13 +238,17 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
       } else {
         this.modelsById[model.id] = model;
         this.models.push(model);
-        model.belongsTo(this, this.currentCID)
+        if (!this.isClone) {
+          model.belongsTo(this, this.currentCID)
+        }
         this.modelsByCID[this.currentCID] = model;
         this.currentCID += 1;
       }
     } else {
       this.models.push(model)
-      model.belongsTo(this, this.currentCID)
+      if (!this.isClone) {
+        model.belongsTo(this, this.currentCID)
+      }
       this.modelsByCID[this.currentCID] = model;
       this.currentCID += 1;
     }
@@ -256,7 +261,6 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
 
   BaseCollection.prototype.remove = function(cid) {
     var model
-    debugger
     if (typeof cid === 'object') {
       model = cid;
     } else {
@@ -348,13 +352,22 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 /*  subset functions */
 
-  BaseCollection.prototype.where = function(callback) {
-    var result = new this.constructor({
+  BaseCollection.prototype.emptyClone = function() {
+    var dup = new this.constructor({
       model: this.model,
-      url: undefined,
+      url: this.url,
       comparator: this.comparator,
-      reverse: this.reverse
-    })
+      reverse: this.reverse,
+      perPage: this.perPage,
+      searchOptions: this.searchOptions
+    });
+    dup.isClone = true;
+    return dup;
+  }
+
+
+  BaseCollection.prototype.where = function(callback) {
+    var result = this.emptyClone();
     result.adding = true
     this.models.forEach(function(model) {
       if (callback(model)) {

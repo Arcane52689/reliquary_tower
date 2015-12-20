@@ -4,7 +4,7 @@
     this.urlBase = "api/decks";
     this.card_slots = new BaseCollection({
       model: CardSlot,
-      comparator: 'card_id'
+      comparator: ''
     });
   };
 
@@ -14,7 +14,6 @@
     data = data || { category_ids: []};
 
     if (data.card_slots) {
-      debugger
       if (this.card_slots.any()) {
         this.card_slots.clearModels();
       }
