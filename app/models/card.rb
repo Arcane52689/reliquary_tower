@@ -135,7 +135,41 @@ class Card < ActiveRecord::Base
   end
 
 
+
+  def determine_if_can_produce_mana
+    produces = {
+      "White"=> false,
+      "Blue"=> false,
+      "Black"=> false,
+      "Red"=> false,
+      "Green"=> false,
+      "Colorless"=> false,
+      "any color"=> false
+    }
+    if self.card_text.include?("to your mana pool")
+      abilities = self.card_text.split("\n").select { |s| s.include?("to your mana pool") && s.include?(":")}
+
+      abilities.each do |ability|
+        ability.split(':')[-1].scan(/{\w}/).each do |symbol|
+          color = COLOR_DICT[symbol[1]]
+          if color
+            produces[color] = true
+          else
+            produces['Colorless'] = true
+          end
+        end
+      end
+      produces['any color'] = true if produces.none? { |k,v| v }
+    end
+    produces.select {|k,v| v }.keys
+  end
+
 end
+
+
+
+
+
 
 class Array
 
