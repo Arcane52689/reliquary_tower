@@ -1,7 +1,10 @@
 <div class="stats">
   <ul class="card-counts">
     <li>
-      Total: 
+      Total: {{stats.mainDeckTotal}}
+    </li>
+    <li ng-repeat="type in stats.typeCounts">
+      {{type.type}} : {{type.count}}
     </li>
   </ul>
 </div>

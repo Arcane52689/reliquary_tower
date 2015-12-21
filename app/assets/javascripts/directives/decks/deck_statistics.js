@@ -6,7 +6,7 @@ angular.module('AppDirectives').directive('deckStatistics', function() {
     controller: 'DeckStatisticsCtrl',
     controllerAs: 'stats',
     scope: {
-      deck: "=deck'"
+      deck: "=deck"
     }
   }
 })
