@@ -75,6 +75,23 @@
     }
   }
 
+  Deck.prototype.manaProducers = function() {
+    var result = {};
+    this.mainDeck().each(function(slot) {
+      slot.card.attributes.produces_mana.forEach(function(mana) {
+        if (result[mana]) {
+          result[mana].count += slot.get('quantity');
+        } else {
+          result[mana] = {
+            type: mana,
+            count: slot.get('quantity')
+          }
+        }
+      })
+    })
+    return result
+  }
+
 
 
 

@@ -22,6 +22,7 @@ class Card < ActiveRecord::Base
 
   before_save :determine_can_be_commander
   before_save :parse_color_identity
+  before_save :determine_if_can_produce_mana
 
   def self.find_by_color(color)
     self.find_by_single_item_in_array_field(:colors, color)
@@ -161,7 +162,7 @@ class Card < ActiveRecord::Base
       end
       produces['any color'] = true if produces.none? { |k,v| v }
     end
-    produces.select {|k,v| v }.keys
+    self.produces_mana = produces.select {|k,v| v }.keys
   end
 
 end
