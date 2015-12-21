@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
 
   before_validation :titleize_name
 
-  def self.query_string(category_ids)
+  def self.query_string_for(category_ids)
     categories = self.where("id in (?)", category_ids)
     queries = []
     arguments = []
@@ -29,16 +29,18 @@ class Category < ActiveRecord::Base
 
 
   def generate_query
+    query = ""
+    arguments = []
     if self.is_keyword
-      query = "UPPER(card_text) LIKE UPPER(?)"
-      arguments = ["%#{self.name}%"]
-    elsif self.is_tribal
-      query = "? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?)"
-      arguments = [self.name.singularize, "%#{self.name.singularize}%", "%#{self.name.pluralize}%"]
-    else
-      query = "(taggings.category_id = ? AND taggings.taggable_type = 'Card'"
-      arguments = [self.id]
+      query += "(UPPER(card_text) LIKE UPPER(?))"
+      arguments << "%#{self.name}%"
     end
+    if self.is_tribal
+      query += "(? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?))"
+      arguments.concat([self.name.singularize, "%#{self.name.singularize}%", "%#{self.name.pluralize}%"])
+    end
+    query += "#{'OR' if (self.is_keyword || self.is_tribal)} (taggings.category_id = ? AND taggings.taggable_type = 'Card')"
+    arguments << self.id
     return query, arguments
   end
 

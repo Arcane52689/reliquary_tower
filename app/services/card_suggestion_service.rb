@@ -23,12 +23,19 @@ class CardSuggestionService
 
 
   def self.suggest(params)
-    result = Card.all
+    join_statement = "LEFT OUTER JOIN taggings ON taggings.taggable_id = cards.id"
+    result = Card.joins(join_statement).all
     byebug
     result = result.where(can_be_commander: true) if params[:commander]
     result = result.where('UPPER(name) like UPPER(?)', "%#{params[:card_text]}%")
     result = result.find_by_color_identity(params[:included_colors]) if params[:included_colors]
     result.where('cmc < 4') if params[:is_tiny_leader]
+    if params[:category_ids]
+      byebug
+      query, arguments = Category.query_string_for(params[:category_ids])
+      result = result.where(query, *arguments)
+    end
+
     limit = params[:limit].to_i || 10
     result = result.limit(limit)
     result

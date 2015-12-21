@@ -1,7 +1,8 @@
 class Api::CardsController < ApplicationController
 
   def show
-
+    @card = Card.find(params[:id])
+    render json: @card
   end
 
   def find_by
@@ -38,8 +39,7 @@ class Api::CardsController < ApplicationController
   end
 
   def suggestion_params
-    byebug
-    params.permit(:card_text, :limit, :commander, :is_tiny_leader, included_colors: [])
+    params.permit(:card_text, :limit, :commander, :is_tiny_leader, included_colors: [], category_ids: [])
   end
 
 

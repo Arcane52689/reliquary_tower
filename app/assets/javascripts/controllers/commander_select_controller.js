@@ -8,7 +8,7 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
       searchOptions: {
         "included_colors[]": this.deck.colorIdentity(),
         is_tiny_leader: (this.deck.get('format') === 'Tiny Leaders'),
-        taggings: [],
+        "category_ids[]": [],
         card_text: "",
         commander: true,
         limit: 10
@@ -43,7 +43,7 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
 
   this.updateSearchInfo = function() {
     this.suggestions.searchOptions["included_colors[]"] = this.deck.colorIdentity();
-    this.suggestions.searchOptions.taggings = this.deck.get('category_ids');
+    this.suggestions.searchOptions["category_ids[]"] = this.deck.get('category_ids');
 
   }
 
