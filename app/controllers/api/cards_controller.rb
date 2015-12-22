@@ -39,7 +39,7 @@ class Api::CardsController < ApplicationController
   end
 
   def suggestion_params
-    params.permit(:card_text, :limit, :commander, :is_tiny_leader, included_colors: [], category_ids: [])
+    params.permit(:card_text, :limit, :commander, :is_tiny_leader, included_colors: [], category_ids: [], excluded_card_names: [])
   end
 
 

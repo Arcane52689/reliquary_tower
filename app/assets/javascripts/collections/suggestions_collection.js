@@ -27,17 +27,16 @@ angular.module('AppCollections').factory('SuggestionsCollection', ['BaseCollecti
     }
 
     this.updateSearchInfo();
-    silent_merge(this.searchInfo, this._searchInfo)
+    silent_merge(this.searchOptions, this._searchOptions)
   }
 
   SuggestionsCollection.prototype.updateSearchInfo = function() {
-    this._searchInfo["included_colors[]"]= this.deck.colorIdentity();
-    this._searchInfo["category_ids[]"] = this.deck.get('category_ids');
-    this._searchInfo["excluded_card_names[]"] = this.deck.cardNames();
-    this._searchInfo["format"] = this.deck.get("format");
+    this._searchOptions["included_colors[]"] = this.deck.colorIdentity();
+    this._searchOptions["category_ids[]"] = this.deck.get('category_ids');
+    this._searchOptions["excluded_card_names[]"] = this.deck.cardNames();
+    this._searchOptions["format"] = this.deck.get("format");
   }
 
 
-
-
+ return SuggestionsCollection;
 }])

@@ -44,6 +44,10 @@ class Card < ActiveRecord::Base
     self.where("#{field} @> ARRAY[?]::varchar[]", arr)
   end
 
+  def self.find_subsets_of_array_field(field, arr)
+    self.where("#{field} <@ ARRAY[?]::varchar[]", arr)
+  end
+
 
   def self.create_from_json(data)
 

@@ -50,7 +50,6 @@ angular.module("AppControllers").controller("CommanderSelectCtrl", [ 'CardCollec
 
   this.suggestCommanders = function() {
     this.updateSearchInfo();
-    debugger
     this.suggestions.fetch();
   }
 

@@ -2,8 +2,11 @@ angular.module('AppDirectives').directive('cardSuggestions', function() {
   return {
     restrict: 'E',
     replace: true,
-    templateUrl: 'cards/card_suggestions.html',
+    templateUrl: 'cards/suggestion_list.html',
     controller: 'CardSuggestionsCtrl',
-    controllerAs: 'suggestions'
+    controllerAs: 'suggestions',
+    scope: {
+      deck: "=deck"
+    }
   }
 })

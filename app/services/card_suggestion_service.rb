@@ -24,22 +24,24 @@ class CardSuggestionService
 
   def self.suggest(params)
     join_statement = "LEFT OUTER JOIN taggings ON taggings.taggable_id = cards.id"
-    result = Card.joins(join_statement).all
-    byebug
-    result = result.where(can_be_commander: true) if params[:commander]
-    result = result.where('UPPER(name) like UPPER(?)', "%#{params[:card_text]}%")
-    result = result.find_by_color_identity(params[:included_colors]) if params[:included_colors]
-    result.where('cmc < 4') if params[:is_tiny_leader]
+    result = Card.joins(join_statement).where("NOT ('Vanguard' = ANY(types) )").where("NOT ('Plane' = ANY(types))")
+    if params[:commander] == "true"
+      result = result.where(can_be_commander: true)
+      result = result.find_by_color_identity(params[:included_colors]) if params[:included_colors]
+    else
+      result = result.find_subsets_of_array_field(:color_identity, params[:included_colors]) if params[:included_colors]
+    end
+    result = result.where('UPPER(card_text) like UPPER(?)', "%#{params[:card_text]}%")
+    result = result.where('cmc < 4') if params[:is_tiny_leader]
+    result = result.where("name NOT IN (?)", params[:excluded_card_names]) if params[:excluded_card_names]
     if params[:category_ids]
-      byebug
       query, arguments = Category.query_string_for(params[:category_ids])
       result = result.where(query, *arguments)
     end
 
     limit = params[:limit].to_i || 10
     result = result.limit(limit)
-    result
-
+    result.to_a.uniq(&:name)
   end
 
 
