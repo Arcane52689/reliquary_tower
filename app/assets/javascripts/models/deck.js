@@ -106,6 +106,12 @@
   }
 
 
+  Deck.prototype.cardNames = function() {
+    this.card_slots.map(function(slot) {
+      return slot.card.attributes.name;
+    })
+  }
+
 
 
 

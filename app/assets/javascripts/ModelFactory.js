@@ -201,6 +201,7 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 
   BaseCollection.prototype.fetch = function(options) {
+    this.beforeFetch && this.beforeFetch();
     options = options || {};
     $http.get(this.url,{ params: this.searchOptions}).success(function(resp) {
       if(options.clearModels) {

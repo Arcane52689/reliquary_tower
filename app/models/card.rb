@@ -9,9 +9,9 @@ class Card < ActiveRecord::Base
   }
   COLOR_REGEX = /({\w}|{\w\/\w})/
 
-  has_many :card_slots
+  has_many :card_slots, dependent: :destroy
   has_many :decks, through: :card_slots, as: :deck
-  has_many :taggings, as: :taggable
+  has_many :taggings, as: :taggable, dependent: :destroy
 
   belongs_to :card_set
 
