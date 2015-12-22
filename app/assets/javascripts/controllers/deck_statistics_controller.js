@@ -3,8 +3,8 @@ angular.module("AppControllers").controller("DeckStatisticsCtrl", ['$scope', fun
     this.deck = $scope.deck
     this.countCards();
     $scope.$watch(function() {
-      return this.deck.card_slots.all().length
-    }.bind(this), this.countCards.bind(this));
+      return this.deck.card_slots.models.length
+    }.bind(this), this.updateDisplay.bind(this));
   }
 
   this.countCards = function() {
@@ -22,10 +22,12 @@ angular.module("AppControllers").controller("DeckStatisticsCtrl", ['$scope', fun
         }.bind(this))
       }
     }.bind(this))
-    debugger
   }
 
-
+  this.updateDisplay = function() {
+    this.countCards();
+    this.manaProducers = this.deck.manaProducers();
+  }
 
   this.initialize();
 }])

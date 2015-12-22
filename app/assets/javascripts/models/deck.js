@@ -78,18 +78,31 @@
   Deck.prototype.manaProducers = function() {
     var result = {};
     this.mainDeck().each(function(slot) {
-      slot.card.attributes.produces_mana.forEach(function(mana) {
-        if (result[mana]) {
-          result[mana].count += slot.get('quantity');
-        } else {
-          result[mana] = {
-            type: mana,
-            count: slot.get('quantity')
+      if (slot.card.id) {
+
+        slot.card.attributes.produces_mana.forEach(function(mana) {
+          if (result[mana]) {
+            result[mana].count += slot.get('quantity');
+          } else {
+            result[mana] = {
+              type: mana,
+              count: slot.get('quantity')
+            }
           }
-        }
-      })
+        })
+      }
     })
     return result
+  }
+
+  Deck.prototype.totalInLocation = function(location) {
+    var count = 0;
+    this.card_slots.each(function(slot) {
+      if (slot.get('location') && slot.card.id) {
+        count += slot.get('quantity');
+      }
+    })
+    return count;
   }
 
 

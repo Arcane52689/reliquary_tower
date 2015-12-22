@@ -1,6 +1,39 @@
 
 // deck index
 
+// deck statistics
+
+.stats {
+  text-align: center;
+
+  .stat-item {
+    min-width: 80px;
+    float: left;
+    padding: 10px;
+    border-right: 1px solid black;
+    .title {
+      text-decoration: underline;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+
+  .card-counts {
+    border: 1px solid black;
+    margin-top: 10px;
+  }
+
+  .mana-producers {
+    border: 1px solid black;
+    margin-top: 10px;
+
+  }
+
+
+
+}
+
+
 
 
 //deck item

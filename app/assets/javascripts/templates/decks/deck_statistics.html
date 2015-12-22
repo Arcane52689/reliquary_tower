@@ -1,10 +1,14 @@
 <div class="stats">
-  <ul class="card-counts">
-    <li>
-      Total: {{stats.mainDeckTotal}}
+  <ul class="card-counts group">
+    <li ng-repeat="type in stats.typeCounts" class="stat-item">
+      <label class="title">{{type.type}}</label> <br>
+      <label class="info">{{type.count}}</label>
     </li>
-    <li ng-repeat="type in stats.typeCounts">
-      {{type.type}} : {{type.count}}
+  </ul>
+  <ul class="mana-producers group">
+    <li ng-repeat="type in stats.manaProducers" class="stat-item">
+      <label class="title">{{type.type}} </label> <br>
+      <label class="info">{{type.count}}</label>
     </li>
   </ul>
 </div>

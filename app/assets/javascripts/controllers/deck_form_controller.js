@@ -36,6 +36,10 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
     this.format = undefined;
 
+    $scope.$watch(function() {
+      return this.deck.card_slots.models.length
+    }.bind(this), this.updateRemainingCards.bind(this))
+
   }
 
 
@@ -95,6 +99,14 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
     }.bind(this))
   }
 
+  this.updateRemainingCards = function() {
+    if (!this.format) {
+      return
+    }
+    this.remainingCards = {
+      'main deck': this.format.card_minimum - this.deck.totalInLocation('main deck')
+    }
+  }
 
 
   this.initialize();
