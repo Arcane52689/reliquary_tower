@@ -11,6 +11,8 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
       },
       perPage: 5
     });
+    
+    // this.collection.fetch();
   }
 
   this.fetch = function() {

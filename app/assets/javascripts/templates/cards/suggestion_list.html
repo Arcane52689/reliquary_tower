@@ -1,12 +1,11 @@
 
 <section class="suggestions group">
-  <button ng-click="suggestions.fetch()" name="button">FETCH</button>
 
+  <button ng-click="suggestions.prevPage()"> PREV </button>
   <ul class="suggestion-list group">
-    <li ng-click="suggestions.prevPage()"> PREV </li>
     <suggestion-item ng-repeat="card in suggestions.collection.getPage(suggestions.page)" card="card" deck="deck">
 
     </suggestion-item>
-    <li ng-click="suggestions.nextPage()"> NEXT </li>
   </ul>
+  <button ng-click="suggestions.nextPage()"> NEXT </button>
 </section>
