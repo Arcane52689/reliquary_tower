@@ -11,14 +11,19 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
       },
       perPage: 5
     });
-    
+    // this.fetch();
+    this.deck.card_slots.on('add', function() {
+      this.fetch();
+      debugger
+    }.bind(this))
+
     // this.collection.fetch();
   }
 
   this.fetch = function() {
     this.collection.fetch({
       success: function(resp) {
-        debugger
+        // $scope.$apply()
       }.bind(this)
     });
   }

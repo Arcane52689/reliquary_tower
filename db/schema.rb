@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221211749) do
+ActiveRecord::Schema.define(version: 20151227023817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20151221211749) do
     t.datetime "updated_at",                 null: false
     t.boolean  "is_keyword", default: false
     t.boolean  "is_tribal",  default: false
+    t.text     "statement"
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
