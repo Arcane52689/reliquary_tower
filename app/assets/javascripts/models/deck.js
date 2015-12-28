@@ -98,7 +98,7 @@
   Deck.prototype.totalInLocation = function(location) {
     var count = 0;
     this.card_slots.each(function(slot) {
-      if (slot.get('location') && slot.card.id) {
+      if ((slot.get('location') === location) && (slot.card.id)) {
         count += slot.get('quantity');
       }
     })

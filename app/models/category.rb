@@ -27,6 +27,10 @@ class Category < ActiveRecord::Base
     true
   end
 
+  def has_statement?
+    return !!self.statement
+  end
+
 
   def generate_query
     query = ""
@@ -38,6 +42,9 @@ class Category < ActiveRecord::Base
     if self.is_tribal
       query += "(? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?))"
       arguments.concat([self.name.singularize, "%#{self.name.singularize}%", "%#{self.name.pluralize}%"])
+    end
+    if self.has_statement?
+      query += "#{self.statement}"
     end
     query += "#{'OR' if (self.is_keyword || self.is_tribal)} (taggings.category_id = ? AND taggings.taggable_type = 'Card')"
     arguments << self.id

@@ -12,29 +12,24 @@ angular.module('AppCollections').factory('SuggestionsCollection', ['BaseCollecti
       "category_ids[]": []
     }
     this.initialize(options)
+
+    this.on('fetch', this.beforeFetch.bind(this));
   }
 
   BaseCollection.parentOf(SuggestionsCollection);
 
   SuggestionsCollection.prototype.beforeFetch = function() {
-    var silent_merge = function(obj1, obj2) {
-      // keys in obj2 won't overwrite obj 1
-      for (key in obj2) {
-        if (!obj1.hasOwnProperty(key)) {
-          obj1[key] = obj2[key];
-        }
-      }
-    }
-
     this.updateSearchInfo();
-    silent_merge(this.searchOptions, this._searchOptions)
+
   }
 
   SuggestionsCollection.prototype.updateSearchInfo = function() {
-    this._searchOptions["included_colors[]"] = this.deck.colorIdentity();
-    this._searchOptions["category_ids[]"] = this.deck.get('category_ids');
-    this._searchOptions["excluded_card_names[]"] = this.deck.cardNames();
-    this._searchOptions["format"] = this.deck.get("format");
+    debugger
+    this.searchOptions["included_colors[]"] = this.deck.colorIdentity();
+    this.searchOptions["category_ids[]"] = this.deck.get('category_ids');
+    this.searchOptions["excluded_card_names[]"] = this.deck.cardNames();
+    this.searchOptions["format"] = this.deck.get("format");
+    this.searchOptions['limit'] = 25;
   }
 
 

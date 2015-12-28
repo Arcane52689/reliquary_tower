@@ -36,10 +36,10 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
     this.format = undefined;
 
-    $scope.$watch(function() {
-      return this.deck.card_slots.models.length
-    }.bind(this), this.updateRemainingCards.bind(this))
-
+    // $scope.$watch(function() {
+    //   return this.deck.card_slots.models.length
+    // }.bind(this), this.updateRemainingCards.bind(this))
+    this.deck.card_slots.on("add", this.updateRemainingCards.bind(this))
   }
 
 

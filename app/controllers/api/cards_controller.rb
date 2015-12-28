@@ -30,6 +30,7 @@ class Api::CardsController < ApplicationController
   end
 
   def suggestions
+    byebug
     @cards = CardSuggestionService.suggest(suggestion_params)
     render json: @cards
   end

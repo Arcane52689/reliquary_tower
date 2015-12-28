@@ -23,8 +23,9 @@ class CardSuggestionService
 
 
   def self.suggest(params)
+    acceptable_types = ["Artifact", "Creature", "Enchantment", "Instant", "Planeswalker", "Sorcery", "Tribal"]
     join_statement = "LEFT OUTER JOIN taggings ON taggings.taggable_id = cards.id"
-    result = Card.joins(join_statement).where("NOT ('Vanguard' = ANY(types) )").where("NOT ('Plane' = ANY(types))")
+    result = Card.joins(join_statement).find_by_subset_of_array_field(:types, acceptable_types)
     if params[:commander] == "true"
       result = result.where(can_be_commander: true)
       result = result.find_by_color_identity(params[:included_colors]) if params[:included_colors]
@@ -38,6 +39,7 @@ class CardSuggestionService
       query, arguments = Category.query_string_for(params[:category_ids])
       result = result.where(query, *arguments)
     end
+    byebug
 
     limit = params[:limit].to_i || 10
     result = result.limit(limit)

@@ -327,22 +327,30 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
 
   /* adding functions */
 
-  BaseCollection.prototype.addModels = function(dataArr) {
+  BaseCollection.prototype.addModels = function(dataArr, options) {
     this.adding = true;
-    dataArr.forEach(this.addModel.bind(this));
-    this.adding = false
+    dataArr.forEach(function(data) {
+      this.addModel(data, {silent: true});
+    }.bind(this));
+    this.adding = false;
+    if ((!options) || (options && !options.silent)) {
+      this.trigger("add")
+    }
     this.sort();
   }
 
-  BaseCollection.prototype.addModel = function(data) {
+  BaseCollection.prototype.addModel = function(data, options) {
     var model = new this.model(data);
-    this.add(model);
+    this.add(model, {silent: true});
+    if ((!options) || (options && !options.silent)) {
+      this.trigger("add")
+    }
     return model;
   }
 
 
 
-  BaseCollection.prototype.add = function(model) {
+  BaseCollection.prototype.add = function(model, options) {
     if (model.id) {
       if (this.modelsById[model.id]) {
         this.modelsById[model.id].updateAttributes(model.attributes);
@@ -366,7 +374,9 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     if (!this.adding) {
       this.sort();
     }
-    this.trigger("add")
+    if ((!options) || (options && !options.silent)) {
+      this.trigger("add")
+    }
     return model;
   }
 

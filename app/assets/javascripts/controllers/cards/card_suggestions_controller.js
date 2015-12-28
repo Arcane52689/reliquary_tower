@@ -14,7 +14,6 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
     // this.fetch();
     this.deck.card_slots.on('add', function() {
       this.fetch();
-      debugger
     }.bind(this))
 
     // this.collection.fetch();
@@ -24,7 +23,8 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
     this.collection.fetch({
       success: function(resp) {
         // $scope.$apply()
-      }.bind(this)
+      }.bind(this),
+      clearModels: true
     });
   }
 
