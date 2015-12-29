@@ -46,7 +46,7 @@ class Category < ActiveRecord::Base
     if self.has_statement?
       query += "#{self.statement}"
     end
-    query += "#{'OR' if (self.is_keyword || self.is_tribal)} (taggings.category_id = ? AND taggings.taggable_type = 'Card')"
+    query += "#{'OR' if query != ""} (taggings.category_id = ? AND taggings.taggable_type = 'Card')"
     arguments << self.id
     return query, arguments
   end
