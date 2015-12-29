@@ -112,6 +112,16 @@
     })
   }
 
+  Deck.prototype.cardIds = function() {
+    var result = [];
+    this.card_slots.each(function(slot) {
+      if (slot.attributes.card_id) {
+        result.push(slot.attributes.card_id);
+      }
+    })
+    return result;
+  }
+
 
 
 

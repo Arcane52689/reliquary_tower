@@ -7,14 +7,16 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
       deck: this.deck,
       searchOptions: {
         is_tiny_leader: (this.deck.get('format') === 'Tiny Leaders'),
-        card_text: ""
+        card_text: "",
+        card_type: "Creature"
       },
       perPage: 5
     });
     // this.fetch();
-    this.deck.card_slots.on('add', function() {
-      this.fetch();
-    }.bind(this))
+    this.deck.one('sync', this.fetch.bind(this));
+    // this.deck.card_slots.on('add', function() {
+    //   this.fetch();
+    // }.bind(this))
 
     // this.collection.fetch();
   }
@@ -22,7 +24,7 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
   this.fetch = function() {
     this.collection.fetch({
       success: function(resp) {
-        // $scope.$apply()
+        debugger
       }.bind(this),
       clearModels: true
     });
@@ -42,6 +44,9 @@ angular.module("AppControllers").controller("CardSuggestionsCtrl", [ '$scope', '
     }
   }
 
-
+  this.fetchNew = function() {
+    this.collection.excludeAll();
+    this.collection.fetch();
+  }
   this.initialize();
 }])

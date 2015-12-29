@@ -30,7 +30,7 @@ class Api::CardsController < ApplicationController
   end
 
   def suggestions
-    byebug
+
     @cards = CardSuggestionService.suggest(suggestion_params)
     render json: @cards
   end
@@ -40,7 +40,8 @@ class Api::CardsController < ApplicationController
   end
 
   def suggestion_params
-    params.permit(:card_text, :limit, :commander, :is_tiny_leader, included_colors: [], category_ids: [], excluded_card_names: [])
+
+    params.permit(:card_text, :limit, :commander, :is_tiny_leader, :card_type, included_colors: [], category_ids: [], excluded_card_ids: [])
   end
 
 

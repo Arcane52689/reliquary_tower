@@ -1,6 +1,11 @@
 
 <section class="suggestions group">
-
+  <select ng-model="suggestions.collection.searchOptions.card_type"
+    ng-options="type as type for type in ['Artifact', 'Creature', 'Enchantment', 'Instant', 'Land', 'Planeswalker', 'Sorcery']"
+    ng-change="suggestions.fetch()"
+    >
+  </select>
+  <button ng-click="suggestions.fetchNew()">Find More Results</button>
   <button ng-click="suggestions.prevPage()"> PREV </button>
   <ul class="suggestion-list group">
     <suggestion-item ng-repeat="card in suggestions.collection.getPage(suggestions.page)" card="card" deck="deck">

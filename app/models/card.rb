@@ -48,6 +48,10 @@ class Card < ActiveRecord::Base
     self.where("#{field} <@ ARRAY[?]::varchar[]", arr)
   end
 
+  def self.find_names_by_ids(id_arr)
+    self.where("id in (?)", id_arr).pluck(:name)
+  end
+
 
   def self.create_from_json(data)
 
@@ -87,8 +91,9 @@ class Card < ActiveRecord::Base
   end
 
   def find_tiny_leader_suggestions
-    self.find_commander_card_suggestions.where("cmc < 4")
+    Card.find_commander_card_suggestions.where("cmc < 4")
   end
+
 
 
 

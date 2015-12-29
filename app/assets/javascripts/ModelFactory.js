@@ -381,8 +381,9 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
   }
 
 
-  BaseCollection.prototype.remove = function(cid) {
+  BaseCollection.prototype.remove = function(cid, options) {
     var model
+    options = options || {}
     if (typeof cid === 'object') {
       model = cid;
     } else {
@@ -396,7 +397,9 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     if ( model.id) {
       delete this.modelsById[model.id];
     }
-    this.trigger("remove")
+    if (!options.silent) {
+      this.trigger("remove")
+    }
   }
 
   BaseCollection.prototype.clearModels = function(id) {
