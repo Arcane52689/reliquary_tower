@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+
   describe "User should validate presence of attributes" do
     let(:user) { User.new({ password: 'abcdef', username: "me", email: "me@me.me"})}
 
@@ -36,6 +37,12 @@ RSpec.describe User, type: :model do
       user.save
       expect(user.errors[:email]).to include("is invalid")
     end
+
+    it "should set the default value for admin to false" do
+      user.save
+      expect(user.admin).to eq(false)
+    end
+
   end
 
   describe "User should validate uniqueness of email and username" do
@@ -54,6 +61,8 @@ RSpec.describe User, type: :model do
       user2.save
       expect(user2.errors[:email]).to include("has already been taken")
     end
+
+
 
   end
 
