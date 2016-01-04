@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227023817) do
+ActiveRecord::Schema.define(version: 20160104133902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bans", force: :cascade do |t|
+    t.string   "format",                    null: false
+    t.string   "card_name",                 null: false
+    t.boolean  "restricted", default: true, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "bans", ["card_name"], name: "index_bans_on_card_name", using: :btree
+  add_index "bans", ["format"], name: "index_bans_on_format", using: :btree
 
   create_table "card_sets", force: :cascade do |t|
     t.string   "name",       null: false

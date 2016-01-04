@@ -221,7 +221,9 @@
       var toRemoveAll = [];
       if (this._listeners[event]) {
         this._listeners[event].forEach(function(obj) {
-          obj.callback && obj.callback();
+          if (obj.callback) {
+            setTimeout(obj.callback)
+          }
           if (obj.once) {
             toRemove.push(obj.listenerId);
           }
@@ -229,7 +231,9 @@
       }
       if (this._listeners["all"]) {
         this._listeners["all"].forEach(function(obj) {
-          obj.callback && obj.callback();
+          if (obj.callback) {
+            setTimeout(obj.callback)
+          }
           if (obj.once) {
             toRemoveAll.push(obj.listenerId);
           }
@@ -651,7 +655,9 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     var toRemoveAll = [];
     if (this._listeners[event]) {
       this._listeners[event].forEach(function(obj) {
-        obj.callback && obj.callback();
+        if (obj.callback) {
+          setTimeout(obj.callback)
+        }
         if (obj.once) {
           toRemove.push(obj.listenerId);
         }
@@ -659,7 +665,9 @@ ModelFactory.factory('BaseCollection', ['$http', 'BaseModel',function($http, Bas
     }
     if (this._listeners["all"]) {
       this._listeners["all"].forEach(function(obj) {
-        obj.callback && obj.callback();
+        if (obj.callback) {
+          setTimeout(obj.callback)
+        }
         if (obj.once) {
           toRemoveAll.push(obj.listenerId);
         }

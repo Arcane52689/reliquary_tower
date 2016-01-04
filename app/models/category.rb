@@ -36,17 +36,18 @@ class Category < ActiveRecord::Base
     query = ""
     arguments = []
     if self.is_keyword
-      query += "(UPPER(card_text) LIKE UPPER(?))"
+
+      query += "#{' OR ' if query != ""} (UPPER(card_text) LIKE UPPER(?))"
       arguments << "%#{self.name}%"
     end
     if self.is_tribal
-      query += "(? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?))"
+      query += "#{' OR ' if query != ""} (? = ANY (subtypes) OR UPPER(card_text) LIKE UPPER(?) OR UPPER(card_text) LIKE UPPER(?))"
       arguments.concat([self.name.singularize, "%#{self.name.singularize}%", "%#{self.name.pluralize}%"])
     end
     if self.has_statement?
-      query += "#{self.statement}"
+      query += "#{'OR' if query != ""}" + "#{self.statement}"
     end
-    query += "#{'OR' if query != ""} (taggings.category_id = ? AND taggings.taggable_type = 'Card')"
+    query += "#{' OR ' if query != ""} (taggings.category_id = ? AND taggings.taggable_type = 'Card')"
     arguments << self.id
     return query, arguments
   end

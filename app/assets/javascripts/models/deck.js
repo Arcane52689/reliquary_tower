@@ -122,6 +122,30 @@
     return result;
   }
 
+  Deck.prototype.updateManaSymbols = function() {
+    this.manaSymbols = {
+      '1': 0
+    };
+    var symbols, i, symbol
+    var re = /{\w}|{\w\/\w}/g
+    this.card_slots.each(function(slot){
+      if (slot.card.id) {
+        symbols = slot.card.get('mana_cost').match(re);
+        for (i = 0; i < symbols.length; i++ ) {
+          symbol = symbols[i].slice(1,-1).toLowerCase();
+          if (symbol.length > 1) {
+            symbol = symbol.split("/").join("");
+          }
+          if (parseInt(symbol)) {
+            this.manaSymbols['1'] += parseInt(symbol)
+          } else {
+            this.manaSymbols[symbol] = this.manSybmols[symbol] + 1 || 1
+          }
+        }
+      }
+    })
+  }
+
 
 
 

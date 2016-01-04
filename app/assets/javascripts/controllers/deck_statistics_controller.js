@@ -29,5 +29,7 @@ angular.module("AppControllers").controller("DeckStatisticsCtrl", ['$scope', fun
     this.manaProducers = this.deck.manaProducers();
   }
 
+
+
   this.initialize();
 }])
