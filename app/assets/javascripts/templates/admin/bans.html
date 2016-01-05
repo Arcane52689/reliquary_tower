@@ -1,0 +1,12 @@
+ban form
+
+Also known as banf
+
+
+<form ng-submit="bans.addBan();" name="BanForm" >
+
+  <input type="text" name="card_name" ng-model="bans.searchCollection.searchOptions.name">
+  <select class="format select" ng-model="bans.newBan.attributes.format" ng-options="format as format for format in ['Modern', 'Standard', 'Commander', 'Tiny Leaders']">
+
+  </select>
+</form>

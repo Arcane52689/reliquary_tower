@@ -50,6 +50,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'DeckIndexCtrl',
     controllerAs: 'index'
   })
+  .when('/admin/bans', {
+    templateUrl: 'admin/bans.html',
+    controller: 'BansCtrl',
+    controllerAs: 'bans'
+  })
 
 
 }])

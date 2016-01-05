@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resource :users, only: [ :create, :show]
     resource :session, only: [:create, :destroy]
     resources :categories, only: [:index, :create, :show]
-
+    resources :bans, only: [:index, :create, :destroy]
 
   end
 
