@@ -5,7 +5,7 @@ class CardSuggestionService
 
 
   def self.commander(colors, categories)
-    result = Card.where( can_be_commander: true)
+    result = Card.where( can_be_commander: true).includes(:printings)
     result = result.joins(:taggings).find_by_color_identity(colors) if colors.any?
     result = result.where("category_id IN (?)", categories) if categories.any?
     result.to_a.uniq(&:name)

@@ -141,10 +141,11 @@ class Card < ActiveRecord::Base
   end
 
 
-  def image_url
-    "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=#{self.multiverse_id}&type=card"
-  end
 
+
+  def card_text_with_name
+    self.card_text.gsub("@name", self.name)
+  end
 
 
   def determine_if_can_produce_mana
