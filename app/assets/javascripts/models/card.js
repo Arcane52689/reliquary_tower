@@ -9,6 +9,17 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
   BaseModel.parentOf(Card)
 
 
+  Card.prototype.updateAttributes = function(data) {
+    data["card_text"] = data["card_text_with_name"];
+    delete data.card_text_with_name
+    BaseModel.prototype.updateAttributes.call(this, data);
+    this.selectedPrinting = this.attributes.printings[0];
+  }
+
+  Card.prototype.imageUrl = function() {
+    return this.selectedPrinting.image_url
+  }
+
   Card.prototype.findByName = function(options) {
 
     options = options || {};

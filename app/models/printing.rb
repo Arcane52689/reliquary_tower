@@ -8,6 +8,7 @@ class Printing < ActiveRecord::Base
 
   def self.create_from_json(data)
     card = Card.find_by(name: data["name"]) || Card.create_from_json(data)
+    byebug if card.id.nil?
     raise StandardError if card.id.nil?
     printing = self.new({
       card_id: card.id,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208143408) do
+ActiveRecord::Schema.define(version: 20160208172958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,22 +48,24 @@ ActiveRecord::Schema.define(version: 20160208143408) do
   add_index "card_slots", ["deck_id"], name: "index_card_slots_on_deck_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
-    t.string   "name",                          null: false
-    t.string   "mana_cost",                     null: false
-    t.integer  "cmc",                           null: false
-    t.string   "colors",           default: [],              array: true
-    t.string   "supertypes",       default: [],              array: true
-    t.string   "types",            default: [],              array: true
-    t.text     "card_text",                     null: false
+    t.string   "name",                                null: false
+    t.string   "mana_cost",                           null: false
+    t.integer  "cmc",                                 null: false
+    t.string   "colors",              default: [],                 array: true
+    t.string   "supertypes",          default: [],                 array: true
+    t.string   "types",               default: [],                 array: true
+    t.text     "card_text",                           null: false
     t.string   "power"
     t.string   "toughness"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.boolean  "can_be_commander"
-    t.string   "color_identity",   default: [],              array: true
-    t.string   "subtypes",         default: [],              array: true
-    t.string   "type_string",                   null: false
-    t.string   "produces_mana",    default: [],              array: true
+    t.string   "color_identity",      default: [],                 array: true
+    t.string   "subtypes",            default: [],                 array: true
+    t.string   "type_string",                         null: false
+    t.string   "produces_mana",       default: [],                 array: true
+    t.boolean  "has_alternate_side",  default: false
+    t.string   "alternate_card_name"
   end
 
   add_index "cards", ["name"], name: "index_cards_on_name", using: :btree

@@ -2,6 +2,7 @@ angular.module("AppControllers").controller("CardModalCtrl", ['Selected', 'Displ
   this.initialize = function() {
 
     this.card = Selected.objects.card;
+    debugger
     this.card.convertManaCost();
     this.card.convertCardText();
   }

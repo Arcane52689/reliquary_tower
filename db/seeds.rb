@@ -40,6 +40,7 @@ def seed_set(number)
   file = File.open(file_name)
 
   data = JSON.parse(file.read)
+  byebug
   number.times do
     set = CardSet.where(is_seeded: false).first
     cards = data[set.code]['cards']

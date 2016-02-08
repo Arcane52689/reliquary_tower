@@ -14,15 +14,16 @@ class Card < ActiveRecord::Base
   has_many :taggings, as: :taggable, dependent: :destroy
   has_many :printings, dependent: :destroy
 
-  validates :name, :cmc, :type_string, presence: true
-  validates :mana_cost, presence: true, allow_blank: true
-  validates :card_text, presence: true, allow_blank: true
+  validates :name, :cmc, presence: true
+  validates :mana_cost, :type_string, :card_text, presence: true, allow_blank: true
   validate :valid_colors
 
   before_save :determine_can_be_commander
   before_save :parse_color_identity
   before_save :remove_name_from_card_text
   before_save :determine_if_can_produce_mana
+
+
 
   def self.find_by_color(color)
     self.find_by_single_item_in_array_field(:colors, color)
@@ -68,6 +69,10 @@ class Card < ActiveRecord::Base
       toughness: data["toughness"] || nil,
       type_string: data["type"]
     })
+    if data["layout"] == "flip" || data["layout"] == "double-faced"
+      new_card.has_alternate_side = true
+      new_card.alternate_card_name = data["names"][0] == new_card.name ? data["names"][1] :  data["names"][0]
+    end
     new_card.save
     new_card
 
@@ -96,7 +101,7 @@ class Card < ActiveRecord::Base
   end
 
 
-
+  
 
 
   def is_colorless?
