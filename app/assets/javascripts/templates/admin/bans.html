@@ -5,8 +5,46 @@ Also known as banf
 
 <form ng-submit="bans.addBan();" name="BanForm" >
 
-  <input type="text" name="card_name" ng-model="bans.searchCollection.searchOptions.name">
-  <select class="format select" ng-model="bans.newBan.attributes.format" ng-options="format as format for format in ['Modern', 'Standard', 'Commander', 'Tiny Leaders']">
+  <input type="text" ng-model="bans.searchCollection.searchOptions.name" ng-change="bans.fetchNames()">
+  <ul ng-show="bans.displayingNames">
+    <li ng-repeat="card in bans.searchCollection.all()" ng-click="bans.select(card)">{{card.get('name')}}</li>
+  </ul>
+  <select class="format select" ng-model="bans.newBan.attributes.format" ng-options="format as format for format in bans.formats">
 
   </select>
+
+  <section class="ban-display" ng-if="bans.selectedCard">
+    <ul>
+      <li class="banned-name">{{bans.selectedCard.get('name')}}</li>
+    </ul>
+    <figure class="ban-image">
+      <img ng-src="{{bans.selectedCard.get('image_url')}}" alt="" />
+    </figure>
+    <button> Ban {{bans.selectedCard.get('name')}} in {{bans.newBan.attributes.format}}</button>
+  </section>
 </form>
+
+
+<!-- <ul>
+  <li ng-repeat="ban in bans.list.all()">
+    <ul>
+      <li>{{ban.get('card_name')}}</li>
+      <li>{{ban.get('format')}}</li>
+    </ul>
+  </li>
+</ul> -->
+
+<ul class="group">
+  <li class="ban-list-section" ng-repeat="format in bans.formats" ng-hide="bans.bannedIn[format].length === 0">
+    <h2 class="title">
+      {{ format }}
+    </h2>
+    <ul class="ban-list">
+      <li ng-repeat="ban in bans.bannedIn[format]">
+        <ul>
+          <li>{{ban.get('card_name')}}</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

@@ -22,6 +22,7 @@ def seed_sets
   data = JSON.parse(file.read)
 
   data.keys.each do |k|
+    next if CardSet.exists?(code: k);
     CardSet.create({
       name: data[k]['name'],
       code: k,
@@ -43,8 +44,10 @@ def seed_set(number)
     set = CardSet.where(is_seeded: false).first
     cards = data[set.code]['cards']
     cards.each do |card_data|
-      # next if Card.exists?(multiverse_id: card_data['multiverseid'])
-      card = set.cards.create_from_json(card_data)
+      multiverse_id = card_data["multiverseid"]
+      next if multiverse_id.nil? || Printing.exists?(multiverse_id: multiverse_id)
+      printing = set.printings.create_from_json(card_data)
+      byebug if printing.id.nil?
     end
     set.is_seeded = true
     set.save

@@ -11,7 +11,7 @@ class Api::BansController < ApplicationController
     if @ban.save
       render json: @ban, status: 200
     else
-      render json: @ban.errors.full_messages, status: 422
+      render json: {error: @ban.errors.full_messages}, status: 422
     end
   end
 

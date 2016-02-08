@@ -11,20 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104141556) do
+ActiveRecord::Schema.define(version: 20160208143408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bans", force: :cascade do |t|
     t.string   "format",                    null: false
-    t.string   "card_name",                 null: false
     t.boolean  "restricted", default: true, null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "card_id",                   null: false
   end
 
-  add_index "bans", ["card_name"], name: "index_bans_on_card_name", using: :btree
+  add_index "bans", ["format", "card_id"], name: "index_bans_on_format_and_card_id", unique: true, using: :btree
   add_index "bans", ["format"], name: "index_bans_on_format", using: :btree
 
   create_table "card_sets", force: :cascade do |t|
@@ -48,26 +48,22 @@ ActiveRecord::Schema.define(version: 20160104141556) do
   add_index "card_slots", ["deck_id"], name: "index_card_slots_on_deck_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
-    t.string   "name",                                     null: false
-    t.string   "mana_cost",                                null: false
-    t.integer  "cmc",                                      null: false
-    t.string   "colors",                      default: [],              array: true
-    t.string   "supertypes",                  default: [],              array: true
-    t.string   "types",                       default: [],              array: true
-    t.string   "rarity",           limit: 50,              null: false
-    t.text     "card_text",                                null: false
-    t.text     "flavor_text"
+    t.string   "name",                          null: false
+    t.string   "mana_cost",                     null: false
+    t.integer  "cmc",                           null: false
+    t.string   "colors",           default: [],              array: true
+    t.string   "supertypes",       default: [],              array: true
+    t.string   "types",            default: [],              array: true
+    t.text     "card_text",                     null: false
     t.string   "power"
     t.string   "toughness"
-    t.integer  "multiverse_id",                            null: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.boolean  "can_be_commander"
-    t.string   "color_identity",              default: [],              array: true
-    t.string   "subtypes",                    default: [],              array: true
-    t.string   "type_string",                              null: false
-    t.integer  "card_set_id",                              null: false
-    t.string   "produces_mana",               default: [],              array: true
+    t.string   "color_identity",   default: [],              array: true
+    t.string   "subtypes",         default: [],              array: true
+    t.string   "type_string",                   null: false
+    t.string   "produces_mana",    default: [],              array: true
   end
 
   add_index "cards", ["name"], name: "index_cards_on_name", using: :btree
@@ -92,6 +88,20 @@ ActiveRecord::Schema.define(version: 20160104141556) do
     t.integer  "user_id"
     t.text     "description"
   end
+
+  create_table "printings", force: :cascade do |t|
+    t.integer  "card_id"
+    t.integer  "card_set_id"
+    t.integer  "multiverse_id", null: false
+    t.text     "flavor_text"
+    t.string   "rarity"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "printings", ["card_id"], name: "index_printings_on_card_id", using: :btree
+  add_index "printings", ["card_set_id"], name: "index_printings_on_card_set_id", using: :btree
+  add_index "printings", ["multiverse_id"], name: "index_printings_on_multiverse_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.integer  "user_id",      null: false
@@ -129,6 +139,8 @@ ActiveRecord::Schema.define(version: 20160104141556) do
 
   add_foreign_key "card_slots", "cards"
   add_foreign_key "card_slots", "decks"
+  add_foreign_key "printings", "card_sets"
+  add_foreign_key "printings", "cards"
   add_foreign_key "sessions", "users"
   add_foreign_key "taggings", "categories"
 end

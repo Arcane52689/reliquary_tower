@@ -12,16 +12,16 @@ class Card < ActiveRecord::Base
   has_many :card_slots, dependent: :destroy
   has_many :decks, through: :card_slots, as: :deck
   has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :printings, dependent: :destroy
 
-  belongs_to :card_set
-
-  validates :name, :cmc, :rarity, :type_string, :multiverse_id, presence: true
+  validates :name, :cmc, :type_string, presence: true
   validates :mana_cost, presence: true, allow_blank: true
   validates :card_text, presence: true, allow_blank: true
   validate :valid_colors
 
   before_save :determine_can_be_commander
   before_save :parse_color_identity
+  before_save :remove_name_from_card_text
   before_save :determine_if_can_produce_mana
 
   def self.find_by_color(color)
@@ -64,9 +64,6 @@ class Card < ActiveRecord::Base
       types: data["types"] || [],
       subtypes: data["subtypes"] || [],
       card_text: data["text"] || "",
-      multiverse_id: data["multiverseid"],
-      rarity: data["rarity"] || "not listed",
-      flavor_text: data["flavor"],
       power: data["power"] || nil,
       toughness: data["toughness"] || nil,
       type_string: data["type"]
@@ -74,6 +71,10 @@ class Card < ActiveRecord::Base
     new_card.save
     new_card
 
+  end
+
+  def remove_name_from_card_text
+    self.card_text = self.card_text.gsub(self.name, "@name")
   end
 
 

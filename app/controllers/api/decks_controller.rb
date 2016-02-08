@@ -13,7 +13,7 @@ class Api::DecksController < ApplicationController
       @deck.card_slots.includes(:card)
       render json: @deck, status: 200
     else
-      render json: @deck.errors.full_messages, status: 422
+      render json: {error: @deck.errors.full_messages}, status: 422
     end
   end
 
