@@ -1,5 +1,5 @@
 <li class="card" ng-click="item.displayModal()">
-<figure>
+<figure ng-class="item.card.isFlipped() ? 'flipped' : ''">
   <img ng-src="{{item.card.imageUrl()}}" alt="{{item.card.get('card_text')}}" />
 </figure>
 </li>

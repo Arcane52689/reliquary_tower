@@ -40,15 +40,14 @@ def seed_set(number)
   file = File.open(file_name)
 
   data = JSON.parse(file.read)
-  byebug
-  number.times do
-    set = CardSet.where(is_seeded: false).first
+
+  sets = CardSet.where(is_seeded: false)[0... number]
+  sets.each do |set|
     cards = data[set.code]['cards']
     cards.each do |card_data|
       multiverse_id = card_data["multiverseid"]
-      next if multiverse_id.nil? || Printing.exists?(multiverse_id: multiverse_id)
+      next if multiverse_id.nil?
       printing = set.printings.create_from_json(card_data)
-      byebug if printing.id.nil?
     end
     set.is_seeded = true
     set.save
@@ -57,7 +56,27 @@ def seed_set(number)
   file.close
 end
 
+def seed_set_by_id(id)
+  file_name = Rails.root.join 'lib', 'assets', 'AllSets.json'
 
+  file = File.open(file_name)
+
+  data = JSON.parse(file.read)
+
+  # sets = CardSet.where(is_seeded: false)[0... number]
+  set = CardSet.find(id)
+  cards = data[set.code]['cards']
+  cards.each do |card_data|
+    multiverse_id = card_data["multiverseid"]
+    next if multiverse_id.nil?
+    printing = set.printings.create_from_json(card_data)
+  end
+  set.is_seeded = true
+  set.save
+  p set.name
+  file.close
+end
 # seed_categories(['enchantments', 'auras', 'general damage', 'weenies', 'combo'])
-# seed_sets
-seed_set(10)
+seed_sets
+seed_set(100)
+# seed_set_by_id(76)

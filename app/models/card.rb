@@ -69,10 +69,13 @@ class Card < ActiveRecord::Base
       toughness: data["toughness"] || nil,
       type_string: data["type"]
     })
-    if data["layout"] == "flip" || data["layout"] == "double-faced"
-      new_card.has_alternate_side = true
+    if data["layout"] == "flip"
       new_card.alternate_card_name = data["names"][0] == new_card.name ? data["names"][1] :  data["names"][0]
+      new_card.is_flip_card = true if data["names"][1] == new_card.name
     end
+    if data["layout"] == "double-faced"
+        new_card.alternate_card_name = data["names"][0] == new_card.name ? data["names"][1] :  data["names"][0]
+      end
     new_card.save
     new_card
 
@@ -101,7 +104,7 @@ class Card < ActiveRecord::Base
   end
 
 
-  
+
 
 
   def is_colorless?

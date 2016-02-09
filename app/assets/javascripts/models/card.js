@@ -8,16 +8,31 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
 
   BaseModel.parentOf(Card)
 
+  Card.findByName = function(name, options)  {
+    var card = new Card({
+      name: name
+    });
+    card.findByName(options);
+    return card;
+  }
 
   Card.prototype.updateAttributes = function(data) {
     data["card_text"] = data["card_text_with_name"];
     delete data.card_text_with_name
     BaseModel.prototype.updateAttributes.call(this, data);
-    this.selectedPrinting = this.attributes.printings[0];
+    if (this.attributes.printings && this.attributes.printings.length > 0) {
+      this.selectedPrinting = this.attributes.printings[0];
+    }
   }
 
   Card.prototype.imageUrl = function() {
-    return this.selectedPrinting.image_url
+    if (this.selectedPrinting) {
+
+      return this.selectedPrinting.image_url
+    }
+    else {
+      return ""
+    }
   }
 
   Card.prototype.findByName = function(options) {
@@ -31,6 +46,9 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
     })
   }
 
+  Card.prototype.isFlipped = function() {
+    return this.attributes.is_flip_card
+  }
 
   Card.prototype.convertManaCost = function() {
     var swap = function(string) {

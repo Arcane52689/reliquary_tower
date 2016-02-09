@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208172958) do
+ActiveRecord::Schema.define(version: 20160209133833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 20160208172958) do
     t.string   "subtypes",            default: [],                 array: true
     t.string   "type_string",                         null: false
     t.string   "produces_mana",       default: [],                 array: true
-    t.boolean  "has_alternate_side",  default: false
     t.string   "alternate_card_name"
+    t.boolean  "is_flip_card",        default: false
   end
 
   add_index "cards", ["name"], name: "index_cards_on_name", using: :btree
@@ -94,16 +94,15 @@ ActiveRecord::Schema.define(version: 20160208172958) do
   create_table "printings", force: :cascade do |t|
     t.integer  "card_id"
     t.integer  "card_set_id"
-    t.integer  "multiverse_id", null: false
     t.text     "flavor_text"
     t.string   "rarity"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "multiverse_id", null: false
   end
 
   add_index "printings", ["card_id"], name: "index_printings_on_card_id", using: :btree
   add_index "printings", ["card_set_id"], name: "index_printings_on_card_set_id", using: :btree
-  add_index "printings", ["multiverse_id"], name: "index_printings_on_multiverse_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.integer  "user_id",      null: false
