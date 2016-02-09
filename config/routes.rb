@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     resources :categories, only: [:index, :create, :show]
     resources :bans, only: [:index, :create, :destroy]
+    resources :card_sets, only: [:index]
 
   end
 

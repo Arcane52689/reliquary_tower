@@ -35,6 +35,10 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
     }
   }
 
+  Card.prototype.hasAlternateFace = function() {
+    return !! this.attributes.alternate_card_name
+  }
+
   Card.prototype.findByName = function(options) {
 
     options = options || {};
@@ -47,7 +51,7 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
   }
 
   Card.prototype.isFlipped = function() {
-    return this.attributes.is_flip_card
+    return this.attributes.is_flip_card;
   }
 
   Card.prototype.convertManaCost = function() {

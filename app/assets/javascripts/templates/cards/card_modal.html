@@ -3,8 +3,17 @@
   <section class="big-image">
     <img ng-src="{{modal.card.get('image_url')}}" alt="" />
   </section>
-  <input type="text" name="name" value="">
   <section class="card-info">
+    <div class="image-display">
+      <figure>
+        <img ng-src="{{modal.card.imageUrl()}}" alt="" />
+      </figure>
+      <ul>
+        <li ng-repeat="printing in modal.card.attributes.printings">
+
+        </li>
+      </ul>
+    </div>
     <ul class="">
       <li>
         <h1 class="title">{{modal.card.get('name')}}</h1>
@@ -12,11 +21,16 @@
       <li ng-bind-html="modal.card.displayCost">
       </li>
       <li>
-        <h5>Card Text</h5>
+        <h4>Card Text</h4>
         <pre ng-bind-html="modal.card.displayText">
         </pre>
       </li>
     </ul>
+    <section ng-if="modal.card.hasAlternateFace()">
+      <h4>Other side</h4>
+
+
+    </section>
 
   </section>
 </div>
