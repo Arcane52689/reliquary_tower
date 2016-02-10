@@ -1,5 +1,6 @@
 angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', function(BaseModel, $http, $sce) {
   var Card = function(data) {
+    data = data || {};
     this.initialize(data)
     this.urlBase = "api/cards"
   }
@@ -17,8 +18,12 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
   }
 
   Card.prototype.updateAttributes = function(data) {
-    data["card_text"] = data["card_text_with_name"];
-    delete data.card_text_with_name
+    data
+    if (data["card_text_with_name"]) {
+      data["card_text"] = data["card_text_with_name"];
+
+      delete data.card_text_with_name
+    }
     BaseModel.prototype.updateAttributes.call(this, data);
     if (this.attributes.printings && this.attributes.printings.length > 0) {
       this.selectedPrinting = this.attributes.printings[0];
@@ -48,6 +53,15 @@ angular.module('AppModels').factory('Card', ['BaseModel', '$http', '$sce', funct
     }.bind(this)).error(function(resp) {
       options.error && options.error(resp)
     })
+  }
+
+  Card.prototype.selectPrinting = function(id) {
+
+    for (var i = 0; i < this.attributes.printings.length; i++) {
+      if (this.attributes.printings[i].id == id) {
+        this.selectedPrinting = this.attributes.printings[i];
+      }
+    }
   }
 
   Card.prototype.isFlipped = function() {

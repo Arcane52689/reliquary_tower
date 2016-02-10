@@ -1,7 +1,7 @@
 class Api::CardSetsController < ApplicationController
 
   def index
-    @sets = CardSets.all
+    @sets = CardSet.all
     render json: @sets, status: 200
   end
 

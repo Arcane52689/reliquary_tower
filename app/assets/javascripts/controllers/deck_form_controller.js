@@ -1,4 +1,4 @@
-angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routeParams', 'Selected', 'Categories', '$scope', function(Deck, $routeParams, Selected, Categories, $scope) {
+angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routeParams', '$location', 'Selected', 'Categories', '$scope', function(Deck, $routeParams, $location, Selected, Categories, $scope) {
 
   this.initialize = function() {
     this._createDeck();
@@ -36,9 +36,6 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
 
     this.format = undefined;
 
-    // $scope.$watch(function() {
-    //   return this.deck.card_slots.models.length
-    // }.bind(this), this.updateRemainingCards.bind(this))
     this.deck.card_slots.on("add", this.updateRemainingCards.bind(this))
   }
 
@@ -88,7 +85,13 @@ angular.module('AppControllers').controller("DeckFormCtrl", ['Deck', '$routePara
   this.save = function() {
     this.deck.attributes.format = this.format.format || '';
 
-    this.deck.save();
+    this.deck.save({
+      success:function() {
+        if (!$routeParams['id']) {
+          $location.path("/decks/" + this.deck.get('id'));
+        }
+      }.bind(this)
+    });
   }
 
   this.selectFormat = function() {

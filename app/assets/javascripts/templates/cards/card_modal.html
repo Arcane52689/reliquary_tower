@@ -9,8 +9,11 @@
         <img ng-src="{{modal.card.imageUrl()}}" alt="" />
       </figure>
       <ul>
-        <li ng-repeat="printing in modal.card.attributes.printings">
-
+        printings
+        <li ng-repeat="printing in modal.card.attributes.printings"
+        ng-click="modal.card.selectPrinting(printing.id)"
+        >
+          {{printing.set_name}}
         </li>
       </ul>
     </div>

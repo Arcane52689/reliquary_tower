@@ -3,7 +3,7 @@ class Api::DecksController < ApplicationController
 
 
   def show
-    @deck = Deck.includes(card_slots: :card).find(params[:id])
+    @deck = Deck.includes(card_slots: [card: :printings]).find(params[:id])
     render json: @deck
   end
 

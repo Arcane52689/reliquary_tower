@@ -1,5 +1,8 @@
-angular.module('AppCollections').factory('CardSets', ['BaseCollection', function() {
+angular.module('AppCollections').factory('CardSets', ['BaseCollection', function(BaseCollection) {
   var CardSets = new BaseCollection({
-    url: "./api/card_sets/index"
+    url: "./api/card_sets"
   })
+
+
+  return CardSets
 }])

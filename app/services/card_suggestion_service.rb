@@ -42,15 +42,14 @@ class CardSuggestionService
     end
     # matches card_text, though this isn't implemented on the front end yet
     result = result.where('UPPER(card_text) like UPPER(?)', "%#{params[:card_text]}%") if params[:card_text] != ""
-    # The tiny leader clause, limits the results to anything
+    # The tiny leader clause, limits the results to anything with cmc 3 or less
     result = result.where('cmc < 4') if params[:is_tiny_leader] === 'true'
-    #Exclude the Un- sets
 
-    result = result.where("card_set_id NOT IN (38, 77)")
+
+
     if params[:excluded_card_ids] && params[:excluded_card_ids].any?
       #excludes cards already in the deck as well as cards that have been marked to "exclude"
-      excluded_names = Card.find_names_by_ids(params[:excluded_card_ids])
-      result = result.where("name NOT IN (?)", excluded_names)
+      result = result.where("cards.id NOT IN (?)", params[:excluded_card_ids])
     end
     if params[:category_ids]
       #generates the category ids with an 'OR' clause between them
